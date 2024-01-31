@@ -1,0 +1,20 @@
+/* Index Page */
+
+
+
+#index-banner {
+    height: 200px;
+    color: white;
+    background-color: black;
+}
+
+#index-body {
+    height: 500px;
+}
+
+#footer-container {
+    height: 200px;
+    color: white;
+    background-color: black;
+    position: fixed;
+}
