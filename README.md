@@ -172,7 +172,7 @@ This project has been designed with two end users in mind:
 
 #### User Goals
 
-![Local Legends Index Desktop](/media/images/user-stories.png)
+![Local Legends Index Desktop](/media/images/concept/user-stories.png)
 
 
 
@@ -217,23 +217,26 @@ Index.html / Home (Extra Small View)
 
 ### App interconnectivity
 
+I have set out how I expect my apps to connect to one another based on the user journey, however this is only a plan at this point and may be subject to change in the final version. I will document any deviation from these plans
+
+![App interconnectivity Design](/media/images/concept/app-interconnectivity.png)
 
 
 ### Database Design
 
 The initial plans for the database were designed in Microsoft Access. I used this program because I was quite familiar with it, having taught its use for years. My project will use a Relational Database design. There will be five tables for admins, users, approvals, restaurants and reviews, each with a primary key.
 
-![Local Legends Relationships Database Design](/local_legends/static/images/design-stages/db-design.png)
+![Relationships Database Design](/media/images/concept/database-relation-design.png)
 
-![Local Legends Admins Table Design](/local_legends/static/images/design-stages/admins-structure.png)
+![Users Table Design](/media/images/concept/users-table-design.png)
 
-![Local Legends Users Design](/local_legends/static/images/design-stages/users-structure.png)
+![Products Table Design](/media/images/concept/products-table-design.png)
 
-![Local Legends Approvals Design](/local_legends/static/images/design-stages/approvals-structure.png)
+![Category Table Design](/media/images/concept/category-table-design.png)
 
-![Local Legends Reviews Design](/local_legends/static/images/design-stages/reviews-structure.png)
+![Basket Table Design](/media/images/concept/basket-table-design.png)
 
-![Local Legends Restaurants Design](/local_legends/static/images/design-stages/restaurants-structure.png)
+![Checkout Table Design](/media/images/concept/checkout-table-design.png)
 
 It should be noted here that although the designs say 'Number' on several data types, the data types in the final product will be Integer. In addition, the 'Text' and 'Long Text' types will be limited by character limits which is not visible on these designs.
 
