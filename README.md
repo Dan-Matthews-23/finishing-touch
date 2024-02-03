@@ -294,13 +294,14 @@ At this stage, the footer holds external links so that the user can find the pro
 
 ### Implementing a Skeleton layout
 
-Stage Three will be to setup all other pages of this project using a skeleton layout with placeholder text.
+Next will be to setup all other pages of this project using a skeleton layout with placeholder text.
 
 #### Index
 
-The homepage will consist of a series of four to eight different restaurants with a description, image and button for each. At this stage the text and image are placeholder only, the button will link to register.html, and will not have any data handling behind it.
+The homepage will consist of a selection of the top four most popular products
 
 Homepage Design: ![Homepage Design](/local_legends/static/images/design-stages/stage-three-design-a.png)
+
 
 #### Register and Login
 
