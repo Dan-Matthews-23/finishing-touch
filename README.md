@@ -246,19 +246,9 @@ I will be using Bootstrap to set the layout of this project. I will be using a r
 
 #### Colour
 
-![Local Legends COLOUR PALETTE](/local_legends/static/images/design-stages/coolors-palette.png)
+I have chosen the following colour scheme for MegaBytes. The template can be found on [Coolers](https://coolors.co/)
 
-[Also available as Coolors palette](https://coolors.co/222222-ffffff-1c5d99-639fab-bbcde5)
-
-This was the original colour palette I had chosen for this project during the design stage. However, after setting up the CSS file, I decided to use the design language [Materialize](https://materializecss.com/color.html), by [Google](http://google.com).
-
-The Coolors palette I selected is not supported by Materialize and instead has its own colour scheme. To that end, I have selected the following colours for this project:
-
-"# 6d4c41 brown darken-1"
-
-"#efebe9 brown lighten-5"
-
-Both are available at [Materialize](https://materializecss.com/color.html)
+![Coolers Palatte](/media/images/concept/coolers-template.png)
 
 #### Font
 
@@ -266,39 +256,41 @@ The font I have chosen to use for this project is one called Poppins, which is p
 
 #### Images
 
-There are several images in this project that are used as temporary placeholders. Once this project is launched, I will contact the restaurants and replace these images with their own images pending approval. Images in use are from [pexels](https://www.pexels.com/)
+
 
 ### Webpage layout
 
 #### Master Template
 
-The Master Template, called base.html, will be used as a template for all pages in this project. It will hold the header, footer, welcome bar and nav bar.
+The Master Template, called base.html, will be used as a template for all pages in this project. It will hold the header, footer and nav bar.
 
-#### Header
+##### Header
 
-At this stage, the header is very simple. To the left I have included the title of the project - Local Legends. I have decided not to incorporate a logo in this project for a much similar reason as my previous projects - I do not feel there is a need for a logo unless I were to mimic another company, which is not something I'm prepared to do. I do have plans to change the font type and size of the title at a later stage once I see how the layout interacts with the other pages. The Navbars are included in the header.
+The header incorperates the project title and nav bar. 
 
-![Local Legends COLOUR PALETTE](/local_legends/static/images/design-stages/stage-two-a.png)
+##### Navbar
 
-#### Navbar
+I have adapted Bootstrap's nav bar for this project. It is responsive, and on viewports smaller than 993px it collapses into a hamburger bar with scroll functionality. At this stage the links do not work and are placeholder only. 
 
-The navbar, along with every other part of this project, has been designed in a mobile-first view. This means that the navbar is responsive. I have chosen to heavily utilize the front-end framework - Materialize, for the main navigation bars. The documentation for the nav bars can be found [here](https://materializecss.com/navbar.html) and is called Right Aligned Links. At this stage, the response trigger is at a much higher viewport than I planned. I intend to amend this with a media query at a later date once I can see the impact on content from other pages.
+Initial design of nav bar on larger viewport:
 
-Navbar on larger viewports: ![Local Legends Large Viewport Navbar](/local_legends/static/images/design-stages/stage-two-design-b.png)
+![Concept Stage Navbar Larger Viewport](/media/images/concept/concept-navbar-large.png)
 
-Navbar on smaller viewports: ![Local Legends Small Viewport Navbar](/local_legends/static/images/design-stages/stage-two-design-c.png)
 
-#### Footer
+Initial design of nav bar on smaller viewport:
+
+![Concept Stage Navbar Smaller Viewport](/media/images/concept/concept-navbar-small.png)
+
+
+##### Footer
 
 At this stage, the footer holds external links so that the user can find the project or author on GitHub, Facebook, X and Linked In.
 
-Footer: ![Footer](/local_legends/static/images/design-stages/stage-two-design-d.png)
+![Footer](/media/images/concept/concept-footer.png)
 
-#### Welcome Banner
 
-At this stage, the welcome banner is made up of three sections: left div, central div and right div. The left and right divs are for layout purposes only and have rounded corners to give the whole bar a rounded look. The central bar holds the text: "Welcome back,". This is placeholder only. Once my connections to the database and scripts for sessions are running, this will either say "Welcome back, {username}", or will say "Welcome, Guest".
 
-Welcome Banner: ![Welcome Banner](/local_legends/static/images/design-stages/stage-two-design-e.png)
+
 
 ### Implementing a Skeleton layout
 
