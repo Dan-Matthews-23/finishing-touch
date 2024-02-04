@@ -1,7 +1,5 @@
 /* Index Page */
 
-
-
 #index-banner {
     height: 200px;
     color: white;
@@ -10,8 +8,47 @@
 
 #index-body {
     height: 500px;
+    padding: 50px;
 }
 
+.product-row {
+    padding: 50px;
+}
+
+.product-col {
+    width: 18rem;
+}
+
+#placeholder-image {
+    height: 180px;
+    width: 286px;
+}
+
+
+
+
+
+
+
+
+/* Generic classes */
+.with-borders {
+    border-style: solid;
+    border-color: black;
+    border-width: 3px;
+}
+
+.card { 
+    width: 18rem;
+}
+
+.align-center {
+    align-items: center;
+}
+/* End of generic classes */
+
+
+/* Footer */
 #footer-container {
     height: 200px;
     color: white;

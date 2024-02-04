@@ -294,13 +294,13 @@ At this stage, the footer holds external links so that the user can find the pro
 
 ### Implementing a Skeleton layout
 
-Next will be to setup all other pages of this project using a skeleton layout with placeholder text.
+Next will be to setup all other pages of this project using a skeleton layout with placeholder text. These are only designs and accept they may change in the final version. 
 
 #### Index
 
-The homepage will consist of a selection of the top four most popular products
+The homepage will consist of a selection of the top four most popular products. In the concept stage I will create a skeleton layout of the page and fill it with placeholder images and text. 
 
-Homepage Design: ![Homepage Design](/local_legends/static/images/design-stages/stage-three-design-a.png)
+Homepage Design: ![Homepage Design](/media/images/concept/concept-index.png)
 
 
 #### Register and Login
