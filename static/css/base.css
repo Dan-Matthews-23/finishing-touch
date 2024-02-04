@@ -16,13 +16,85 @@
 }
 
 .product-col {
-    width: 18rem;
+    padding: 20px;
 }
 
 #placeholder-image {
     height: 180px;
     width: 286px;
 }
+
+/*
+#banner-left-div { 
+    height: 200px;       
+    border-style: solid;
+    border-color: red;
+    border-radius: 0% 0% 80% 0%;
+    background-color: black;
+}
+
+#banner-right-div {
+    height: 200px;    
+    border-style: solid;
+    border-color: red;
+    border-radius: 0% 0% 80% 0%;
+    background-color: black;
+}
+
+#index-banner-row {
+    background-color: white;
+}*/
+
+
+
+.row-index-left {
+    background-color: black;
+
+}
+
+.col-index-background-left {
+    background-image: url("https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+    border-radius: 0% 0% 80% 00%;
+    height: 300px;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.col-index-logo-left {
+    text-align: justify;
+}
+
+.row-index-right {
+    background-color: black;
+    border-radius: 0% 0% 80% 0%;
+}
+
+.col-index-background-right {
+    height: 300px;
+    width: 90%;
+    text-align: justify;
+    padding: 100px 150px 150px 150px;
+}
+
+.index-header {
+    color: white;
+    letter-spacing: 2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -38,13 +110,31 @@
     border-width: 3px;
 }
 
-.card { 
+.card {
     width: 18rem;
+    margin: auto;
 }
 
 .align-center {
     align-items: center;
 }
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 12px;
+}
+
+.lg-padding-not-left {
+    padding: 25px 25px 25px 0px
+}
+
 /* End of generic classes */
 
 
