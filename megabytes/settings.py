@@ -146,6 +146,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.okta',
     'allauth.socialaccount.providers.feishu',
     'home',
+    'products',
 ]
 
 MIDDLEWARE = [
