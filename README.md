@@ -214,6 +214,17 @@ Index.html / Home (Extra Small View)
 
 [Index xsm](/local_legends/static/images/wireframes/index-mobile)
 
+### Custom Models
+
+I plan to have two additional models that are fully customized: favourites and ratings
+
+#### Favourites
+
+The user will be able to browse products and then add one as a favourite. This will add that product to the user's favourites section so it can be accessed easily if they should wish to buy that product. This will be a one-to-one relationship, so a user can only have one favourites list, and each seperate favourites list belongs to only one user. 
+
+#### Ratings
+
+In my previous project, ratings were what the project was all about. In MegaBytes, they will be used as a useful addition but not central to the theme. They will be an added option for users when browsing for products or having purchased an item. Ratings may be a many-to-one relationship where a user can leave many ratings. 
 
 ### App interconnectivity
 
@@ -224,7 +235,7 @@ I have set out how I expect my apps to connect to one another based on the user 
 
 ### Database Design
 
-The initial plans for the database were designed in Microsoft Access. I used this program because I was quite familiar with it, having taught its use for years. My project will use a Relational Database design. There will be five tables for admins, users, approvals, restaurants and reviews, each with a primary key.
+The initial plans for the database were designed in Microsoft Access. I used this program because I was quite familiar with it, having taught its use for years. My project will use a Relational Database design. The Ratings and Favourites tables will form part of my two custom models
 
 ![Relationships Database Design](/media/images/concept/database-relation-design.png)
 
@@ -237,6 +248,10 @@ The initial plans for the database were designed in Microsoft Access. I used thi
 ![Basket Table Design](/media/images/concept/basket-table-design.png)
 
 ![Checkout Table Design](/media/images/concept/checkout-table-design.png)
+
+![Ratings Table Design](/media/images/concept/ratings-table-design.png)
+
+![Favourites Table Design](/media/images/concept/favourites-table-design.png)
 
 It should be noted here that although the designs say 'Number' on several data types, the data types in the final product will be Integer. In addition, the 'Text' and 'Long Text' types will be limited by character limits which is not visible on these designs.
 
