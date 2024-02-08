@@ -99,6 +99,13 @@
     padding: 5px;
 }
 
+.title-link {
+    color: black;
+    font-weight: bold;
+}
+
+
+
 
 
 
@@ -176,5 +183,5 @@ h3 {
     height: 200px;
     color: white;
     background-color: black;
-    position: fixed;
+
 }

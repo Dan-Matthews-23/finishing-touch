@@ -28,9 +28,9 @@
 
 <body>
     <header>
-        <div class="container-fluid md-padding-top md-padding-bottom bg-body-tertiary">
-            <div class="row ">
-                <div class="col ">
+        <div class="with-borders container-fluid md-padding-top md-padding-bottom bg-body-tertiary">
+            <div class="with-borders row ">
+                <div class="with-borders col ">
 
 
                     <!--
@@ -38,35 +38,35 @@
              -->
 
                     <!--Designed mobile-first. Collapses on smaller screens into a hamburger bar-->
-                    <nav class="navbar navbar-expand-lg ">
-                        <div class="container-fluid">
-                            <a class="navbar-brand" href="#">MegaBytes</a>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    <nav class="with-borders navbar navbar-expand-lg ">
+                        <div class="with-borders container-fluid">
+                            <a class="with-borders navbar-brand" href="#">MegaBytes</a>
+                            <button class="with-borders navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
                                 aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
+                                <span class="with-borders navbar-toggler-icon"></span>
                             </button>
-                            <div class="collapse navbar-collapse" id="navbarScroll">
-                                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
+                            <div class="with-borders collapse navbar-collapse" id="navbarScroll">
+                                <ul class="with-borders navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
                                     style="--bs-scroll-height: 100px;">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                    <li class="with-borders nav-item">
+                                        <a class="with-borders nav-link active" aria-current="page" href="#">Home</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#">About Us</a>
+                                    <li class="with-borders nav-item">
+                                        <a class="with-borders nav-link" href="#">About Us</a>
                                     </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                                    <li class="with-borders nav-item dropdown">
+                                        <a class="with-borders nav-link dropdown-toggle" href="#" role="button"
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             Shop
                                         </a>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">All Products</a></li>
+                                        <ul class="with-borders dropdown-menu">
+                                            <li><a class="with-borders dropdown-item" href="#">All Products</a></li>
                                             <li>
-                                                <hr class="dropdown-divider">
+                                                <hr class="with-borders dropdown-divider">
                                             </li>
-                                            <li><a class="dropdown-item" href="#">Popular Items</a></li>
-                                            <li><a class="dropdown-item" href="#">New Arrivals</a></li>
+                                            <li><a class="with-borders dropdown-item" href="#">Popular Items</a></li>
+                                            <li><a class="with-borders dropdown-item" href="#">New Arrivals</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -74,22 +74,31 @@
                         </div>
                     </nav>
                 </div>
-                <div class="col ">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                <div class="with-borders col ">
+                    <form class="with-borders d-flex" role="search">
+                        <input class="with-borders form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="with-borders btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
-                <div class="col title-icon-div align-right ">
-                    <span class="title-icon "><i class="fa-solid fa-user fa-2xl" style="color: #000000;"></i></span>
+                <div class="with-borders col title-icon-div align-right ">
+
+                    <span class="with-borders title-icon ">
+                        {% if not logged_in %}
+                        <i class="with-borders fa-solid fa-user fa-2xl" style="color: #000000;"></i>                        
+                        <a class="with-borders title-link" href="" action="">Login</a>
+                        {% else %}
+                        <i class="with-borders fa-solid fa-user fa-2xl" style="color: #000000;" id="login-icon"></i>
+                        <a class="with-borders title-link" href="" action="">Daniel</a>
+                        {% endif %}
+                    </span>
                     {% if not basket %}
-                    <span class="title-icon "><i class="fa-solid fa-cart-shopping fa-2xl"
+                    <span class="with-borders title-icon "><i class="with-borders fa-solid fa-cart-shopping fa-2xl"
                             style="color: #000000;"></i></span>
                     {% else %}
-                    <span class="title-icon "><i class="fa-solid fa-cart-shopping fa-2xl"
+                    <span class="with-borders title-icon "><i class="with-borders fa-solid fa-cart-shopping fa-2xl"
                             style="color: #ff0000;"></i></span>
                     {% endif %}
-                    <span class="title-icon  bold-text">£0.00</span>
+                    <span class="with-borders title-icon  bold-text">£0.00</span>
                 </div>
             </div>
         </div>
@@ -99,7 +108,7 @@
 
 
     {% if messages %}
-    <div class="message-container"></div>
+    <div class="with-borders message-container"></div>
     {% endif %}
 
     {% block page_header %}
@@ -122,18 +131,18 @@
 </body>
 
 <footer>
-    <div class="container-fluid" id="footer-container">
-        <div class="row">
-            <div class="col">
+    <div class="with-borders container-fluid" id="footer-container">
+        <div class="with-borders row">
+            <div class="with-borders col">
                 This is a link to Facebook
             </div>
-            <div class="col">
+            <div class="with-borders col">
                 This is a link to X (Twitter)
             </div>
-            <div class="col">
+            <div class="with-borders col">
                 This is a link to LinkedIn
             </div>
-            <div class="col">
+            <div class="with-borders col">
                 This is a link to GitHub
             </div>
         </div>
