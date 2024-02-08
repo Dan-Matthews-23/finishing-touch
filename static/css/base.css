@@ -90,8 +90,14 @@
 
 
 
+/* Base template */
+.title-icon {
+    padding: 10px;
+}
 
-
+.title-icon-div {
+    padding: 5px;
+}
 
 
 
@@ -104,6 +110,11 @@
 
 
 /* Generic classes */
+
+.bold-text {
+    font-weight: bold;
+}
+
 .with-borders {
     border-style: solid;
     border-color: black;
@@ -115,9 +126,23 @@
     margin: auto;
 }
 
-.align-center {
+/*
+.align-center-flex {
+    display: flex;
     align-items: center;
 }
+
+.align-right-flex {
+    display: flex;
+    align-items: right;
+}
+*/
+
+.align-right {
+    text-align: right;
+}
+
+
 
 h1 {
     font-size: 28px;
@@ -133,6 +158,14 @@ h3 {
 
 .lg-padding-not-left {
     padding: 25px 25px 25px 0px
+}
+
+.md-padding-top {
+    padding-top: 10px;
+}
+
+.md-padding-bottom {
+    padding-bottom: 10px;
 }
 
 /* End of generic classes */
