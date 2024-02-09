@@ -255,6 +255,13 @@ The initial plans for the database were designed in Microsoft Access. I used thi
 
 It should be noted here that although the designs say 'Number' on several data types, the data types in the final product will be Integer. In addition, the 'Text' and 'Long Text' types will be limited by character limits which is not visible on these designs.
 
+### Products Table Design
+
+In my last project I made the mistake of creating the data models before I'd considered what was going to go in it. This resulted in many further migrations which complicated the process. This time I have created my full dataset before any changes are migrated. I will do this for each seperate model. 
+
+[Product Table Dataset](/media/images/concept/concept-products-table-dataset-design.png)
+
+
 ### Layout
 
 I will be using Bootstrap to set the layout of this project. I will be using a range of features including the the grid, nav bar and breakpoints to ensure it's responsive. 
