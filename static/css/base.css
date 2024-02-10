@@ -6,10 +6,10 @@
     background-color: black;
 }
 
-#index-body {
+/*#index-body {
     height: 500px;
     padding: 50px;
-}
+}*/
 
 .product-row {
     padding: 50px;
@@ -166,6 +166,19 @@ h3 {
 .lg-padding-not-left {
     padding: 25px 25px 25px 0px
 }
+
+.lg-padding-bottom {
+    padding-bottom: 25px;
+}
+
+.xlg-padding-bottom {
+    padding-bottom: 50px;
+}
+
+.xxlg-padding-bottom {
+    padding-bottom: 75px;
+}
+
 
 .md-padding-top {
     padding-top: 10px;
