@@ -178,10 +178,37 @@ h3 {
 /* End of generic classes */
 
 
-/* Footer */
-#footer-container {
-    height: 200px;
-    color: white;
-    background-color: black;
+/*<!-----------------------FOOTER------------------------------------>*/
+.footer-head {
+    font-weight: bold;
+    padding: 5px;
+    letter-spacing: 2px;
+    color: var(--brown-darken-1);
+}
 
+.footer-container {
+    background-color: #efebe9;
+    text-align: center;
+    margin: auto;
+    color: var(--brown-darken-1);
+    border-top: 1px solid black;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.footer-links li {
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    color: var(--brown-darken-1);
+}
+
+.footer-links i {
+    font-size: 180%;
+    color: var(--brown-darken-1);
+}
+
+.header-links {
+    color: var(--brown-darken-1);
 }

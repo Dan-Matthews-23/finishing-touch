@@ -50,14 +50,19 @@
 
 <div class="container-fluid align-center" id="index-body">
     <div class="row  product-row align-center ">
+        <div class="col align-center">
+            <h1 class="make-sandwitch-instructions">First, choose your bread</h1>
+        </div>
+    </div>
+    <div class="row product-row align-center ">
 
-        {% for product in products %}       
+
+        {% for product in products %}
 
         <div class="col  align-center product-col">
             <div class="card ">
-                <img class="card-img-top"
-                    src="{{product.product_image_url}}"
-                    alt="{{product.product_placeholder_name}}" id="placeholder-image">
+                <img class="card-img-top" src="{{product.product_image_url}}" alt="{{product.product_placeholder_name}}"
+                    id="placeholder-image">
                 <div class="card-body ">
                     <h5 class="card-title">{{product.product_name}}</h5>
                     <p class="card-text ">

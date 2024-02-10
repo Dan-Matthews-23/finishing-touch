@@ -34,7 +34,7 @@ class Products(models.Model):
     fibre_source = models.BooleanField(null=True, blank=True)    
     product_image_url = models.URLField(1024)
     product_rating = models.IntegerField(choices=rating_select, default=1)
-    category_id = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+    category_id = models.IntegerField(default=0)
 
     def __str__(self):
         return self.product_name
