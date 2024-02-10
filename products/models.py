@@ -26,6 +26,7 @@ class Category(models.Model):
 
 class Products(models.Model):
     product_id = models.AutoField(primary_key=True)
+    product_placeholder_name = models.CharField(max_length=254,null=True)
     product_name = models.CharField(max_length=254)
     product_price = models.DecimalField(max_digits=6, decimal_places=2)
     product_short_description = models.CharField(max_length=254)
