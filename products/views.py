@@ -19,3 +19,4 @@ def list_all_fillings(request):
         'fillings' : fillings,
     }
     return render(request, 'products/products.html', context)
+

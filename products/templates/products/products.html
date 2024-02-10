@@ -48,7 +48,7 @@
 
 
 
-<div class="container-fluid xxlg-padding-bottom align-center with-borders">
+<div class="container-fluid xxlg-padding-bottom align-center with-borders" id="products-container">
     <div class="row product-row align-center md-padding ">
         <div class="col align-center">
             <h1 class="make-sandwitch-instructions">First, choose your bread</h1>
@@ -58,7 +58,6 @@
 
 
         {% for bread in breads %}
-
         <div class="col  align-center product-col">
             <div class="card ">
                 <img class="card-img-top" src="{{bread.product_image_url}}" alt="{{bread.product_placeholder_name}}"
@@ -66,13 +65,35 @@
                 <div class="card-body ">
                     <h5 class="card-title">{{bread.product_name}}</h5>
                     <p class="card-text ">
-
                     </p>
                     <a href="#" class="btn btn-priindex">Go somewhere</a>
                 </div>
             </div>
         </div>
         {% endfor %}
+
+        <div class="row product-row align-center md-padding ">
+            <div class="col align-center">
+                <h1 class="make-sandwitch-instructions">Next, the filling</h1>
+            </div>
+        </div>
+
+        {% for filling in fillings %}
+        <div class="col  align-center product-col">
+            <div class="card ">
+                <img class="card-img-top" src="{{filling.product_image_url}}" alt="{{filling.product_placeholder_name}}"
+                    id="placeholder-image">
+                <div class="card-body ">
+                    <h5 class="card-title">{{filling.product_name}}</h5>
+                    <p class="card-text ">
+                    </p>
+                    <a href="#" class="btn btn-priindex">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
     </div>
 </div>
 

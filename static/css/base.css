@@ -86,8 +86,10 @@
 
 
 
-
-
+/* Products  */
+#products-container {
+    height: 2000px;
+}
 
 
 /* Base template */

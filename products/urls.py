@@ -22,6 +22,4 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.list_all_breads, name='breads'),
     path('', views.list_all_fillings, name='fillings'),
-    #path('', views.list_all_breads, name='breads'),
-    #path('', views.list_all_breads, name='breads'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
