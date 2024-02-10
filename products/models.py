@@ -2,18 +2,15 @@ from django.db import models
 
 # Create your models here.
 
-  """
-category_select = (
-        (roll, 'Roll'),
-        (jacket_potato, 'Jacket Potato'),
-        (filling, 'Filling'),
-        (sauces, 'Sauces'),
-        (dressings, 'Dressings'),
-        (extras, 'Extras'),
-        (drinks, 'Drinks'),
-        (sundries, 'Sundries'),
+
+rating_select = (
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (4, '5'),
     )
-  """
+ 
 
 
 class Category(models.Model):
@@ -35,7 +32,7 @@ class Products(models.Model):
     protein_source = models.BooleanField(null=True, blank=True)
     fibre_source = models.BooleanField(null=True, blank=True)    
     product_image_url = models.URLField(1024)
-    product_rating = models.URLField(1024)
+    product_rating = models.IntegerField(choices=rating_select, default=1)
     category_id = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
