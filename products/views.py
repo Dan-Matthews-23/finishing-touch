@@ -4,19 +4,12 @@ from .models import Products
 # Create your views here.
 
 # Display all breads
-def list_all_breads(request):
-    #products = Products.objects.all()
-    breads = Products.objects.filter(category_id=1)
+def list_all_sandwitch_items(request):   
+    sandwitch_items = Products.objects.all()
     context = {
-        'breads' : breads,
+        'sandwitch_items' : sandwitch_items,
     }
     return render(request, 'products/products.html', context)
 
-# Display all fillings
-def list_all_fillings(request):    
-    fillings = Products.objects.filter(category_id=2)
-    context = {
-        'fillings' : fillings,
-    }
-    return render(request, 'products/products.html', context)
+
 
