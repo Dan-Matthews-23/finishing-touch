@@ -14,6 +14,8 @@
     <title>MegaBytes {% block extra_title %}{% endblock %}</title>
 
     {% block corecss %}
+
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
@@ -26,43 +28,39 @@
 
 <body>
     <header>
-        <div class="with-borders container-fluid md-padding-top md-padding-bottom bg-body-tertiary">
-            <div class="with-borders row ">
-                <div class="with-borders col ">
+        <div class=" container-fluid md-padding-top md-padding-bottom  with-borders" id="nav-bar-container">
+            <div class=" row ">
+                <div class=" col ">
                     {% include 'includes/nav-bar.html' %}
                 </div>
-                <div class="with-borders col ">
-                    <form class="with-borders d-flex" role="search">
-                        <input class="with-borders form-control me-2" type="search" placeholder="Search"
+                <!--<div class=" col ">
+                    <form class=" d-flex" role="search">
+                        <input class=" form-control me-2" type="search" placeholder="Search"
                             aria-label="Search">
-                        <button class="with-borders btn btn-outline-success" type="submit">Search</button>
+                        <button class=" btn btn-outline-success" type="submit">Search</button>
                     </form>
-                </div>
-                <div class="with-borders col title-icon-div align-right ">
-                    <span class="with-borders title-icon ">
+                </div>-->
+                <div class=" col align-right with-borders ">
+                    <span class=" title-icon ">
                         {% if not logged_in %}
-                        <i class="with-borders fa-solid fa-user fa-2xl" style="color: #000000;"></i>
-                        <a class="with-borders title-link" href="" action="">Login</a>
+                        <i class="fa-solid fa-user fa-2xl nav-icons"></i>
+                        <a href="" action="" class="nav-icons">Login</a>
                         {% else %}
-                        <i class="with-borders fa-solid fa-user fa-2xl" style="color: #000000;" id="login-icon"></i>
-                        <a class="with-borders title-link" href="" action="">Daniel</a>
+                        <i class=" fa-solid fa-user fa-2xl nav-icons"></i>
+                        <a href="" action="" class="nav-icons">Daniel</a>
                         {% endif %}
                     </span>
-                    {% if not basket %}
-                    <span class="with-borders title-icon "><i class="with-borders fa-solid fa-cart-shopping fa-2xl"
-                            style="color: #000000;"></i></span>
-                    {% else %}
-                    <span class="with-borders title-icon "><i class="with-borders fa-solid fa-cart-shopping fa-2xl"
-                            style="color: #ff0000;"></i></span>
-                    {% endif %}
-                    <span class="with-borders title-icon  bold-text">£0.00</span>
+
+                    <span class=" title-icon "><i class=" fa-solid fa-cart-shopping fa-2xl nav-icons"></i></span>
+
+                    <span class=" nav-icons  bold-text">£0.00</span>
                 </div>
             </div>
         </div>
     </header>
 
     {% if messages %}
-    <div class="with-borders message-container"></div>
+    <div class=" message-container"></div>
     {% endif %}
 
     {% block page_header %}
@@ -73,16 +71,14 @@
 
     {% block postloadjs %}
     {% endblock %}
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+
 </body>
 
 <footer>
