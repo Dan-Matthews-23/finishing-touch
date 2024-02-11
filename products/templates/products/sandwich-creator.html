@@ -28,26 +28,6 @@
     </div>
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="container-fluid xxlg-padding-bottom align-center with-borders" id="products-container">
     <div class="row product-row align-center md-padding ">
         <div class="col align-center">
@@ -57,8 +37,11 @@
     <div class="row product-row align-center ">
 
 
-        {% for i in sandwitch_items %}
-        {% if i.category_id == 1 %}
+        {% for i in sandwich_items %}
+
+        <!--
+        if i.category_id == 1 
+        -->
         <div class="col  align-center product-col">
             <div class="card ">
                 <img class="card-img-top" src="{{i.product_image_url}}" alt="{{i.product_placeholder_name}}"
@@ -71,7 +54,7 @@
                 </div>
             </div>
         </div>
-        {% endif %}
+
         {% endfor %}
 
         <div class="row product-row align-center md-padding ">

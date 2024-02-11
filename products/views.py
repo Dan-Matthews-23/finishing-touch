@@ -1,10 +1,10 @@
 from django.shortcuts import render
-from .models import Products
+from .models import Products, Category
 
 # Create your views here.
 
 # Display all breads
-def list_all_sandwich_items(request):   
+def prepacked_sandwiches(request):   
     sandwich_items = Products.objects.all()
     context = {
         'sandwich_items' : sandwich_items,

@@ -31,13 +31,14 @@
 <div class="container-fluid xxlg-padding-bottom align-center with-borders" id="products-container">
     <div class="row product-row align-center md-padding ">
         <div class="col align-center">
-            <h1 class="make-sandwich-instructions">First, choose your bread PRODUCTS PAGE</h1>
+            <h1 class="make-sandwich-instructions">Here's our selection</h1>
         </div>
     </div>
     <div class="row product-row align-center ">
 
         {% for i in sandwich_items %}
-        {% if i.category_id == 1 %}
+        {% if i.category_id == 9 %}
+
         <div class="col  align-center product-col">
             <div class="card ">
                 <img class="card-img-top" src="{{i.product_image_url}}" alt="{{i.product_placeholder_name}}"
@@ -58,27 +59,6 @@
                 <h1 class="make-sandwich-instructions">Next, the filling</h1>
             </div>
         </div>
-
-        {% for i in sandwich_items %}
-        {% if i.category_id == 2 %}
-        <div class="col  align-center product-col">
-            <div class="card ">
-                <img class="card-img-top" src="{{i.product_image_url}}" alt="{{i.product_placeholder_name}}"
-                    id="placeholder-image">
-                <div class="card-body ">
-                    <h5 class="card-title">{{i.product_name}}</h5>
-                    <p class="card-text ">
-                    </p>
-                    <a href="#" class="btn btn-priindex">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        {% endif %}
-        {% endfor %}
-
-
-
-
     </div>
 </div>
 
