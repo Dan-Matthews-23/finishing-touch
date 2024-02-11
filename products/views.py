@@ -14,7 +14,7 @@ def list_all_sandwich_items(request):
 
 
 def list_sandwich_creator_items(request):   
-    sandwich_items = Products.objects.filter(category_id=2) # Remove the filter once you get this working
+    sandwich_items = Products.objects.all() # Remove the filter once you get this working
     context = {
         'sandwich_items' : sandwich_items,
     }
