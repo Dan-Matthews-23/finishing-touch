@@ -18,7 +18,8 @@
                     <a class="with-borders nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="with-borders nav-item">
-                    <a class="with-borders nav-link" href="#">About Us</a>
+                    <a class="with-borders nav-link" href="{% url 'sandwich_creator' %}">CREATE OWN</a>
+                    <a class="with-borders nav-link" href="{% url 'sandwich_items' %}">BROWSE EXIST</a>
                 </li>
                 <li class="with-borders nav-item dropdown">
                     <a class="with-borders nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
@@ -26,7 +27,9 @@
                         Shop
                     </a>
                     <ul class="with-borders dropdown-menu">
-                        <li><a class="with-borders dropdown-item" href="#">All Products</a></li>
+                        <li><a class="with-borders dropdown-item" href="{% url 'sandwich_creator' %}">BROWSE EXIST</a>
+                        </li>
+                        <li><a class="with-borders dropdown-item" href="{% url 'sandwich_items' %}">CREATE OWN</a></li>
                         <li>
                             <hr class="with-borders dropdown-divider">
                         </li>

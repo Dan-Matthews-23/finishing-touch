@@ -312,8 +312,6 @@ At this stage, the footer holds external links so that the user can find the pro
 
 
 
-
-
 ### Implementing a Skeleton layout
 
 Next will be to setup all other pages of this project using a skeleton layout with placeholder text. These are only designs and accept they may change in the final version. 
@@ -327,22 +325,20 @@ Homepage Design: ![Homepage Design](/media/images/concept/concept-index.png)
 
 #### Register and Login
 
-The Register / Login page will be in two sections. For ease, I will be importing code from my first project as a placeholder, although I may choose to replicate the form completely. There is no code attached to the submit buttons below, only placeholder text, although data validation and formatting are present only because I imported code that I'd already written for Project One.
 
-Homepage Design: ![Homepage Design](/local_legends/static/images/design-stages/stage-three-design-b.png)
+
+Homepage Design: ![Homepage Design]()
 
 #### Profile
 
-The Profile page will allow the users to carry out Update and Delete functions from the CRUD design. At this stage, none of the code behind the buttons or data validation work, and I would later like to add a small table for stats on how many stars and reviews the user has left. I've left this out of Stage Three design as this is something I will add only if I get time.
 
-Homepage Design: ![Homepage Design](/local_legends/static/images/design-stages/stage-three-design-d.png)
+
+Homepage Design: ![Homepage Design]()
 
 #### Restaurants
 
-I have replicated index.html for restaurants.html at Stage Three, simply because Restaurants will be an extension of index.html. I intend on displaying all restaurants on this page, and only a random selection of four on index.
 
-Homepage Design: ![Homepage Design](/local_legends/static/images/design-stages/stage-three-design-c.png)
-
+Homepage Design: ![Homepage Design]()
 
 
 
@@ -358,49 +354,13 @@ Homepage Design: ![Homepage Design](/local_legends/static/images/design-stages/s
 
 
 
-### Stage Four - Creating the database structure
 
-#### PostgreSQL
 
-I will be using PostgreSQL to create the structure and of the database and tables. My database structure, tables, columns and keys have all been approved by my mentor. I will be using command line interface to perform these tasks.
 
-I created the database which was successful on the second attempt (see testing).
 
-Creating DB using PostgreSQL Design: ![Create DB](/local_legends/static/images/design-stages/stage-four-design-b.png)
 
-Then using the [PostgreSQL documentation](https://www.postgresql.org/docs/current/tutorial-table.html) to ensure I my SQL statement was correct, I created the users table
 
-![Create users table](/local_legends/static/images/design-stages/stage-four-design-c.png)
 
-I did try to enter the database to make sure the table was created successfully; however, nothing has shown. I will attempt to inset data into the table and then try to pull the data, which will show if it has worked or not. After several attempts this worked
-
-![Pulling row from users table](/local_legends/static/images/design-stages/stage-four-design-d.png)
-
-I used the same method to create the restaurants table.
-
-![Create restaurants table](/local_legends/static/images/design-stages/stage-four-design-f.png)
-
-You may have noticed some errors with the queries I've used so far. It was at this point I realised that I'd set all of my tables up incorrectly. I decided to drop my database and start again using carefully formulated SQL queries and the PostgreSQL documentation. These were my final queries, where I created the tables, inserted a test row then pulled the data from it to make sure everything (in particular the auto-increment for primary keys) were working fine:
-
-![Create restaurants table](/local_legends/static/images/design-stages/stage-four-design-g.png)
-
-![Create users table](/local_legends/static/images/design-stages/stage-four-design-h.png)
-
-![Create reviews table](/local_legends/static/images/design-stages/stage-four-design-i.png)
-
-That completes Stage Four
-
-EDIT: I have made the mistake here of waiting until Stage Five before learning how to use SQL Alchemy. Had I learned this before Stage Four, I'd have known that creating the schema using SQL (PSQL command line) was a mistake. I should have used an SQL Alchemy model. I have therefore dropped the previous tables and started again using a models.py file, then initialised the schema through the command line as shown below.
-
-![Models DB import](/local_legends/static/images/design-stages/stage-four-design-j.png)
-
-Then I checked to make sure the tables were set up correctly.
-
-![Checking tables set up](/local_legends/static/images/design-stages/stage-four-design-k.png)
-
-I have done this using the models.py script, although this code was based on the examples given in Lesson 18: Creating the database on the Code Institute walkthrough tutorial. It wasn't possible to completely write my own code here as the syntax for this particular function is more or less identical across the spectrum.
-
-![Modals.py](/local_legends/static/images/design-stages/stage-four-design-l.png)
 
 ### Stage Five: Create and Read (CRUD)
 
@@ -425,6 +385,16 @@ The restaurants page is now complete, and I can see a list of everything in the 
 ![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-five-design-j.png)
 
 The Creating and Reading of CRUD is now complete.
+
+
+
+
+
+
+
+
+
+
 
 ### Stage Six - Update (CRUD)
 

@@ -51,13 +51,13 @@
 <div class="container-fluid xxlg-padding-bottom align-center with-borders" id="products-container">
     <div class="row product-row align-center md-padding ">
         <div class="col align-center">
-            <h1 class="make-sandwitch-instructions">First, choose your bread</h1>
+            <h1 class="make-sandwich-instructions">First, choose your bread PRODUCTS PAGE</h1>
         </div>
     </div>
     <div class="row product-row align-center ">
 
 
-        {% for i in sandwitch_items %}
+        {% for i in sandwich_items %}
         {% if i.category_id == 1 %}
         <div class="col  align-center product-col">
             <div class="card ">
@@ -76,11 +76,11 @@
 
         <div class="row product-row align-center md-padding ">
             <div class="col align-center">
-                <h1 class="make-sandwitch-instructions">Next, the filling</h1>
+                <h1 class="make-sandwich-instructions">Next, the filling</h1>
             </div>
         </div>
 
-        {% for i in sandwitch_items %}
+        {% for i in sandwich_items %}
         {% if i.category_id == 2 %}
         <div class="col  align-center product-col">
             <div class="card ">
