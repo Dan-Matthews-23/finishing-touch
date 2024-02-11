@@ -23,14 +23,34 @@ body {
 
 #nav-bar-container {
     background-color: black;
-    border-color: white;
-    border-style: solid;
+
 
 }
 
-.nav-icons {
+.nav-icons li {
+    display: inline-block;
+    padding-left: 35px;
+    padding-right: 35px;
     color: white;
+}
 
+.nav-icons i {
+    font-size: 250%;
+    color: white;
+}
+
+#nav-icon-div {
+    margin: auto;
+    text-align: right;
+    padding-top: 15px;
+    padding-right: 10px;
+
+}
+
+.nav-small-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
 }
 
 /* Index Page */

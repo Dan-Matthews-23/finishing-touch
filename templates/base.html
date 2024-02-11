@@ -28,32 +28,26 @@
 
 <body>
     <header>
-        <div class=" container-fluid md-padding-top md-padding-bottom  with-borders" id="nav-bar-container">
+        <div class=" container-fluid " id="nav-bar-container">
             <div class=" row ">
-                <div class=" col ">
+                <div class="  col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 g-0 ">
                     {% include 'includes/nav-bar.html' %}
                 </div>
-                <!--<div class=" col ">
-                    <form class=" d-flex" role="search">
-                        <input class=" form-control me-2" type="search" placeholder="Search"
-                            aria-label="Search">
-                        <button class=" btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>-->
-                <div class=" col align-right with-borders ">
-                    <span class=" title-icon ">
-                        {% if not logged_in %}
-                        <i class="fa-solid fa-user fa-2xl nav-icons"></i>
-                        <a href="" action="" class="nav-icons">Login</a>
-                        {% else %}
-                        <i class=" fa-solid fa-user fa-2xl nav-icons"></i>
-                        <a href="" action="" class="nav-icons">Daniel</a>
-                        {% endif %}
-                    </span>
 
-                    <span class=" title-icon "><i class=" fa-solid fa-cart-shopping fa-2xl nav-icons"></i></span>
-
-                    <span class=" nav-icons  bold-text">£0.00</span>
+                <div class="  col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 g-0 " id="nav-icon-div">
+                    <ul class="nav-icons ">
+                        <li>
+                            <a href="https://facebook.com" aria-label="Contact Us On Facebook" target="_blank">
+                                <i class="fa-solid fa-user fa-2xl "></i>
+                            </a>Login
+                        </li>
+                        <li>
+                            <a href="https://github.com/Dan-Matthews-23" aria-label="Check out our Git Hub"
+                                target="_blank">
+                                <i class=" fa-solid fa-cart-shopping fa-2xl"></i>
+                            </a>£0.00
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
