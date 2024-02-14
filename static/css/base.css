@@ -72,7 +72,7 @@ body {
 
 .product-col {
     padding: 20px;
- 
+
 }
 
 .product-image {
@@ -127,37 +127,28 @@ body {
 
 
 
-/* The Modal (background) */
-.modal {
+/* This modal was adapted from W3 Schools */
+.select-sandwich {
     display: none;
-    /* Hidden by default */
     position: fixed;
-    /* Stay in place */
     z-index: 1;
-    /* Sit on top */
     left: 0;
     top: 0;
     width: 100%;
-    /* Full width */
     height: 100%;
-    /* Full height */
     overflow: auto;
-    /* Enable scroll if needed */
     background-color: rgb(0, 0, 0);
-    /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
 }
 
-/* Modal Content/Box */
-.modal-content {
+.select-sandwich-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
-    /* Could be more or less, depending on screen size */
+    width: 30%;
+    height: 450px;
+    border-radius: 10% 10% 10% 10%;
 }
 
 /* The Close Button */
@@ -175,7 +166,32 @@ body {
     cursor: pointer;
 }
 
+#select-product-div {
+    width: 100%;
+    padding: 20px;
+}
 
+#quantity-container {
+    width: 50%;
+    padding: 20px;
+}
+
+.modal-row-padding {
+    padding: 20px;
+}
+
+.modal-quantity-col {
+    width: 20px;
+}
+
+#quantity-field {
+    width: 1000px;
+}
+
+#quantity {
+    font-size: 26px;
+    font-weight: bold;
+}
 
 
 
@@ -306,6 +322,14 @@ body {
 
 .align-right {
     text-align: right;
+}
+
+.align-center-vertical {
+    text-align: center;
+}
+
+.align-center-horizontal {
+    margin: auto;
 }
 
 

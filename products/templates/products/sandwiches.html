@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-
+<!--REMEMER TO ADD csrf_token to form -->
 <section class="index-banner">
     <div class="container-fluid g-0">
         <div class="row g-0">
@@ -15,11 +15,11 @@
                 <div class="row row-index-right g-0">
                     <div class="col-index-background-right g-0">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0 align-center ">
-                            <h1 class="index-header">Hungry?</h2>
-                                <h2 class="index-header">We've got you covered</h3>
-                                    <p class="index-header lg-padding-not-left">
-                                        <button type="button" class="btn btn-light">Shop Now</button>
-                                    </p>
+                            <h2 class="index-header">Hungry?</h2>
+                            <h3 class="index-header">We've got you covered</h3>
+                            <p class="index-header lg-padding-not-left">
+                                <button type="button" class="btn btn-light">Shop Now</button>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -28,68 +28,94 @@
     </div>
 </section>
 
-<div class="container-fluid xxlg-padding-bottom align-center with-borders" id="products-container">
+<div class="container-fluid xxlg-padding-bottom align-center " id="products-container">
     <div class="row product-row align-center md-padding ">
         <div class="col align-center">
             <h1 class="make-sandwich-instructions">Here's our selection</h1>
         </div>
     </div>
-    <div class="row product-row align-center with-borders ">
+    <div class="row product-row align-center  ">
 
         {% for i in sandwich_items %}
         {% if i.category_id == 9 %}
 
-        <div class="col  align-center product-col with-borders ">
-            <div class="card with-borders">
+        <div class="col  align-center product-col  ">
+            <div class="card ">
                 <img class="card-img-top product-image" src="{{i.product_image_url}}"
                     alt="{{i.product_placeholder_name}}">
-                <div class="card-body with-borders ">
+                <div class="card-body  ">
                     <h5 class="card-title">{{i.product_name}}</h5>
-                    <p class="card-text md-padding-top md-padding-bottom with-borders ">
+                    <p class="card-text md-padding-top md-padding-bottom  ">
                         {{i.product_short_description}}
                     </p>
 
-                    <p class="card-text-source md-padding-top md-padding-bottom with-borders protein ">
+                    <p class="card-text-source md-padding-top md-padding-bottom  protein ">
                         {% if i.protein_source %}Source of protein{% endif %}
                     </p>
 
 
-                    <p class="card-text-source md-padding-top md-padding-bottom with-borders fibre ">
+                    <p class="card-text-source md-padding-top md-padding-bottom  fibre ">
                         {% if i.fibre_source %}Source of fibre{% endif %}
                     </p>
                 </div>
-                <div class="col with-borders">
-                    <p class="with-borders align-center">
-                        <!-- Trigger/Open The Modal -->
-                        <button id="myBtn">Open Modal</button>
-
-                        <!-- The Modal -->
-                    <div id="myModal" class="modal">
-
-                        <!-- Modal content -->
-                        <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <p>Some text in the Modal..</p>
-                        </div>
-
-                    </div>
+                <div class="col ">
+                    <p class=" align-center">
+                        <button id="select-product-btn">Open Modal</button>
                     </p>
+                    <div id="select-product-modal" class="select-sandwich">
+                        <div class="select-sandwich-modal-content">
+                            <span class="close">&times;</span>
+
+                            <div class="container " id="select-product-div">
+                                <div class="card">
+                                    <div class="row modal-row-padding  ">
+                                        <div class="col ">{{i.product_name}}</div>
+                                    </div>
+                                    <div class="row  modal-row-padding ">
+                                        <div class="col ">£{{i.product_price}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container " id="select-product-div">
+                                <div class="card">
+                                    <div class="row modal-row-padding  ">
+                                        
+                                        <div class="col with-borders align-center-vertical align-center-horizontal">
+                                            <button class="btn" id="decrease-quantity"><i class="fa-solid fa-square-minus fa-2xl"
+                                                    style="color: #74C0FC;"></i></button>
+                                        </div>
+                                        
+                                        <div class="col with-borders align-center-vertical align-center-horizontal" id="quantity">
+                                            0
+                                        </div>
+                                        
+                                        <div class="col with-borders align-center-vertical align-center-horizontal">
+                                            <button class="btn" id="increase-quantity"><i class="fa-solid fa-square-plus fa-2xl"
+                                                    style="color: #74C0FC;"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container ">
+                                <div class="card">
+                                    <div class="row modal-row-padding  ">                            
+                                        <div class="col with-borders align-center-vertical align-center-horizontal">
+                                            <form method="POST" action="{% url 'home' %}">
+                                                {% csrf_token %}
+                                            <button class="btn" id="add-to-basket">Add to basket</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-
-
-
-
-
-                <!--REMEMER TO ADD csrf_token to form -->
-
             </div>
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
-    {% endif %}
-    {% endfor %}
 </div>
-</div>
-
-
 {% endblock %}
