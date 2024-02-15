@@ -25,7 +25,9 @@ window.onclick = function (event) {
 }
 
 let quantity = 0;
+
 const quantityCount = document.getElementById("quantity");
+quantityCount.innerHTML = quantity;
 
 const increaseQuantityBtn = document.getElementById("increase-quantity");
 const decreaseQuantityBtn = document.getElementById("decrease-quantity");
@@ -39,13 +41,11 @@ addEventListener("click", function (event) {
 });
 
 function increaseQuantity() {
-    quantity += 1;
-    console.log("Increased! Quantity is ", quantity, "currently");
+    quantity += 1;   
     quantityCount.innerHTML = quantity;
 }
 
 function decreaseQuantity() {
-    quantity -= 1;
-    console.log("Increased! Quantity is ", quantity, "currently");
+    quantity = Math.max(quantity - 1, 0);    
     quantityCount.innerHTML = quantity;
 }
