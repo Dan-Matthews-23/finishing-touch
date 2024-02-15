@@ -198,20 +198,11 @@ body {
     font-weight: bold;
 }
 
-
-#increase-quantity-icon,
-increase-quantity-icon {
-    height: 100%;
-    width: 100%;
+#decrease-quantity,
+#increase-quantity {
+    font-size: 36px;
+    color: #74C0FC;
 }
-
-
-
-
-
-
-
-
 
 
 

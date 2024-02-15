@@ -29,13 +29,16 @@ let quantity = 0;
 const quantityCount = document.getElementById("quantity");
 quantityCount.innerHTML = quantity;
 
+const increaseIcon = document.querySelector("increase-quantity-icon");
+const decreaseIcon = document.querySelector("decrease-quantity-icon");
+
 const increaseQuantityBtn = document.getElementById("increase-quantity");
 const decreaseQuantityBtn = document.getElementById("decrease-quantity");
 
 addEventListener("click", function (event) {
-    if (event.target === increaseQuantityBtn) {         
+    if (event.target === increaseQuantityBtn || event.target === increaseIcon) {         
         increaseQuantity();        
-    } else if (event.target === decreaseQuantityBtn) {
+    } else if (event.target === decreaseQuantityBtn || event.target === decreaseIcon) {
         decreaseQuantity();        
     }
 });
@@ -49,3 +52,5 @@ function decreaseQuantity() {
     quantity = Math.max(quantity - 1, 0);    
     quantityCount.innerHTML = quantity;
 }
+
+
