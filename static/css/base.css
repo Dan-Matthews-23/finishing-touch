@@ -204,7 +204,12 @@ body {
     color: #74C0FC;
 }
 
-
+.modal-text-styling {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin: auto;
+}
 
 
 

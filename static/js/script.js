@@ -24,33 +24,56 @@ window.onclick = function (event) {
     }
 }
 
-let quantity = 0;
+let quantity = 1;
+let currentPrice = 0;
+
+const databasePrice = document.getElementById("product-price-hidden").value;
+const displayPrice = document.getElementById("product-price");
+
+const price = parseFloat(databasePrice).toFixed(2);
 
 const quantityCount = document.getElementById("quantity");
-quantityCount.innerHTML = quantity;
 
-const increaseIcon = document.querySelector("increase-quantity-icon");
-const decreaseIcon = document.querySelector("decrease-quantity-icon");
+quantityCount.innerHTML = quantity;
+displayPrice.innerHTML = `£${price}`;
+
 
 const increaseQuantityBtn = document.getElementById("increase-quantity");
 const decreaseQuantityBtn = document.getElementById("decrease-quantity");
 
 addEventListener("click", function (event) {
-    if (event.target === increaseQuantityBtn || event.target === increaseIcon) {         
-        increaseQuantity();        
-    } else if (event.target === decreaseQuantityBtn || event.target === decreaseIcon) {
-        decreaseQuantity();        
+    if (event.target === increaseQuantityBtn) {
+        increaseQuantity();
+    } else if (event.target === decreaseQuantityBtn) {
+        decreaseQuantity();
     }
 });
 
 function increaseQuantity() {
-    quantity += 1;   
+    quantity += 1;
+    currentPrice = (quantity * price).toFixed(2);
+    console.log(`
+    The value of the hidden field called databasePrice is ${databasePrice}, and its type is ${typeof databasePrice}.
+    The value of quantity is ${quantity} and its type is ${typeof quantity}. 
+    The value of price is ${price} and its type is ${typeof price}. 
+    The value of final price is ${currentPrice} currently, and the type is ${typeof currentPrice}
+    `);
     quantityCount.innerHTML = quantity;
+    displayPrice.innerHTML = `£${currentPrice}`;
 }
 
 function decreaseQuantity() {
-    quantity = Math.max(quantity - 1, 0);    
+    quantity = Math.max(quantity - 1, 0);
+    currentPrice = (quantity * price).toFixed(2);
+    console.log(`
+    The value of the hidden field called databasePrice is ${databasePrice}, and its type is ${typeof databasePrice}.
+    The value of quantity is ${quantity} and its type is ${typeof quantity}. 
+    The value of price is ${price} and its type is ${typeof price}. 
+    The value of final price is ${currentPrice} currently, and the type is ${typeof currentPrice}
+    `);
+
     quantityCount.innerHTML = quantity;
+    displayPrice.innerHTML = `£${currentPrice}`;
 }
 
 

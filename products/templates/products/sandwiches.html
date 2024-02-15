@@ -65,44 +65,37 @@
                     <div id="select-product-modal" class="select-sandwich">
                         <div class="select-sandwich-modal-content">
                             <span class="close">&times;</span>
-
                             <div class="container " id="select-product-div">
                                 <div class="card">
                                     <div class="row modal-row-padding  ">
-                                        <div class="col ">{{i.product_name}}</div>
+                                        <div class="col modal-text-styling">{{i.product_name}}</div>
                                     </div>
                                     <div class="row  modal-row-padding ">
-                                        <div class="col ">£{{i.product_price}}</div>
+                                        <input type="hidden" id="product-price-hidden" value="{{i.product_price}}">
+                                        <div class="col modal-text-styling" id="product-price"></div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="container " id="select-product-div">
+                            <div class="container" id="select-product-div">
                                 <div class="card">
-                                    <div class="row modal-row-padding  ">
-
-                                        <div class="col with-borders align-center-vertical align-center-horizontal">
+                                    <div class="row modal-row-padding">
+                                        <div class="col align-center-vertical align-center-horizontal">
                                             <button type="button" class="btn fa-solid fa-square-minus fa-2xl"
                                                 id="decrease-quantity"></button>
                                         </div>
-
-                                        <div class="col with-borders align-center-vertical align-center-horizontal"
-                                            id="quantity">
+                                        <div class="col  align-center-vertical align-center-horizontal" id="quantity">
                                         </div>
-
-                                        <div class="col with-borders align-center-vertical align-center-horizontal">
+                                        <div class="col  align-center-vertical align-center-horizontal">
                                             <button type="button" class="btn fa-solid fa-square-plus fa-2xl"
                                                 id="increase-quantity"></button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="container ">
                                 <div class="card">
                                     <div class="row modal-row-padding  ">
-                                        <div class="col with-borders align-center-vertical align-center-horizontal">
+                                        <div class="col  align-center-vertical align-center-horizontal">
                                             <form method="POST" action="{% url 'home' %}">
                                                 {% csrf_token %}
                                                 <button class="btn" id="add-to-basket">Add to basket</button>
