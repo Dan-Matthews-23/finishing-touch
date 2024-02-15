@@ -211,7 +211,10 @@ body {
     margin: auto;
 }
 
-
+#open-modal-btn-div {
+    width: 100%;
+    text-align: center;
+}
 
 /*
 #banner-left-div { 

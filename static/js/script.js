@@ -51,27 +51,14 @@ addEventListener("click", function (event) {
 
 function increaseQuantity() {
     quantity += 1;
-    currentPrice = (quantity * price).toFixed(2);
-    console.log(`
-    The value of the hidden field called databasePrice is ${databasePrice}, and its type is ${typeof databasePrice}.
-    The value of quantity is ${quantity} and its type is ${typeof quantity}. 
-    The value of price is ${price} and its type is ${typeof price}. 
-    The value of final price is ${currentPrice} currently, and the type is ${typeof currentPrice}
-    `);
+    currentPrice = (quantity * price).toFixed(2);    
     quantityCount.innerHTML = quantity;
     displayPrice.innerHTML = `£${currentPrice}`;
 }
 
 function decreaseQuantity() {
-    quantity = Math.max(quantity - 1, 0);
+    quantity = Math.max(quantity - 1, 1);
     currentPrice = (quantity * price).toFixed(2);
-    console.log(`
-    The value of the hidden field called databasePrice is ${databasePrice}, and its type is ${typeof databasePrice}.
-    The value of quantity is ${quantity} and its type is ${typeof quantity}. 
-    The value of price is ${price} and its type is ${typeof price}. 
-    The value of final price is ${currentPrice} currently, and the type is ${typeof currentPrice}
-    `);
-
     quantityCount.innerHTML = quantity;
     displayPrice.innerHTML = `£${currentPrice}`;
 }
