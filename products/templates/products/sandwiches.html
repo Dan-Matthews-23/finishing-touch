@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<!--REMEMER TO ADD csrf_token to form -->
+
 <section class="index-banner">
     <div class="container-fluid g-0">
         <div class="row g-0">
@@ -76,34 +76,43 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="container " id="select-product-div">
                                 <div class="card">
                                     <div class="row modal-row-padding  ">
-                                        
+
                                         <div class="col with-borders align-center-vertical align-center-horizontal">
-                                            <button class="btn" id="decrease-quantity"><i class="fa-solid fa-square-minus fa-2xl"
-                                                    style="color: #74C0FC;"></i></button>
+                                            <a class="btn" id="decrease-quantity">
+                                                <i
+                                                    id="decrease-quantity-icon" class="fa-solid fa-square-minus fa-2xl"
+                                                    style="color: #74C0FC;"></i>
+                                            </a>                                            
                                         </div>
-                                        
-                                        <div class="col with-borders align-center-vertical align-center-horizontal" id="quantity">
-                                            0
+
+                                        <div class="col with-borders align-center-vertical align-center-horizontal"
+                                            id="quantity">
                                         </div>
-                                        
+
                                         <div class="col with-borders align-center-vertical align-center-horizontal">
-                                            <button class="btn" id="increase-quantity"><i class="fa-solid fa-square-plus fa-2xl"
-                                                    style="color: #74C0FC;"></i></button>
+                                            <a class="btn" id="increase-quantity">
+                                                <i
+                                                    id="increase-quantity-icon" class="fa-solid fa-square-plus fa-2xl"
+                                                    style="color: #74C0FC;">
+                                                </i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+
                             <div class="container ">
                                 <div class="card">
-                                    <div class="row modal-row-padding  ">                            
+                                    <div class="row modal-row-padding  ">
                                         <div class="col with-borders align-center-vertical align-center-horizontal">
                                             <form method="POST" action="{% url 'home' %}">
                                                 {% csrf_token %}
-                                            <button class="btn" id="add-to-basket">Add to basket</button>
+                                                <button class="btn" id="add-to-basket">Add to basket</button>
                                             </form>
                                         </div>
                                     </div>

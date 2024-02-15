@@ -151,6 +151,11 @@ body {
     border-radius: 10% 10% 10% 10%;
 }
 
+
+
+
+
+
 /* The Close Button */
 .close {
     color: #aaa;
@@ -194,6 +199,11 @@ body {
 }
 
 
+#increase-quantity-icon,
+increase-quantity-icon {
+    height: 100%;
+    width: 100%;
+}
 
 
 

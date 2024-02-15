@@ -23,3 +23,29 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
+
+let quantity = 0;
+const quantityCount = document.getElementById("quantity");
+
+const increaseQuantityBtn = document.getElementById("increase-quantity");
+const decreaseQuantityBtn = document.getElementById("decrease-quantity");
+
+addEventListener("click", function (event) {
+    if (event.target === increaseQuantityBtn) {         
+        increaseQuantity();        
+    } else if (event.target === decreaseQuantityBtn) {
+        decreaseQuantity();        
+    }
+});
+
+function increaseQuantity() {
+    quantity += 1;
+    console.log("Increased! Quantity is ", quantity, "currently");
+    quantityCount.innerHTML = quantity;
+}
+
+function decreaseQuantity() {
+    quantity -= 1;
+    console.log("Increased! Quantity is ", quantity, "currently");
+    quantityCount.innerHTML = quantity;
+}
