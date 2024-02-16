@@ -50,7 +50,7 @@ const displayOrderProductPrice = document.getElementById("display-order-product-
 const createOrderBtn = document.getElementById("add-to-basket");
 const existingOrder = JSON.parse(localStorage.getItem("existingOrder")) || [];
 
-const productID = document.getElementById("product_id").value;
+const productID = document.getElementById("product-id").value;
 const productName = document.getElementById("product-name").value;
 
 const databasePrice = document.getElementById("product-price-hidden").value;
