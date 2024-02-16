@@ -5,6 +5,7 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
     letter-spacing: 2px;
+    background-color: #F7F9F9;
 }
 
 /* Nav Page */
@@ -72,6 +73,12 @@ body {
 
 .product-col {
     padding: 20px;
+
+}
+
+.product-container {
+    width: 25%;
+    border-radius: 10% 10% 10% 10%;
 
 }
 
@@ -148,9 +155,29 @@ body {
     border: 1px solid #888;
     width: 30%;
     height: 450px;
+    width: 50%;
     border-radius: 10% 10% 10% 10%;
 }
 
+#menu-navigation {
+    width: 15%;
+    position: absolute;
+    left: 200px;
+    padding-top: 25px;
+
+}
+
+#order-details {
+    width: 15%;
+    position: absolute;
+    right: 200px;
+    padding-top: 25px;
+}
+
+.menu-nav-links {
+    font-size: 14px;
+    font-weight: bold;
+}
 
 
 
@@ -174,6 +201,12 @@ body {
 #select-product-div {
     width: 100%;
     padding: 20px;
+}
+
+#quantity-row {
+    width: 50%;
+    text-align: center;
+    margin: auto;
 }
 
 #quantity-container {
@@ -283,6 +316,9 @@ body {
     height: 2000px;
 }
 
+.card-row {
+    padding: 10px;
+}
 
 
 
@@ -312,10 +348,7 @@ body {
     border-width: 3px;
 }
 
-.card {
-    width: 18rem;
-    margin: auto;
-}
+
 
 /*
 .align-center-flex {
@@ -341,6 +374,9 @@ body {
     margin: auto;
 }
 
+.bold {
+    font-weight: bold;
+}
 
 
 h1 {
@@ -399,7 +435,7 @@ h3 {
     border-top: 1px solid black;
     position: fixed;
     width: 100%;
-    bottom: 0;
+
 }
 
 .footer-links li {

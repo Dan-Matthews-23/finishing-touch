@@ -27,6 +27,19 @@ window.onclick = function (event) {
 let quantity = 1;
 let currentPrice = 0;
 
+
+
+const displayOrderProductName = document.getElementById("display-order-product-name");
+const displayOrderProductQuantity = document.getElementById("display-order-product-quantity");
+const displayOrderProductPrice = document.getElementById("display-order-product-price");
+
+
+const createOrderBtn = document.getElementById("add-to-basket");
+const existingOrder = JSON.parse(localStorage.getItem("existingOrder")) || [];
+
+const productID = document.getElementById("product-id").value;
+const productName = document.getElementById("product-name").value;
+
 const databasePrice = document.getElementById("product-price-hidden").value;
 const displayPrice = document.getElementById("product-price");
 
@@ -49,9 +62,16 @@ addEventListener("click", function (event) {
     }
 });
 
+addEventListener("click", function (event) {
+    if (event.target === createOrderBtn) {
+        populateOrder();
+        modal.style.display = "none";
+    }
+});
+
 function increaseQuantity() {
     quantity += 1;
-    currentPrice = (quantity * price).toFixed(2);    
+    currentPrice = (quantity * price).toFixed(2);
     quantityCount.innerHTML = quantity;
     displayPrice.innerHTML = `£${currentPrice}`;
 }
@@ -62,5 +82,32 @@ function decreaseQuantity() {
     quantityCount.innerHTML = quantity;
     displayPrice.innerHTML = `£${currentPrice}`;
 }
+
+
+
+function populateOrder() {
+    const orderList = {
+        orderProductID: productID,
+        orderProductName: productName,
+        orderQuantity: quantity,
+        orderPrice: currentPrice,
+    };
+    existingOrder.push(orderList);
+    localStorage.setItem("existingOrder", JSON.stringify(existingOrder));
+    console.log(existingOrder)
+
+
+
+
+
+    displayOrderProductName.innerHTML = `${productName}`;
+    displayOrderProductQuantity.innerHTML = quantity;
+    displayOrderProductPrice.innerHTML = `£${currentPrice}`;
+
+}
+
+
+
+
 
 
