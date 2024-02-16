@@ -4,7 +4,8 @@ def basket(request):
     return render(request, 'basket/basket.html')
 
 
-def add_items_to_basket(request, product-id):  
+#def add_items_to_basket(request, product-id):
+def add_items_to_basket(request, product_id):    
 
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
