@@ -135,7 +135,7 @@
                         <div class="col with-borders align-center">
                             <span class="close">&times;</span>
                             <div class="row card-row ">
-                                <input type="hidden" id="product-id" value="{{i.product_id}}">
+                                <input type="hidden" id="product_id" value="{{i.product_id}}">
                                 <input type="hidden" id="product-name" value="{{i.product_name}}">
                                 <div class="col modal-text-styling">{{i.product_name}}</div>
                             </div>
@@ -159,6 +159,7 @@
                                 <div class="col  align-center-vertical align-center-horizontal">
                                     {% csrf_token %}
                                     <button class="btn" id="add-to-basket">Add to basket</button>
+                                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
                                 </div>
                             </div>
                         </div>
