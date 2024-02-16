@@ -147,6 +147,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.feishu',
     'home',
     'products',
+    'basket',
 ]
 
 MIDDLEWARE = [
