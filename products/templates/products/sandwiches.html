@@ -49,7 +49,7 @@
                 <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#extras">Extras</a></h3>
             </div>
         </div>
-        
+
     </div>
 </section>
 <!--End of secondary navigation section-->
@@ -59,16 +59,34 @@
     <div class="container-fluid align-center card product-container" id="order-details">
         <div class="row with-borders">
             <div class="col with-borders">
-                <h3 class=" modal-text-styling">Order Details</h3>
+
+                <div class="row with-borders">
+                    <div class="col with-borders">
+                        <h3 class=" modal-text-styling">Order Details</h3>
+                    </div>
+                </div>
+                <input type="hidden" id="order-product-ID" value="">
+                <div class="row ">
+                    <div class="col " id="display-order-product-name"></div>
+                </div>
+                <div class="row ">
+                    <div class="col " id="display-order-product-quantity"></div>
+                </div>
+                <div class="row">
+                    <div class="col bold " id="display-order-product-price"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <form method="POST" action="{ url 'home'}">
+                            <button type="button" class="btn" id="checkout">Checkout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col with-borders col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xm-2 col-xxl-2" id="remove-item-div">
+                <button type="button" class="btn fa-solid fa-trash fa-xl" id="remove-item-btn"></button>
             </div>
         </div>
-        <div class="row ">
-            <div class="col " id="display-order-product-name"></div>
-            <div class="col " id="display-order-product-quantity"></div>
-            <div class="col " id="display-order-product-price"></div>
-        </div>
-
-
     </div>
 </section>
 <!--End of order summary section-->

@@ -160,17 +160,17 @@ body {
 }
 
 #menu-navigation {
-    width: 15%;
+    width: 25%;
     position: absolute;
-    left: 200px;
+    left: 75px;
     padding-top: 25px;
 
 }
 
 #order-details {
-    width: 15%;
+    width: 25%;
     position: absolute;
-    right: 200px;
+    right: 75px;
     padding-top: 25px;
 }
 
@@ -179,8 +179,21 @@ body {
     font-weight: bold;
 }
 
+#display-order-product-price {
+    border-bottom: black;
+    border-bottom-style: solid;
+}
 
+#remove-item {
+    color: red;
+    
+}
 
+#remove-item-div {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin: auto;    
+}
 
 
 /* The Close Button */
@@ -452,4 +465,44 @@ h3 {
 
 .header-links {
     color: var(--brown-darken-1);
+}
+
+
+
+
+
+@media screen and (max-width: 1100px) {
+    #menu-navigation {
+        width: 25%;
+        left: 50px;
+    }
+
+    #order-details {
+        width: 25%;
+        right: 50px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #menu-navigation {
+        width: 25%;
+        left: 25px;
+    }
+
+    #order-details {
+        width: 25%;
+        right: 25px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    #menu-navigation {
+        width: 25%;
+        left: 15px;
+    }
+
+    #order-details {
+        width: 25%;
+        right: 15px;
+    }
 }

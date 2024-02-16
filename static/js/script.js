@@ -24,11 +24,24 @@ window.onclick = function (event) {
     }
 }
 
+
+
+const removeItemBtn = document.getElementById("remove-item-btn");
+addEventListener("click", function (event) {
+    if (event.target === removeItemBtn) {
+        removeItem();
+    }
+});
+
+
+
+
 let quantity = 1;
 let currentPrice = 0;
 
 
 
+const displayOrderProductID = document.getElementById("order-product-ID");
 const displayOrderProductName = document.getElementById("display-order-product-name");
 const displayOrderProductQuantity = document.getElementById("display-order-product-quantity");
 const displayOrderProductPrice = document.getElementById("display-order-product-price");
@@ -96,18 +109,15 @@ function populateOrder() {
     localStorage.setItem("existingOrder", JSON.stringify(existingOrder));
     console.log(existingOrder)
 
-
-
-
-
     displayOrderProductName.innerHTML = `${productName}`;
-    displayOrderProductQuantity.innerHTML = quantity;
+    displayOrderProductQuantity.innerHTML = `X ${quantity}`;
     displayOrderProductPrice.innerHTML = `£${currentPrice}`;
+    displayOrderProductID.innerHTML = `${productID}`;
 
 }
 
 
 
-
+//existingOrder.length = 0; // Reset the array
 
 
