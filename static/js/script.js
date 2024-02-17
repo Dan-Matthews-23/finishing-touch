@@ -26,16 +26,16 @@ window.onclick = function (event) {
 
 
 
-const removeItemBtn = document.getElementById("remove-item-btn");
-addEventListener("click", function (event) {
-    if (event.target === removeItemBtn) {
-        removeItem();
-    }
-});
+//const removeItemBtn = document.getElementById("remove-item-btn");
+//addEventListener("click", function (event) {
+//    if (event.target === removeItemBtn) {
+//        removeItem();
+//    }
+//});
 
 
 
-// DO ALL OF THESE VARIABLES AGAIN - THEY'RE A MESS!!
+
 
 
 // Assigning variables to buttons
@@ -50,11 +50,19 @@ const hidden_product_quantity = document.getElementById("hidden_product_quantity
 const hidden_product_price = document.getElementById("hidden_product_price");
 
 // Actual DIV IDs for use in innerHTML section and order details
-const showProductID = document.getElementById("order-product-ID");
-const showProductName = document.getElementById("display-order-product-name");
-const showProductQuantity = document.getElementById("display-order-product-quantity");
-const showProductPrice = document.getElementById("display-order-product-price");
+const product_id_div = document.getElementById("order-product-ID");
+const product_name_div = document.getElementById("display-order-product-name");
+const product_quantity_div = document.getElementById("display-order-product-quantity");
+const product_price_div = document.getElementById("display-order-product-price");
+const quantity_counter = document.getElementById("quantity");
 
+// These fields come from the for() loop. They are values of the database fields that are itterated in i.sandwich_items
+const product_id = document.getElementById("product_id").value;
+const product_name = document.getElementById("product_name").value;
+const product_price = document.getElementById("product_price").value;
+
+// Set the value of product_price to a float
+const price = parseFloat(product_price).toFixed(2);
 
 
 // Event Listeners
@@ -68,8 +76,9 @@ addEventListener("click", function (event) {
 
 addEventListener("click", function (event) {
     if (event.target === addToBasket) {
-        populateOrder();
         modal.style.display = "none";
+        populateOrder();
+
     }
 });
 // ---
@@ -78,77 +87,48 @@ addEventListener("click", function (event) {
 
 // Set default quantity to 1 and price to (1x quantity)
 let quantity = 1;
-let currentPrice = 0;
-quantityCount.innerHTML = quantity;
-displayPrice.innerHTML = `£${price}`;
+let new_price = product_price;
+quantity_counter.innerHTML = quantity;
+product_price_div.innerHTML = `£${new_price}`;
 // ---
-
-// Pull the values from the for() loop (for i in sandwich_items)
-const productID = document.getElementById("product-id").value;
-const productName = document.getElementById("product-name").value;
-const databasePrice = document.getElementById("product-price-hidden").value;
-const displayPrice = document.getElementById("product-price");
-// ---
-
-
-
-
-
-
-
-
-
-
-
-
 
 const existingOrder = JSON.parse(localStorage.getItem("existingOrder")) || [];
-
-
-
-
-const price = parseFloat(databasePrice).toFixed(2);
-
-const quantityCount = document.getElementById("quantity");
-
-
-
-
-
-
-
-
 
 // Functions
 function increaseQuantity() {
     quantity += 1;
-    currentPrice = (quantity * price).toFixed(2);
-    quantityCount.innerHTML = quantity;
-    displayPrice.innerHTML = `£${currentPrice}`;
+    new_price = (quantity * price).toFixed(2);
+    quantity_counter.innerHTML = quantity;
+    product_price_div.innerHTML = `£${new_price}`;
 }
 
 function decreaseQuantity() {
     quantity = Math.max(quantity - 1, 1);
     currentPrice = (quantity * price).toFixed(2);
-    quantityCount.innerHTML = quantity;
-    displayPrice.innerHTML = `£${currentPrice}`;
+    quantity_counter.innerHTML = quantity;
+    product_price_div.innerHTML = `£${new_price}`;
 }
 
 function populateOrder() {
     const orderList = {
-        orderProductID: productID,
-        orderProductName: productName,
+        orderProductID: product_id,
+        orderProductName: product_name,
         orderQuantity: quantity,
-        orderPrice: currentPrice,
+        orderPrice: new_price,
     };
     existingOrder.push(orderList);
     localStorage.setItem("existingOrder", JSON.stringify(existingOrder));
     console.log(existingOrder)
 
-    showProductName.innerHTML = `${productName}`;
-    showProductQuantity.innerHTML = `X ${quantity}`;
-    showProductPrice.innerHTML = `£${currentPrice}`;
-    showProductID.innerHTML = `${productID}`;
+    product_name_div.innerHTML = `${product_name}`;
+    product_quantity_div.innerHTML = `X ${quantity}`;
+    product_price_div.innerHTML = `£${new_price}`;
+
+    console.log(`The product id is ${product_id} and its type is ${typeof product_id}`);
+    console.log(`The product name is ${product_name} and its type is ${typeof product_name}`);
+    //console.log(document.getElementById("product_name"))
+    console.log(`The product quantity is ${quantity} and its type is ${typeof quantity}`);
+    console.log(`The product price is ${new_price} and its type is ${typeof new_price}`);
 
 }
 

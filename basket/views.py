@@ -5,7 +5,7 @@ def basket(request):
 
 
 #def add_items_to_basket(request, product-id):
-def add_items_to_basket(request, product_id):    
+def create_basket(request, product_id):    
 
     quantity = int(request.POST.get('quantity'))
     redirect_url = request.POST.get('redirect_url')
