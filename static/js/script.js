@@ -82,7 +82,7 @@ addEventListener("click", function (event) {
     if (event.target === addToBasket) {
         modal.style.display = "none";
         btn.style.display = "none";
-        itemAddedP.style.display = "block";       
+        itemAddedP.style.display = "block";
         populateOrder();
 
     }
@@ -137,7 +137,7 @@ function decreaseQuantity() {
 
 function populateOrder() {
     const existingOrder = JSON.parse(localStorage.getItem("existingOrder")) || [];
-    
+
     const orderProductIDExists = existingOrder.some(orderProduct => orderProduct.orderProductID === product_id);
 
     if (orderProductIDExists) {
@@ -154,7 +154,7 @@ function populateOrder() {
             orderQuantity: quantity,
             orderPrice: new_price,
         };
-    
+
         existingOrder.push(orderList);
         localStorage.setItem("existingOrder", JSON.stringify(existingOrder));
         console.log(existingOrder)
@@ -163,13 +163,13 @@ function populateOrder() {
         //product_quantity_div.innerHTML = `X ${quantity}`;
         //product_price_div.innerHTML = `£${new_price}`;
 
-        //const retrive_order_array = JSON.parse(localStorage.getItem("existingOrder")) || [];
+        const retrive_order_array = JSON.parse(localStorage.getItem("existingOrder")) || [];
 
-        //display_order.innerHTML = retrive_order_array.map(entry => `
-        //  <li>${entry.orderProductID}</li>
-        //  <li>${entry.orderProductName}</li>
-        //  <li>${entry.orderQuantity}</li>
-        //  <li>${entry.orderPrice}</li>`).join('');
+        display_order.innerHTML = retrive_order_array.map(entry => `
+          <li>${entry.orderProductID}</li>
+          <li>${entry.orderProductName}</li>
+          <li>${entry.orderQuantity}</li>
+          <li>${entry.orderPrice}</li>`).join('');
     }
 }
 
@@ -196,6 +196,7 @@ display_order.innerHTML = retrive_order_array.map(entry => `
 
 
 
-//existingOrder.length = 0; // Reset the array
+//localStorage.removeItem("existingOrder");
+// Reset the array
 
 
