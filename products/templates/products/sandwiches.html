@@ -133,7 +133,9 @@
         <div class="row  card-row">
             <div class="col" id="open-modal-btn-div">
                 <p class=" align-center">
-                    <button class="btn select-product-btn" id="select-product-btn">Add to order</button>
+                    <button class="btn select-product-btn" data-product-id="{{i.product_id}}" data-product-name="{{i.product_name}}"
+                        data-product-price="{{i.product_price}}" data-product-quantity="{{i.product_quantity}}">Add to order</button>
+
                 <p id="item-added">Item Added</p>
                 </p>
             </div>
@@ -142,20 +144,21 @@
 
 
         <!--This is the pop-up modal led by customer interaction-->
-        <div id="select-product-modal" class="select-sandwich">
+        <div id="modal-div" class="select-sandwich">
             <div class="select-sandwich-modal-content">
                 <div class="container-fluid  align-center">
                     <div class="row card-row align-center">
                         <div class="col  align-center">
                             <span class="close">&times;</span>
                             <div class="row card-row ">
-                                <input type="hidden" class="product-id" id="product_id" value="{{i.product_id}}">
+                                <!--
+                                    <input type="hidden" class="product-id" id="product_id" value="{{i.product_id}}">
                                 <input type="hidden" class="product-name" id="product_name" value="{{i.product_name}}">
-                                <input type="hidden" class="product-price" id="product_price" value="{{i.product_price}}">
+                                <input type="hidden" class="product-price" id="product_price" value="{{i.product_price}}">-->
                                 <div class="col modal-text-styling">{{i.product_name}}</div>
                             </div>
                             <div class="row card-row ">
-                                <input type="hidden" id="product-price-hidden" value="{{i.product_price}}">
+                                <!--<input type="hidden" id="product-price-hidden" value="{{i.product_price}}">-->
                                 <div class="col modal-text-styling" id="product-price"></div>
                             </div>
                             <div class="row card-row align-center " id="quantity-row">

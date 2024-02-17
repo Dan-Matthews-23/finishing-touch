@@ -1,31 +1,9 @@
-// Get the modal
-var modal = document.getElementById("select-product-modal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("select-product-btn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function () {
-    modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
 
 
 
+
+
+/*
 //const removeItemBtn = document.getElementById("remove-item-btn");
 //addEventListener("click", function (event) {
 //    if (event.target === removeItemBtn) {
@@ -42,35 +20,81 @@ const itemAddedP = document.getElementById("item-added");
 
 // THE SECOND PRODUCT MAY NOT BE ADDING TO THE ORDER BECAUSE I AM CALLING THE ID. IDS CAN ONLY BE CALLED ONCE. lOOK TO SEE IF YOU CAN DO THIS
 
+
 // Assigning variables to buttons
 const addToBasket = document.getElementById("add-to-basket");
 const increaseQuantityBtn = document.getElementById("increase-quantity");
 const decreaseQuantityBtn = document.getElementById("decrease-quantity");
 
 
-// Hidden fields for use in Python
-const hidden_product_id = document.getElementById("hidden_product_id");
-const hidden_product_name = document.getElementById("hidden_product_name");
-const hidden_product_quantity = document.getElementById("hidden_product_quantity");
-const hidden_product_price = document.getElementById("hidden_product_price");
 
-// Actual DIV IDs for use in innerHTML section and order details
-const product_id_div = document.getElementById("order-product-ID");
-const product_name_div = document.getElementById("display-order-product-name");
-const product_quantity_div = document.getElementById("display-order-product-quantity");
-const product_price_div = document.getElementById("display-order-product-price");
-const quantity_counter = document.getElementById("quantity");
 
-// These fields come from the for() loop. They are values of the database fields that are itterated in i.sandwich_items
-const product_id = document.getElementById("product_id").value;
-const product_name = document.getElementById("product_name").value;
-const product_price = document.getElementById("product_price").value;
+
+*/
+
+
+const modal = document.getElementById("modal-div");
+
+const selectProductBtns = document.querySelectorAll('.select-product-btn');
+selectProductBtns.forEach(clickedButton => {
+    clickedButton.addEventListener('click', function (event) {        
+        modal.classList.add("show");
+        
+        const productId = this.dataset.productId; // Use 'this' to refer to the clicked button        
+        const productName = this.dataset.productName;
+        const productPrice = this.dataset.productPrice;
+        const productQuantity = this.dataset.productQuantity;
+
+        selectedItem = {
+            product_id: productId,
+            product_name: productName,
+            product_price: productPrice,
+            product_quantity: productQuantity
+        };
+
+        // Get Order Details div
+        const order_div = document.getElementById("display_order");
+        order_div.innerHTML =
+            "Product ID: " + selectedItem.product_id + "<br>" +
+            "Product Name: " + selectedItem.product_name + "<br>" +
+            "Product Price: $" + selectedItem.product_price + "<br>" +
+            "Product Quantity: " + selectedItem.product_quantity;
+
+
+        console.log(productId);
+        console.log(productName);
+        console.log(productPrice);
+        console.log(productQuantity);
+
+
+    });
+});
+
+
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.classList.remove("show");
+    }
+}
+
+const span = document.getElementsByClassName("close")[0];
+span.onclick = function () {
+    modal.classList.remove("show");
+}
+
+
+
+
+
+/*
+
 
 // Set the value of product_price to a float
 const price = parseFloat(product_price).toFixed(2);
 
-// Get Order Details div
-const display_order = document.getElementById("display_order");
+
 
 // Event Listeners
 addEventListener("click", function (event) {
@@ -205,7 +229,7 @@ display_order.innerHTML = retrive_order_array.map(entry => `
 
 
 
-/*
+
 const selectProductButton = document.querySelectorAll('.select-product-btn');
 selectProductButton.forEach(button => {
     button.addEventListener("click", function (event) {

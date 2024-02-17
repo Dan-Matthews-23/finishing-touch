@@ -279,7 +279,13 @@ body {
     border-bottom-color: black;
 }
 
+.hide {
+    display: none;
+}
 
+.show { 
+    display: block;
+}
 
 
 
