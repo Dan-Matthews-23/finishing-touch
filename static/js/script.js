@@ -39,6 +39,9 @@ window.onclick = function (event) {
 // Assigning the hidden <p> to a variable
 const itemAddedP = document.getElementById("item-added");
 
+
+// THE SECOND PRODUCT MAY NOT BE ADDING TO THE ORDER BECAUSE I AM CALLING THE ID. IDS CAN ONLY BE CALLED ONCE. lOOK TO SEE IF YOU CAN DO THIS
+
 // Assigning variables to buttons
 const addToBasket = document.getElementById("add-to-basket");
 const increaseQuantityBtn = document.getElementById("increase-quantity");
@@ -78,6 +81,7 @@ addEventListener("click", function (event) {
     }
 });
 
+
 addEventListener("click", function (event) {
     if (event.target === addToBasket) {
         modal.style.display = "none";
@@ -95,7 +99,7 @@ addEventListener("click", function (event) {
 let quantity = 1;
 let new_price = product_price;
 quantity_counter.innerHTML = quantity;
-product_price_div.innerHTML = `£${new_price}`;
+//product_price_div.innerHTML = `£${new_price}`;
 // ---
 
 const existingOrder = JSON.parse(localStorage.getItem("existingOrder")) || [];
@@ -166,19 +170,19 @@ function populateOrder() {
         const retrive_order_array = JSON.parse(localStorage.getItem("existingOrder")) || [];
 
         display_order.innerHTML = retrive_order_array.map(entry => `
-          <li>${entry.orderProductID}</li>
-          <li>${entry.orderProductName}</li>
-          <li>${entry.orderQuantity}</li>
-          <li>${entry.orderPrice}</li>`).join('');
+          
+          <li class="order-list-styling">${entry.orderProductName}</li>
+          <li class="order-list-styling">(X)${entry.orderQuantity}</li>
+          <li class="order-list-styling">£${entry.orderPrice}</li>`).join('');
     }
 }
 
 const retrive_order_array = JSON.parse(localStorage.getItem("existingOrder")) || [];
 display_order.innerHTML = retrive_order_array.map(entry => `
-  <li>${entry.orderProductID}</li>
-  <li>${entry.orderProductName}</li>
-  <li>${entry.orderQuantity}</li>
-  <li>${entry.orderPrice}</li>`).join('');
+    
+    <li class="order-list-styling">${entry.orderProductName}</li>
+    <li class="order-list-styling">(X)${entry.orderQuantity}</li>
+    <li class="order-list-styling">£${entry.orderPrice}</li>`).join('');
 
 
 
@@ -200,3 +204,34 @@ display_order.innerHTML = retrive_order_array.map(entry => `
 // Reset the array
 
 
+
+/*
+const selectProductButton = document.querySelectorAll('.select-product-btn');
+selectProductButton.forEach(button => {
+    button.addEventListener("click", function (event) {
+
+        const productIds = document.querySelectorAll('.product-id');
+        const productIdValues = Array.from(productIds).map(input => input.value);
+        console.log(productIdValues);
+
+        const productNames = document.querySelectorAll('.product-name');
+        const productNameValues = Array.from(productNames).map(input => input.value);
+        console.log(productNameValues);
+
+        const productPrices = document.querySelectorAll('.product-prices');
+        const productPricesValues = Array.from(productPrices).map(input => input.value);
+        console.log(productPricesValues);
+
+        const combinedProducts = [];
+        for (let i = 0; i < productIdValues.length; i++) {
+            combinedProducts.push({
+                id: productIdValues[i],
+                name: productNameValues[i],
+                price: productPricesValues[i]
+            });
+        }
+        console.log(combinedProducts)
+        // Code to execute when a button is clicked
+        console.log("Worked");
+    });
+});*/

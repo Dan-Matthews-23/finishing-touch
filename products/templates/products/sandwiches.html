@@ -33,19 +33,19 @@
 <!--This is the section that holds the secondary navigation where users can navigate on the same page-->
 <section class="menu-navigation">
     <div class="container-fluid align-center card product-container" id="menu-navigation">
-        <div class="row with-borders">
-            <div class="col with-borders">
+        <div class="row ">
+            <div class="col ">
                 <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#specials">MegaBytes Specials</a>
                 </h3>
             </div>
         </div>
-        <div class="row with-borders">
-            <div class="col with-borders">
+        <div class="row ">
+            <div class="col ">
                 <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#sundries">Sundries</a></h3>
             </div>
         </div>
-        <div class="row with-borders">
-            <div class="col with-borders">
+        <div class="row ">
+            <div class="col ">
                 <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#extras">Extras</a></h3>
             </div>
         </div>
@@ -57,17 +57,17 @@
 <!--This is the order sumary section that holds details of the current order-->
 <section class="order-details">
     <div class="container-fluid align-center card product-container" id="order-details">
-        <div class="row with-borders">
-            <div class="col with-borders">
+        <div class="row ">
+            <div class="col ">
 
-                <div class="row with-borders">
-                    <div class="col with-borders">
+                <div class="row ">
+                    <div class="col ">
                         <h3 class=" modal-text-styling">Order Details</h3>
                     </div>
                 </div>
-                <div class="row with-borders">
-                    <div class="col with-borders" id="display_order">
-                        
+                <div class="row ">
+                    <div class="col " id="display_order">
+
                     </div>
                 </div>
                 <input type="hidden" id="hidden_product_id_for_order" value="">
@@ -91,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col with-borders col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xm-2 col-xxl-2" id="remove-item-div">
+            <div class="col  col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xm-2 col-xxl-2" id="remove-item-div">
                 <button type="button" class="btn fa-solid fa-trash fa-xl" id="remove-item-btn"></button>
             </div>
         </div>
@@ -104,6 +104,11 @@
     {% for i in sandwich_items %}
     {% if i.category_id == 9 %}
     <div class="container-fluid align-center card product-container">
+        <div class="row  card-row">
+            <div class="col  align-center">
+                <h5 class="card-title">{{i.product_id}}</h5>
+            </div>
+        </div>
         <div class="row  card-row">
             <div class="col  align-center">
                 <h5 class="card-title">{{i.product_name}}</h5>
@@ -128,8 +133,8 @@
         <div class="row  card-row">
             <div class="col" id="open-modal-btn-div">
                 <p class=" align-center">
-                    <button class="btn" id="select-product-btn">Add to order</button>
-                    <p id="item-added">Item Added</p>
+                    <button class="btn select-product-btn" id="select-product-btn">Add to order</button>
+                <p id="item-added">Item Added</p>
                 </p>
             </div>
         </div>
@@ -139,21 +144,21 @@
         <!--This is the pop-up modal led by customer interaction-->
         <div id="select-product-modal" class="select-sandwich">
             <div class="select-sandwich-modal-content">
-                <div class="container-fluid with-borders align-center">
+                <div class="container-fluid  align-center">
                     <div class="row card-row align-center">
-                        <div class="col with-borders align-center">
+                        <div class="col  align-center">
                             <span class="close">&times;</span>
                             <div class="row card-row ">
-                                <input type="hidden" id="product_id" value="{{i.product_id}}">
-                                <input type="hidden" id="product_name" value="{{i.product_name}}">
-                                <input type="hidden" id="product_price" value="{{i.product_price}}">
+                                <input type="hidden" class="product-id" id="product_id" value="{{i.product_id}}">
+                                <input type="hidden" class="product-name" id="product_name" value="{{i.product_name}}">
+                                <input type="hidden" class="product-price" id="product_price" value="{{i.product_price}}">
                                 <div class="col modal-text-styling">{{i.product_name}}</div>
                             </div>
                             <div class="row card-row ">
                                 <input type="hidden" id="product-price-hidden" value="{{i.product_price}}">
                                 <div class="col modal-text-styling" id="product-price"></div>
                             </div>
-                            <div class="row card-row align-center with-borders" id="quantity-row">
+                            <div class="row card-row align-center " id="quantity-row">
                                 <div class="col align-center-vertical align-center-horizontal">
                                     <button type="button" class="btn fa-solid fa-square-minus fa-2xl"
                                         id="decrease-quantity"></button>
@@ -168,7 +173,7 @@
                             <div class="row modal-row-padding  ">
                                 <div class="col  align-center-vertical align-center-horizontal">
                                     {% csrf_token %}
-                                    <button class="btn" id="add-to-basket">Add to basket</button>
+                                    <button class="btn add-to-basket" id="add-to-basket">Add to basket</button>
                                     <input type="hidden" name="redirect_url" value="{{ request.path }}">
                                 </div>
                             </div>

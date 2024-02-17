@@ -186,13 +186,13 @@ body {
 
 #remove-item {
     color: red;
-    
+
 }
 
 #remove-item-div {
     padding-top: 15px;
     padding-bottom: 15px;
-    margin: auto;    
+    margin: auto;
 }
 
 
@@ -266,9 +266,18 @@ body {
     display: none;
 }
 
+.order-list-styling {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+}
 
-
-
+#display_order {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+}
 
 
 
