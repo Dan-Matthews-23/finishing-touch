@@ -262,6 +262,18 @@ body {
     text-align: center;
 }
 
+#item-added {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
 /*
 #banner-left-div { 
     height: 200px;       

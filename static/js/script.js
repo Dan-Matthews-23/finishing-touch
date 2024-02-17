@@ -36,12 +36,14 @@ window.onclick = function (event) {
 
 
 
-
+// Assigning the hidden <p> to a variable
+const itemAddedP = document.getElementById("item-added");
 
 // Assigning variables to buttons
 const addToBasket = document.getElementById("add-to-basket");
 const increaseQuantityBtn = document.getElementById("increase-quantity");
 const decreaseQuantityBtn = document.getElementById("decrease-quantity");
+
 
 // Hidden fields for use in Python
 const hidden_product_id = document.getElementById("hidden_product_id");
@@ -64,6 +66,8 @@ const product_price = document.getElementById("product_price").value;
 // Set the value of product_price to a float
 const price = parseFloat(product_price).toFixed(2);
 
+// Get Order Details div
+const display_order = document.getElementById("display_order");
 
 // Event Listeners
 addEventListener("click", function (event) {
@@ -77,6 +81,8 @@ addEventListener("click", function (event) {
 addEventListener("click", function (event) {
     if (event.target === addToBasket) {
         modal.style.display = "none";
+        btn.style.display = "none";
+        itemAddedP.style.display = "block";       
         populateOrder();
 
     }
@@ -93,6 +99,26 @@ product_price_div.innerHTML = `£${new_price}`;
 // ---
 
 const existingOrder = JSON.parse(localStorage.getItem("existingOrder")) || [];
+const check_array = existingOrder.some(orderProduct => orderProduct.orderProductID === product_id);
+if (check_array) {
+    // Product ID already exists in the array
+    btn.style.display = "none";
+    itemAddedP.style.display = "block";
+    // Handle the existing product (e.g., update quantity, remove, display a message)
+} else {
+    btn.style.display = "block";
+    itemAddedP.style.display = "none";
+}
+
+
+
+
+
+
+
+
+
+
 
 // Functions
 function increaseQuantity() {
@@ -110,27 +136,63 @@ function decreaseQuantity() {
 }
 
 function populateOrder() {
-    const orderList = {
-        orderProductID: product_id,
-        orderProductName: product_name,
-        orderQuantity: quantity,
-        orderPrice: new_price,
-    };
-    existingOrder.push(orderList);
-    localStorage.setItem("existingOrder", JSON.stringify(existingOrder));
-    console.log(existingOrder)
+    const existingOrder = JSON.parse(localStorage.getItem("existingOrder")) || [];
+    
+    const orderProductIDExists = existingOrder.some(orderProduct => orderProduct.orderProductID === product_id);
 
-    product_name_div.innerHTML = `${product_name}`;
-    product_quantity_div.innerHTML = `X ${quantity}`;
-    product_price_div.innerHTML = `£${new_price}`;
+    if (orderProductIDExists) {
+        // Product ID already exists in the array
+        console.log("Product with ID", product_id, "already exists in the order.");
+        // Handle the existing product (e.g., update quantity, remove, display a message)
+    } else {
 
-    console.log(`The product id is ${product_id} and its type is ${typeof product_id}`);
-    console.log(`The product name is ${product_name} and its type is ${typeof product_name}`);
-    //console.log(document.getElementById("product_name"))
-    console.log(`The product quantity is ${quantity} and its type is ${typeof quantity}`);
-    console.log(`The product price is ${new_price} and its type is ${typeof new_price}`);
 
+
+        const orderList = {
+            orderProductID: product_id,
+            orderProductName: product_name,
+            orderQuantity: quantity,
+            orderPrice: new_price,
+        };
+    
+        existingOrder.push(orderList);
+        localStorage.setItem("existingOrder", JSON.stringify(existingOrder));
+        console.log(existingOrder)
+
+        //product_name_div.innerHTML = `${product_name}`;
+        //product_quantity_div.innerHTML = `X ${quantity}`;
+        //product_price_div.innerHTML = `£${new_price}`;
+
+        //const retrive_order_array = JSON.parse(localStorage.getItem("existingOrder")) || [];
+
+        //display_order.innerHTML = retrive_order_array.map(entry => `
+        //  <li>${entry.orderProductID}</li>
+        //  <li>${entry.orderProductName}</li>
+        //  <li>${entry.orderQuantity}</li>
+        //  <li>${entry.orderPrice}</li>`).join('');
+    }
 }
+
+const retrive_order_array = JSON.parse(localStorage.getItem("existingOrder")) || [];
+display_order.innerHTML = retrive_order_array.map(entry => `
+  <li>${entry.orderProductID}</li>
+  <li>${entry.orderProductName}</li>
+  <li>${entry.orderQuantity}</li>
+  <li>${entry.orderPrice}</li>`).join('');
+
+
+
+
+
+
+//console.log(`The product id is ${product_id} and its type is ${typeof product_id}`);
+//console.log(`The product name is ${product_name} and its type is ${typeof product_name}`);
+//console.log(document.getElementById("product_name"))
+//console.log(`The product quantity is ${quantity} and its type is ${typeof quantity}`);
+//console.log(`The product price is ${new_price} and its type is ${typeof new_price}`);
+
+
+
 
 
 
