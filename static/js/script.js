@@ -4,7 +4,7 @@
 // Reset the array
 
 let default_quantity = 1;
-const quantity_div = document.getElementById("quantity");
+const quantity_div = document.querySelectorAll('.quantity-div');
 quantity_div.innerHTML = default_quantity;
 
 // Get Order Details div
