@@ -133,8 +133,9 @@
         <div class="row  card-row">
             <div class="col" id="open-modal-btn-div">
                 <p class=" align-center">
-                    <button class="btn open-modal" data-product-id="{{i.product_id}}" data-product-name="{{i.product_name}}"
-                                        data-product-price="{{i.product_price}}" data-product-quantity="{{i.product_quantity}}">Select item</button>
+                    <button class="btn open-modal" data-product-id="{{i.product_id}}"
+                        data-product-name="{{i.product_name}}" data-product-price="{{i.product_price}}"
+                        data-product-quantity="1">Select item</button>
 
                 <p class="item-added">Item Added</p>
                 </p>
@@ -144,7 +145,7 @@
 
 
         <!--This is the pop-up modal led by customer interaction-->
-        <div id="modal-div" class="select-sandwich">
+        <div id="modal-div" class="select-sandwich ">
             <div class="select-sandwich-modal-content">
                 <div class="container-fluid  align-center">
                     <div class="row card-row align-center">
@@ -163,22 +164,21 @@
                             </div>
                             <div class="row card-row align-center " id="quantity-row">
                                 <div class="col align-center-vertical align-center-horizontal">
-                                    <button type="button" class="btn fa-solid fa-square-minus fa-2xl"
+                                    <button type="button" class="btn fa-solid fa-square-minus fa-2xl increase-quantity"
                                         id="decrease-quantity"></button>
                                 </div>
-                                <div class="col  align-center-vertical align-center-horizontal quantity-div" >
-                                </div>
+                                <div class="col  align-center-vertical align-center-horizontal quantity-div"></div>
                                 <div class="col  align-center-vertical align-center-horizontal">
-                                    <button type="button" class="btn fa-solid fa-square-plus fa-2xl"
+                                    <button type="button" class="btn fa-solid fa-square-plus fa-2xl increase-quantity"
                                         id="increase-quantity"></button>
                                 </div>
                             </div>
                             <div class="row modal-row-padding  ">
                                 <div class="col  align-center-vertical align-center-horizontal">
                                     {% csrf_token %}
-                                    
-                                    <button class="btn select-product-btn" >Add to order</button>
-                                    
+
+                                    <button class="btn select-product-btn">Add to order</button>
+
                                 </div>
                             </div>
                         </div>

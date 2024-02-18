@@ -3,15 +3,18 @@
 
 // Reset the array
 
-let default_quantity = 1;
-const quantity_div = document.querySelectorAll('.quantity-div');
-quantity_div.innerHTML = default_quantity;
+let currentPrice;
+let quantity;
+
+
+
+//document.getElementById("quantity-div").innerHTML = 1;
 
 // Get Order Details div
 const order_div = document.getElementById("display_order");
 const orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
 if (orderArray.length > 0) {
-    console.log(orderArray.length)
+    //console.log(orderArray.length)
     order_div.innerHTML = orderArray.map(entry => `
     ${entry.product_id}<br>
     ${entry.product_name}<br>
@@ -26,69 +29,115 @@ const selectProductBtns = document.querySelectorAll('.open-modal');
 selectProductBtns.forEach(clickedOpenModalBtn => {
     clickedOpenModalBtn.addEventListener('click', function (event) {
 
+
+
+        //const increaseQuantityBtn = document.querySelectorAll('.increase-quantity');
+        //const decreaseQuantityBtn = document.querySelectorAll('.decrease-quantity');
+        const increaseQuantityBtn = document.getElementById("increase-quantity");
+        const decreaseQuantityBtn = document.getElementById("decrease-quantity");
+
+        let quantity = 1;
+
         const modal = document.getElementById("modal-div");
-        quantity = default_quantity
+        const quantity_div = document.querySelectorAll('.quantity-div');
+        quantity_div.innerHTML = quantity;
 
-        addEventListener("click", function (event) {
-            if (event.target === increaseQuantityBtn) {
-                increaseQuantity();
-            } else if (event.target === decreaseQuantityBtn) {
-                decreaseQuantity();
-            }
-        });
+        // This probably isn't working because of the querySelectorAll. Maybe it needs to be getElementByID. And maybe it needs to be outside of the loop?
 
-        function increaseQuantity() {
-            quantity += 1;
-            new_price = (quantity * productPrice).toFixed(2);
-            quantity_div.innerHTML = quantity;
-            product_price_div.innerHTML = `£${new_price}`;
-        }
 
-        function decreaseQuantity() {
-            quantity = Math.max(quantity - 1, 1);
-            currentPrice = (quantity * productPrice).toFixed(2);
-            quantity_div.innerHTML = quantity;
-            product_price_div.innerHTML = `£${new_price}`;
-        }
 
         modal.classList.add("show");
         const product_price_div = document.getElementById("display-order-product-price");
         const productId = this.dataset.productId; // Use 'this' to refer to the clicked button        
         const productName = this.dataset.productName;
         const productPrice = this.dataset.productPrice;
-        const productQuantity = this.dataset.productQuantity;
+        //let productQuantity = this.dataset.productQuantity;
+        //document.querySelectorAll('.quantity-div').innerHTML = productQuantity;
 
-        selectedItem = {
-            product_id: productId,
-            product_name: productName,
-            product_price: productPrice,
-            product_quantity: productQuantity
-        };
 
-        const existingIndex = orderArray.findIndex(item => item.product_id === productId);
 
-        if (existingIndex !== -1) {
-            // Update existing item
-            orderArray[existingIndex] = selectedItem;
-            localStorage.setItem("orderArray", JSON.stringify(orderArray));
-            console.log("Product updated:", selectedItem);
-        } else {
-            // Add new item if ID doesn't exist
-            orderArray.push(selectedItem);
-            localStorage.setItem("orderArray", JSON.stringify(orderArray));
-            console.log("Product added:", selectedItem);
-        }
+
 
         //orderArray.push(selectedItem);
         //localStorage.setItem("orderArray", JSON.stringify(orderArray));
 
-        const increaseQuantityBtn = document.getElementById("increase-quantity");
-        const decreaseQuantityBtn = document.getElementById("decrease-quantity");
+
 
         const confirmOrder = document.querySelectorAll('.select-product-btn');
 
         confirmOrder.forEach(clickedConfirmOrderBtn => {
             clickedConfirmOrderBtn.addEventListener('click', function (event) {
+
+                const existingIndex = orderArray.findIndex(item => item.product_id === productId);
+
+                
+
+                addEventListener("click", function (event) {
+                    if (event.target === increaseQuantityBtn) {
+                        increaseQuantity();
+                    } else if (event.target === decreaseQuantityBtn) {
+                        decreaseQuantity();
+                    }
+                });
+
+                function increaseQuantity() {
+                    quantity += 1;
+                    new_price = (quantity * productPrice).toFixed(2);
+                    quantity_div.innerHTML = quantity;
+                    product_price_div.innerHTML = `£${currentPrice}`;
+                    console.log('Quantity for increase: ' + quantity)
+                }
+
+                function decreaseQuantity() {
+                    quantity = Math.max(quantity - 1, 1);
+                    currentPrice = (quantity * productPrice).toFixed(2);
+                    quantity_div.innerHTML = quantity;
+                    product_price_div.innerHTML = `£${currentPrice}`;
+                    console.log('Quantity for decrease: ' + quantity)
+                }
+
+                //productQuantity = quantity;
+
+
+
+                selectedItem = {
+                    product_id: productId,
+                    product_name: productName,
+                    product_price: productPrice,
+                    product_quantity: quantity
+                };
+
+                if (existingIndex !== -1) {
+                    // Update existing item
+                    orderArray[existingIndex] = selectedItem;
+                    localStorage.setItem("orderArray", JSON.stringify(orderArray));
+                    //console.log("Product updated:", selectedItem);
+                } else {
+                    // Add new item if ID doesn't exist
+                    orderArray.push(selectedItem);
+                    localStorage.setItem("orderArray", JSON.stringify(orderArray));
+                    //console.log("Product added:", selectedItem);
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 modal.classList.remove("show");
                 modal.classList.add("hide");
@@ -105,11 +154,13 @@ selectProductBtns.forEach(clickedOpenModalBtn => {
                 
                 */
                 order_div.innerHTML = pullOrderArray.map(entry => `
-                ${entry.product_id}<br>
+                
                 ${entry.product_name}<br>
                 ${entry.product_price}<br>
-                ${entry.product_quantity}<br>
+                ${entry.product_quantity}<br><br><br>
                 `).join('');
+
+                //console.log(productQuantity)
             });
         });
 

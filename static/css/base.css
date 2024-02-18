@@ -244,8 +244,8 @@ body {
     font-weight: bold;
 }
 
-#decrease-quantity,
-#increase-quantity {
+.decrease-quantity,
+.increase-quantity {
     font-size: 36px;
     color: #74C0FC;
 }
@@ -283,7 +283,7 @@ body {
     display: none;
 }
 
-.show { 
+.show {
     display: block;
 }
 
