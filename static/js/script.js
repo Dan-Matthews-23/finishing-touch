@@ -1,51 +1,31 @@
+//localStorage.removeItem("selectedItems");
+//localStorage.removeItem("orderArray");
 
-
-
-
-
-/*
-//const removeItemBtn = document.getElementById("remove-item-btn");
-//addEventListener("click", function (event) {
-//    if (event.target === removeItemBtn) {
-//        removeItem();
-//    }
-//});
-
-
-
-
-// Assigning the hidden <p> to a variable
-const itemAddedP = document.getElementById("item-added");
-
-
-// THE SECOND PRODUCT MAY NOT BE ADDING TO THE ORDER BECAUSE I AM CALLING THE ID. IDS CAN ONLY BE CALLED ONCE. lOOK TO SEE IF YOU CAN DO THIS
-
-
-// Assigning variables to buttons
-const addToBasket = document.getElementById("add-to-basket");
-const increaseQuantityBtn = document.getElementById("increase-quantity");
-const decreaseQuantityBtn = document.getElementById("decrease-quantity");
-
-
-
-
-
-*/
-
+// Reset the array
 
 let default_quantity = 1;
 const quantity_div = document.getElementById("quantity");
 quantity_div.innerHTML = default_quantity;
 
-
-
-
-
-
+// Get Order Details div
+const order_div = document.getElementById("display_order");
+const orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
+if (orderArray.length > 0) {
+    console.log(orderArray.length)
+    order_div.innerHTML = orderArray.map(entry => `
+    ${entry.product_id}<br>
+    ${entry.product_name}<br>
+    ${entry.product_price}<br>
+    ${entry.product_quantity}<br>
+    `).join('');
+} else {
+    order_div.innerHTML = "Your basket is empty";
+}
 
 const selectProductBtns = document.querySelectorAll('.open-modal');
-selectProductBtns.forEach(clickedButton => {
-    clickedButton.addEventListener('click', function (event) {
+selectProductBtns.forEach(clickedOpenModalBtn => {
+    clickedOpenModalBtn.addEventListener('click', function (event) {
+
         const modal = document.getElementById("modal-div");
         quantity = default_quantity
 
@@ -71,18 +51,12 @@ selectProductBtns.forEach(clickedButton => {
             product_price_div.innerHTML = `£${new_price}`;
         }
 
-
-
         modal.classList.add("show");
-
         const product_price_div = document.getElementById("display-order-product-price");
-
         const productId = this.dataset.productId; // Use 'this' to refer to the clicked button        
         const productName = this.dataset.productName;
         const productPrice = this.dataset.productPrice;
         const productQuantity = this.dataset.productQuantity;
-
-
 
         selectedItem = {
             product_id: productId,
@@ -91,36 +65,51 @@ selectProductBtns.forEach(clickedButton => {
             product_quantity: productQuantity
         };
 
+        const existingIndex = orderArray.findIndex(item => item.product_id === productId);
+
+        if (existingIndex !== -1) {
+            // Update existing item
+            orderArray[existingIndex] = selectedItem;
+            localStorage.setItem("orderArray", JSON.stringify(orderArray));
+            console.log("Product updated:", selectedItem);
+        } else {
+            // Add new item if ID doesn't exist
+            orderArray.push(selectedItem);
+            localStorage.setItem("orderArray", JSON.stringify(orderArray));
+            console.log("Product added:", selectedItem);
+        }
+
+        //orderArray.push(selectedItem);
+        //localStorage.setItem("orderArray", JSON.stringify(orderArray));
+
         const increaseQuantityBtn = document.getElementById("increase-quantity");
         const decreaseQuantityBtn = document.getElementById("decrease-quantity");
 
-
         const confirmOrder = document.querySelectorAll('.select-product-btn');
-        confirmOrder.forEach(clickedButton => {
-            clickedButton.addEventListener('click', function (event) {
+
+        confirmOrder.forEach(clickedConfirmOrderBtn => {
+            clickedConfirmOrderBtn.addEventListener('click', function (event) {
 
                 modal.classList.remove("show");
                 modal.classList.add("hide");
+                //clickedOpenModalBtn.classList.add("hide");
 
+                const pullOrderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
 
-                // Get Order Details div
-                const order_div = document.getElementById("display_order");
+                /*
                 order_div.innerHTML =
                     "Product ID: " + selectedItem.product_id + "<br>" +
                     "Product Name: " + selectedItem.product_name + "<br>" +
                     "Product Price: £" + selectedItem.product_price + "<br>" +
                     "Product Quantity: " + selectedItem.product_quantity;
-
-
-
-                console.log(productId);
-                console.log(productName);
-                console.log(productPrice);
-                console.log(productQuantity);
-
-
-
-
+                
+                */
+                order_div.innerHTML = pullOrderArray.map(entry => `
+                ${entry.product_id}<br>
+                ${entry.product_name}<br>
+                ${entry.product_price}<br>
+                ${entry.product_quantity}<br>
+                `).join('');
             });
         });
 
@@ -263,8 +252,7 @@ display_order.innerHTML = retrive_order_array.map(entry => `
 
 
 
-//localStorage.removeItem("existingOrder");
-// Reset the array
+
 
 
 
@@ -297,4 +285,27 @@ selectProductButton.forEach(button => {
         // Code to execute when a button is clicked
         console.log("Worked");
     });
-});*/
+});
+
+//const removeItemBtn = document.getElementById("remove-item-btn");
+//addEventListener("click", function (event) {
+//    if (event.target === removeItemBtn) {
+//        removeItem();
+//    }
+//});
+
+
+
+
+
+
+
+// THE SECOND PRODUCT MAY NOT BE ADDING TO THE ORDER BECAUSE I AM CALLING THE ID. IDS CAN ONLY BE CALLED ONCE. lOOK TO SEE IF YOU CAN DO THIS
+
+
+// Assigning variables to buttons
+const addToBasket = document.getElementById("add-to-basket");
+const increaseQuantityBtn = document.getElementById("increase-quantity");
+const decreaseQuantityBtn = document.getElementById("decrease-quantity");
+
+*/
