@@ -33,17 +33,56 @@ const decreaseQuantityBtn = document.getElementById("decrease-quantity");
 */
 
 
-const modal = document.getElementById("modal-div");
+let default_quantity = 1;
+const quantity_div = document.getElementById("quantity");
+quantity_div.innerHTML = default_quantity;
 
-const selectProductBtns = document.querySelectorAll('.select-product-btn');
+
+
+
+
+
+
+const selectProductBtns = document.querySelectorAll('.open-modal');
 selectProductBtns.forEach(clickedButton => {
-    clickedButton.addEventListener('click', function (event) {        
+    clickedButton.addEventListener('click', function (event) {
+        const modal = document.getElementById("modal-div");
+        quantity = default_quantity
+
+        addEventListener("click", function (event) {
+            if (event.target === increaseQuantityBtn) {
+                increaseQuantity();
+            } else if (event.target === decreaseQuantityBtn) {
+                decreaseQuantity();
+            }
+        });
+
+        function increaseQuantity() {
+            quantity += 1;
+            new_price = (quantity * productPrice).toFixed(2);
+            quantity_div.innerHTML = quantity;
+            product_price_div.innerHTML = `£${new_price}`;
+        }
+
+        function decreaseQuantity() {
+            quantity = Math.max(quantity - 1, 1);
+            currentPrice = (quantity * productPrice).toFixed(2);
+            quantity_div.innerHTML = quantity;
+            product_price_div.innerHTML = `£${new_price}`;
+        }
+
+
+
         modal.classList.add("show");
-        
+
+        const product_price_div = document.getElementById("display-order-product-price");
+
         const productId = this.dataset.productId; // Use 'this' to refer to the clicked button        
         const productName = this.dataset.productName;
         const productPrice = this.dataset.productPrice;
         const productQuantity = this.dataset.productQuantity;
+
+
 
         selectedItem = {
             product_id: productId,
@@ -52,37 +91,59 @@ selectProductBtns.forEach(clickedButton => {
             product_quantity: productQuantity
         };
 
-        // Get Order Details div
-        const order_div = document.getElementById("display_order");
-        order_div.innerHTML =
-            "Product ID: " + selectedItem.product_id + "<br>" +
-            "Product Name: " + selectedItem.product_name + "<br>" +
-            "Product Price: $" + selectedItem.product_price + "<br>" +
-            "Product Quantity: " + selectedItem.product_quantity;
+        const increaseQuantityBtn = document.getElementById("increase-quantity");
+        const decreaseQuantityBtn = document.getElementById("decrease-quantity");
 
 
-        console.log(productId);
-        console.log(productName);
-        console.log(productPrice);
-        console.log(productQuantity);
+        const confirmOrder = document.querySelectorAll('.select-product-btn');
+        confirmOrder.forEach(clickedButton => {
+            clickedButton.addEventListener('click', function (event) {
 
+                modal.classList.remove("show");
+                modal.classList.add("hide");
+
+
+                // Get Order Details div
+                const order_div = document.getElementById("display_order");
+                order_div.innerHTML =
+                    "Product ID: " + selectedItem.product_id + "<br>" +
+                    "Product Name: " + selectedItem.product_name + "<br>" +
+                    "Product Price: £" + selectedItem.product_price + "<br>" +
+                    "Product Quantity: " + selectedItem.product_quantity;
+
+
+
+                console.log(productId);
+                console.log(productName);
+                console.log(productPrice);
+                console.log(productQuantity);
+
+
+
+
+            });
+        });
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.classList.remove("show");
+                modal.classList.add("hide");
+            }
+        }
+
+        const span = document.getElementsByClassName("close")[0];
+        span.onclick = function () {
+            modal.classList.remove("show");
+            modal.classList.add("hide");
+        }
 
     });
 });
 
 
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.classList.remove("show");
-    }
-}
 
-const span = document.getElementsByClassName("close")[0];
-span.onclick = function () {
-    modal.classList.remove("show");
-}
 
 // TOMORROW YOU NEED TO:
 
@@ -93,24 +154,15 @@ span.onclick = function () {
 
 
 
-/*
+
 
 
 // Set the value of product_price to a float
-const price = parseFloat(product_price).toFixed(2);
-
-
-
+//const price = parseFloat(product_price).toFixed(2);
 // Event Listeners
-addEventListener("click", function (event) {
-    if (event.target === increaseQuantityBtn) {
-        increaseQuantity();
-    } else if (event.target === decreaseQuantityBtn) {
-        decreaseQuantity();
-    }
-});
 
 
+/*
 addEventListener("click", function (event) {
     if (event.target === addToBasket) {
         modal.style.display = "none";
@@ -121,16 +173,17 @@ addEventListener("click", function (event) {
     }
 });
 // ---
-
+*/
 
 
 // Set default quantity to 1 and price to (1x quantity)
-let quantity = 1;
-let new_price = product_price;
-quantity_counter.innerHTML = quantity;
+
+//let new_price = product_price;
+
 //product_price_div.innerHTML = `£${new_price}`;
 // ---
 
+/*
 const existingOrder = JSON.parse(localStorage.getItem("existingOrder")) || [];
 const check_array = existingOrder.some(orderProduct => orderProduct.orderProductID === product_id);
 if (check_array) {
@@ -143,31 +196,12 @@ if (check_array) {
     itemAddedP.style.display = "none";
 }
 
-
-
-
-
-
-
-
-
-
-
+*/
 // Functions
-function increaseQuantity() {
-    quantity += 1;
-    new_price = (quantity * price).toFixed(2);
-    quantity_counter.innerHTML = quantity;
-    product_price_div.innerHTML = `£${new_price}`;
-}
 
-function decreaseQuantity() {
-    quantity = Math.max(quantity - 1, 1);
-    currentPrice = (quantity * price).toFixed(2);
-    quantity_counter.innerHTML = quantity;
-    product_price_div.innerHTML = `£${new_price}`;
-}
 
+
+/*
 function populateOrder() {
     const existingOrder = JSON.parse(localStorage.getItem("existingOrder")) || [];
 

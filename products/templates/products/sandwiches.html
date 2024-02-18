@@ -133,8 +133,8 @@
         <div class="row  card-row">
             <div class="col" id="open-modal-btn-div">
                 <p class=" align-center">
-                    <button class="btn select-product-btn" data-product-id="{{i.product_id}}" data-product-name="{{i.product_name}}"
-                        data-product-price="{{i.product_price}}" data-product-quantity="{{i.product_quantity}}">Add to order</button>
+                    <button class="btn open-modal" data-product-id="{{i.product_id}}" data-product-name="{{i.product_name}}"
+                                        data-product-price="{{i.product_price}}" data-product-quantity="{{i.product_quantity}}">Select item</button>
 
                 <p id="item-added">Item Added</p>
                 </p>
@@ -155,7 +155,7 @@
                                     <input type="hidden" class="product-id" id="product_id" value="{{i.product_id}}">
                                 <input type="hidden" class="product-name" id="product_name" value="{{i.product_name}}">
                                 <input type="hidden" class="product-price" id="product_price" value="{{i.product_price}}">-->
-                                <div class="col modal-text-styling">{{i.product_name}}</div>
+                                <!--<div class="col modal-text-styling">{{i.product_name}}</div>-->
                             </div>
                             <div class="row card-row ">
                                 <!--<input type="hidden" id="product-price-hidden" value="{{i.product_price}}">-->
@@ -176,8 +176,9 @@
                             <div class="row modal-row-padding  ">
                                 <div class="col  align-center-vertical align-center-horizontal">
                                     {% csrf_token %}
-                                    <button class="btn add-to-basket" id="add-to-basket">Add to basket</button>
-                                    <input type="hidden" name="redirect_url" value="{{ request.path }}">
+                                    
+                                    <button class="btn select-product-btn" >Add to order</button>
+                                    
                                 </div>
                             </div>
                         </div>
