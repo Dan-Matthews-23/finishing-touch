@@ -19,16 +19,22 @@ if (orderArray.length > 0) {
     order_div.innerHTML = "Your basket is empty";
 }
 
+
 const selectProductBtns = document.querySelectorAll('.open-modal');
+
+
 selectProductBtns.forEach(clickedOpenModalBtn => {
     clickedOpenModalBtn.addEventListener('click', function (event) {
+
         const increaseQuantityBtn = document.getElementById("increase-quantity");
         const decreaseQuantityBtn = document.getElementById("decrease-quantity");
 
+        increaseQuantityBtn.addEventListener('click', increaseQuantity);
+        decreaseQuantityBtn.addEventListener('click', decreaseQuantity);
 
 
+        //let new_price = 0;
         let quantity = 1;
-        let new_price = 0;
 
         const modal = document.getElementById("modal-div");
         const quantity_div = document.getElementById('quantity-div');
@@ -36,56 +42,40 @@ selectProductBtns.forEach(clickedOpenModalBtn => {
 
         modal.classList.add("show");
         const product_price_div = document.getElementById("display-order-product-price");
-        const productId = this.dataset.productId;
-        const productName = this.dataset.productName;
-        const productPrice = this.dataset.productPrice;
+        //const productId = this.dataset.productId;
+        //const productName = this.dataset.productName;
+        //const productPrice = this.dataset.productPrice;
 
-
-
-        addEventListener("click", function (event) {
-            if (event.target === increaseQuantityBtn) {
-                increaseQuantity();
-            } else if (event.target === decreaseQuantityBtn) {
-                decreaseQuantity();
-            }
-        });
-
+        selectedItem = {
+            product_id: this.dataset.productId,
+            product_name: this.dataset.productName,
+            product_price: this.dataset.productPrice,
+            product_quantity: 1
+        };
+        
         function increaseQuantity() {
             quantity += 1;
-            new_price = (quantity * productPrice).toFixed(2);
-            quantity_div.innerHTML = quantity;
-            product_price_div.innerHTML = `£${new_price}`;
-
-            //console.log(`Default product price is ${productPrice} and the new price is ${new_price}`);
+            selectedItem.quantity = quantity
+            total = (selectedItem.quantity * selectedItem.product_price).toFixed(2);
+            quantity_div.innerHTML = selectedItem.quantity;
         }
 
         function decreaseQuantity() {
             quantity = Math.max(quantity - 1, 1);
-            new_price = (quantity * productPrice).toFixed(2);
-            quantity_div.innerHTML = quantity;
-            product_price_div.innerHTML = `£${new_price}`;
-            //console.log(`Default product price is ${productPrice} and the new price is ${new_price}`);
+            selectedItem.quantity = quantity
+            total = (selectedItem.quantity * selectedItem.product_price).toFixed(2);
+            quantity_div.innerHTML = selectedItem.quantity;         
 
         }
 
-        
+
 
         const confirmOrder = document.querySelectorAll('.select-product-btn');
 
         confirmOrder.forEach(clickedConfirmOrderBtn => {
             clickedConfirmOrderBtn.addEventListener('click', function (event) {
 
-                const existingIndex = orderArray.findIndex(item => item.product_id === productId);
-
-                selectedItem = {
-                    product_id: productId,
-                    product_name: productName,
-                    product_price: new_price,
-                    product_quantity: quantity
-                };
-
-
-
+                const existingIndex = orderArray.findIndex(item => item.product_id === selectedItem.productId);
 
                 if (existingIndex !== -1) {
                     // Update existing item
