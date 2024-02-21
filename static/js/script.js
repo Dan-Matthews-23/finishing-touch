@@ -16,7 +16,7 @@ orderArray = orderArray.map(item => ({
 }));
 updateOrderDisplay();
 
-//console.log(orderArray);
+console.log(orderArray);
 
 
 
@@ -115,11 +115,13 @@ function openModal(event) {
 const openModalButtons = document.querySelectorAll('.open-modal');
 openModalButtons.forEach(button => {
     button.addEventListener('click', function (event) {
-        const productId = event.target.dataset.productId;
+        // const productId = event.target.dataset.data - productID; open-modal-value
+        const productId = parseInt(document.getElementById("open-modal-value").value, 10);
         const productName = event.target.dataset.productName;
         const productPrice = event.target.dataset.productPrice;
         // You now have the data to use or pass to your updateQuantity function
         updateQuantity(true, productId, productName, productPrice); // Example if updateQuantity handles adding 
+
     });
 });
 
@@ -127,25 +129,46 @@ openModalButtons.forEach(button => {
 function updateQuantity(isIncrease, productId, productName, productPrice) { // Pass product_id if not using event
     if (isIncrease) {
         const itemIndex = orderArray.findIndex(item => item.product_id === productId);
+        
+        //console.log(`ID is ${productId} and its type is ${typeof productId}`)
         if (itemIndex !== -1) {
-            orderArray[itemIndex].product_quantity += 1; // Corrected increment
-            console.log("The quantity was increased");
+            console.log(`Yes, there is an item here with the product ID of ${productId}. We will update the quantity to ${orderArray[itemIndex].product_quantity}`);
+            //let new_quantity = 0;
+            orderArray[itemIndex].product_quantity += 1;
+            
+            //orderArray[itemIndex].product_quantity = new_quantity; // Update existing property
+            //orderArray[itemIndex].product_quantity = productName,
+            //orderArray[itemIndex].product_name,
+            //product_price: parseFloat(productPrice),
+            //original_price: parseFloat(productPrice),
+            //product_quantity: new_quantity
+
+            //orderArray[itemIndex].update(new_values);
+            localStorage.setItem("orderArray", JSON.stringify(orderArray));
+            //new_values = [];
+            //console.log(orderArray);
+            //console.log("The quantity was increased. It is now " + orderArray[itemIndex].product_quantity);
+            //console.log(`The index is ${itemIndex}`)
+            //console.log(`The product ID is ${orderArray[itemIndex].product_id} and its type is ${typeof orderArray[itemIndex].product_id} `)
+            return productId;
         } else {
+            let quantity = 0;
+            quantity += 1;
             newItem = {
                 product_id: productId,
                 product_name: productName,
                 product_price: parseFloat(productPrice),
                 original_price: parseFloat(productPrice),
-                product_quantity: 1
+                product_quantity: quantity
             };
             orderArray.push(newItem);
-            console.log("Item not found, so we've created it instead");
-            console.log(itemIndex);
-            console.log(orderArray);
-            console.log(`All details have been pulled from the orderArray and are: Product ID: ${productId}, Product Name: ${productName}  `)
+            //console.log("Item not found, so we've created it instead");
+            //console.log(itemIndex);
+            //console.log(orderArray);
+            //console.log(`All details have been pulled from the orderArray and are: Product ID: ${productId}, Product Name: ${productName}  `)
         }
     } else {
-        const itemIndex = orderArray.findIndex(item => item.product_id === product_id);
+        const itemIndex = orderArray.findIndex(item => item.product_id === productId);
         if (itemIndex !== -1) { // Check for item before decreasing
             console.log(itemIndex)
             orderArray[itemIndex].product_quantity = Math.max(orderArray[itemIndex].product_quantity - 1, 1);
