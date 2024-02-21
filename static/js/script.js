@@ -1,9 +1,6 @@
 //localStorage.removeItem("selectedItem");
 //localStorage.removeItem("orderArray");
 
-// Reset the array
-
-
 
 const order_div = document.getElementById("display_order");
 let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
@@ -37,7 +34,7 @@ function updateOrderDisplay() {
 
 // Function to delete an item
 function deleteItem(index) {
-    orderArray.splice(index, 1);  // Remove the item at the given index
+    orderArray.splice(index, 1);
     localStorage.setItem("orderArray", JSON.stringify(orderArray));
     updateOrderDisplay();
 }
@@ -50,28 +47,38 @@ selectProductBtns.forEach(btn => {
 
 // Modal Logic
 function openModal(event) {
+    
     const modal = document.getElementById("modal-div");
     const quantityDiv = document.getElementById('quantity-div');
     const increaseBtn = document.getElementById('increase-quantity');
     const decreaseBtn = document.getElementById('decrease-quantity');
     const confirmBtn = document.querySelector('.select-product-btn');
 
-    let selectedItem = {
-        product_id: event.target.dataset.productId,
-        product_name: event.target.dataset.productName,
-        product_price: parseFloat(event.target.dataset.productPrice),
-        original_price: parseFloat(event.target.dataset.productPrice),
-        product_quantity: 1
-    };
+    // Find the existing product in orderArray or create a new one
+    const existingItem = orderArray.find(i => i.product_id === event.target.dataset.productId);
+    let selectedItem;
+    if (existingItem) {
+        selectedItem = { ...existingItem }; // Create a copy
+    } else {
+        selectedItem = {
+            product_id: event.target.dataset.productId,
+            product_name: event.target.dataset.productName,
+            product_price: parseFloat(event.target.dataset.productPrice),
+            original_price: parseFloat(event.target.dataset.productPrice),
+            product_quantity: 1
+        };
+    }
+    console.log("selectedItem in openModal:", selectedItem);
 
     quantityDiv.innerHTML = selectedItem.product_quantity;
     modal.classList.add("show");
 
     increaseBtn.addEventListener('click', () => updateQuantity(selectedItem, true));
     decreaseBtn.addEventListener('click', () => updateQuantity(selectedItem, false));
-    confirmBtn.addEventListener('click', () => confirmAndClose(selectedItem));
 
-    // Close modal on outside click and close button
+    confirmBtn.addEventListener('click', () => confirmAndClose(selectedItem)); 
+
+    // Close modal
     window.onclick = function (event) {
         if (event.target == modal) {
             modal.classList.remove("show");
@@ -97,22 +104,22 @@ function updateQuantity(item, isIncrease) {
     document.getElementById('quantity-div').innerHTML = item.product_quantity;
 }
 
-
-
 // Confirm order and close modal function
-function confirmAndClose(item) {
-    const existingIndex = orderArray.findIndex(i => i.product_id === item.product_id);
+function confirmAndClose(selectedItem) {
+    // Find the index of the item to update in orderArray
+    const existingIndex = orderArray.findIndex(i => i.product_id === selectedItem.product_id);
+
     if (existingIndex !== -1) {
-        orderArray[existingIndex] = item;
+        orderArray[existingIndex] = { ...selectedItem }; // Create a new copy
     } else {
-        orderArray.push(item);
+        orderArray.push(selectedItem);
     }
+
     localStorage.setItem("orderArray", JSON.stringify(orderArray));
     updateOrderDisplay();
-    //console.log(item.product_price)
+   
 
     document.getElementById("modal-div").classList.remove("show");
     document.getElementById("modal-div").classList.add("hide");
 }
-
 
