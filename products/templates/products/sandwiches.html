@@ -69,7 +69,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <form method="POST" >
+                        <form method="POST">
                             {% csrf_token %}
                             <button type="submit" class="btn" id="checkout">Checkout</button>
                         </form>
@@ -117,8 +117,9 @@
         <div class="row  card-row">
             <div class="col" id="open-modal-btn-div">
                 <p class=" align-center">
-                    <button class="btn open-modal" data-product-id="{{i.product_id}}"
-                        data-product-name="{{i.product_name}}" data-product-price="{{i.product_price}}" id="open-modal">Select item</button>
+                    <button class="btn open-modal" data-productID="{{i.product_id}}"
+                        data-productName="{{i.product_name}}" data-productPrice="{{i.product_price}}">Select
+                        item</button>
                 <p class="item-added">Item Added</p>
                 </p>
             </div>

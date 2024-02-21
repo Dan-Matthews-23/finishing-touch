@@ -1,5 +1,5 @@
 
-https://www.geeksforgeeks.org/how-to-modify-an-objects-property-in-an-array-of-objects-in-javascript/#approach-1-using-arraymap-method
+
 
 
 //localStorage.removeItem("selectedItem");
@@ -15,6 +15,10 @@ orderArray = orderArray.map(item => ({
 
 }));
 updateOrderDisplay();
+
+//console.log(orderArray);
+
+
 
 function updateOrderDisplay() {
     if (orderArray.length > 0) {
@@ -55,33 +59,43 @@ function openModal(event) {
 
     const modal = document.getElementById("modal-div");
     const quantityDiv = document.getElementById('quantity-div');
-
     const confirmBtn = document.querySelector('.select-product-btn');
 
-    // Find the existing product in orderArray or create a new one
-    const existingItem = orderArray.find(i => i.product_id === event.target.dataset.productId);
-    let selectedItem;
-    if (existingItem) {
-        selectedItem = { ...existingItem }; // Create a copy
-    } else {
-        selectedItem = {
-            product_id: event.target.dataset.productId,
-            product_name: event.target.dataset.productName,
-            product_price: parseFloat(event.target.dataset.productPrice),
-            original_price: parseFloat(event.target.dataset.productPrice),
-            product_quantity: 1
-        };
-    }
-    console.log("selectedItem in openModal:", selectedItem);
 
-    quantityDiv.innerHTML = selectedItem.product_quantity;
+
+
+
+
+
+
+
+
+
+
+
+
+    //let selectedItem;
+    //if (existingItem) {
+    //selectedItem = { ...existingItem }; // Create a copy
+    //} else {
+    //selectedItem = {
+    //product_id: event.target.dataset.productId,
+    //product_name: event.target.dataset.productName,
+    //product_price: parseFloat(event.target.dataset.productPrice),
+    //original_price: parseFloat(event.target.dataset.productPrice),
+    //product_quantity: 1
+    //};
+    //}
+    //console.log("selectedItem in openModal:", selectedItem);
+
+    //quantityDiv.innerHTML = selectedItem.product_quantity;
 
     modal.classList.add("show");
 
     const increaseBtn = document.getElementById('increase-quantity');
     const decreaseBtn = document.getElementById('decrease-quantity');
-    increaseBtn.addEventListener('click', () => updateQuantity(selectedItem, true));
-    decreaseBtn.addEventListener('click', () => updateQuantity(selectedItem, false));
+    increaseBtn.addEventListener('click', () => updateQuantity(true));
+    decreaseBtn.addEventListener('click', () => updateQuantity(false));
 
     confirmBtn.addEventListener('click', () => confirmAndClose(selectedItem));
 
@@ -98,22 +112,53 @@ function openModal(event) {
     }
 }
 
-function updateQuantity(selectedItem, isIncrease) {
-    if (selectedItem) {
-        //console.log("selectedItem before update:", selectedItem) // Check its state here
-        if (isIncrease) {
-            selectedItem.product_quantity++;
-            //console.log(`The new quantity for the product with ID of ${selectedItem.product_id} is ${selectedItem.product_quantity}`);
+const openModalButtons = document.querySelectorAll('.open-modal');
+openModalButtons.forEach(button => {
+    button.addEventListener('click', function (event) {
+        const productId = event.target.dataset.productId;
+        const productName = event.target.dataset.productName;
+        const productPrice = event.target.dataset.productPrice;
+        // You now have the data to use or pass to your updateQuantity function
+        updateQuantity(true, productId, productName, productPrice); // Example if updateQuantity handles adding 
+    });
+});
+
+
+function updateQuantity(isIncrease, productId, productName, productPrice) { // Pass product_id if not using event
+    if (isIncrease) {
+        const itemIndex = orderArray.findIndex(item => item.product_id === productId);
+        if (itemIndex !== -1) {
+            orderArray[itemIndex].product_quantity += 1; // Corrected increment
+            console.log("The quantity was increased");
         } else {
-            selectedItem.product_quantity = Math.max(selectedItem.product_quantity - 1, 1);
-            console.log(`The new quantity for the product with ID of ${selectedItem.product_id} is ${selectedItem.product_quantity}`);
+            newItem = {
+                product_id: productId,
+                product_name: productName,
+                product_price: parseFloat(productPrice),
+                original_price: parseFloat(productPrice),
+                product_quantity: 1
+            };
+            orderArray.push(newItem);
+            console.log("Item not found, so we've created it instead");
+            console.log(itemIndex);
+            console.log(orderArray);
+            console.log(`All details have been pulled from the orderArray and are: Product ID: ${productId}, Product Name: ${productName}  `)
         }
-        // Calculate using the original price
-        selectedItem.product_price = (selectedItem.product_quantity * selectedItem.original_price).toFixed(2);
-        document.getElementById('quantity-div').innerHTML = selectedItem.product_quantity;
-        console.log(`The new quantity for the product with ID of ${selectedItem.product_id} is ${selectedItem.product_quantity}`);
+    } else {
+        const itemIndex = orderArray.findIndex(item => item.product_id === product_id);
+        if (itemIndex !== -1) { // Check for item before decreasing
+            console.log(itemIndex)
+            orderArray[itemIndex].product_quantity = Math.max(orderArray[itemIndex].product_quantity - 1, 1);
+            console.log("The quantity was decreased");
+        }
     }
 }
+
+
+
+
+
+
 
 // Confirm order and close modal function
 function confirmAndClose(selectedItem) {
