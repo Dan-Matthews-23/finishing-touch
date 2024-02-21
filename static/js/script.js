@@ -1,3 +1,7 @@
+
+https://www.geeksforgeeks.org/how-to-modify-an-objects-property-in-an-array-of-objects-in-javascript/#approach-1-using-arraymap-method
+
+
 //localStorage.removeItem("selectedItem");
 //localStorage.removeItem("orderArray");
 
@@ -8,6 +12,7 @@ orderArray = orderArray.map(item => ({
     ...item,
     product_price: parseFloat(item.product_price).toFixed(2),
     original_price: parseFloat(item.original_price).toFixed(2)
+
 }));
 updateOrderDisplay();
 
@@ -47,11 +52,10 @@ selectProductBtns.forEach(btn => {
 
 // Modal Logic
 function openModal(event) {
-    
+
     const modal = document.getElementById("modal-div");
     const quantityDiv = document.getElementById('quantity-div');
-    const increaseBtn = document.getElementById('increase-quantity');
-    const decreaseBtn = document.getElementById('decrease-quantity');
+
     const confirmBtn = document.querySelector('.select-product-btn');
 
     // Find the existing product in orderArray or create a new one
@@ -71,12 +75,15 @@ function openModal(event) {
     console.log("selectedItem in openModal:", selectedItem);
 
     quantityDiv.innerHTML = selectedItem.product_quantity;
+
     modal.classList.add("show");
 
+    const increaseBtn = document.getElementById('increase-quantity');
+    const decreaseBtn = document.getElementById('decrease-quantity');
     increaseBtn.addEventListener('click', () => updateQuantity(selectedItem, true));
     decreaseBtn.addEventListener('click', () => updateQuantity(selectedItem, false));
 
-    confirmBtn.addEventListener('click', () => confirmAndClose(selectedItem)); 
+    confirmBtn.addEventListener('click', () => confirmAndClose(selectedItem));
 
     // Close modal
     window.onclick = function (event) {
@@ -91,17 +98,21 @@ function openModal(event) {
     }
 }
 
-function updateQuantity(item, isIncrease) {
-    if (isIncrease) {
-        item.product_quantity++;
-    } else {
-        item.product_quantity = Math.max(item.product_quantity - 1, 1);
+function updateQuantity(selectedItem, isIncrease) {
+    if (selectedItem) {
+        //console.log("selectedItem before update:", selectedItem) // Check its state here
+        if (isIncrease) {
+            selectedItem.product_quantity++;
+            //console.log(`The new quantity for the product with ID of ${selectedItem.product_id} is ${selectedItem.product_quantity}`);
+        } else {
+            selectedItem.product_quantity = Math.max(selectedItem.product_quantity - 1, 1);
+            console.log(`The new quantity for the product with ID of ${selectedItem.product_id} is ${selectedItem.product_quantity}`);
+        }
+        // Calculate using the original price
+        selectedItem.product_price = (selectedItem.product_quantity * selectedItem.original_price).toFixed(2);
+        document.getElementById('quantity-div').innerHTML = selectedItem.product_quantity;
+        console.log(`The new quantity for the product with ID of ${selectedItem.product_id} is ${selectedItem.product_quantity}`);
     }
-
-    // Calculate using the original price
-    item.product_price = (item.product_quantity * item.original_price).toFixed(2);
-
-    document.getElementById('quantity-div').innerHTML = item.product_quantity;
 }
 
 // Confirm order and close modal function
@@ -116,8 +127,9 @@ function confirmAndClose(selectedItem) {
     }
 
     localStorage.setItem("orderArray", JSON.stringify(orderArray));
+    selectedItem = [];
     updateOrderDisplay();
-   
+
 
     document.getElementById("modal-div").classList.remove("show");
     document.getElementById("modal-div").classList.add("hide");

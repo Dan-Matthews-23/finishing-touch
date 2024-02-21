@@ -59,35 +59,24 @@
     <div class="container-fluid align-center card product-container" id="order-details">
         <div class="row ">
             <div class="col ">
-
                 <div class="row ">
                     <div class="col ">
                         <h3 class=" modal-text-styling">Order Details</h3>
                     </div>
                 </div>
                 <div class="row ">
-                    <div class="col " id="display_order">
-                    </div>
-                </div>               
-                <div class="row ">
-                    <div class="col " id="display-order-product-name"></div>                    
-                </div>
-                <div class="row ">
-                    <div class="col " id="display-order-product-quantity"></div>                   
-                </div>
-                <div class="row">
-                    <div class="col bold " id="display-order-product-price"></div>                    
+                    <div class="col " id="display_order"></div>
                 </div>
                 <div class="row">
                     <div class="col">
-                        <form method="POST" action="{ url 'home'}">
-                            <button type="button" class="btn" id="checkout">Checkout</button>
+                        <form method="POST" >
+                            {% csrf_token %}
+                            <button type="submit" class="btn" id="checkout">Checkout</button>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="col  col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xm-2 col-xxl-2" id="remove-item-div">
-                <!--<button type="button" class="btn fa-solid fa-trash fa-xl" id="remove-item-btn"></button>-->
             </div>
         </div>
     </div>
@@ -129,9 +118,7 @@
             <div class="col" id="open-modal-btn-div">
                 <p class=" align-center">
                     <button class="btn open-modal" data-product-id="{{i.product_id}}"
-                        data-product-name="{{i.product_name}}" data-product-price="{{i.product_price}}"
-                        data-product-quantity="1">Select item</button>
-
+                        data-product-name="{{i.product_name}}" data-product-price="{{i.product_price}}" id="open-modal">Select item</button>
                 <p class="item-added">Item Added</p>
                 </p>
             </div>
@@ -147,30 +134,27 @@
                         <div class="col  align-center">
                             <span class="close">&times;</span>
                             <div class="row card-row ">
-                                
+
                             </div>
                             <div class="row card-row ">
-                            
+
                                 <div class="col modal-text-styling" id="product-price"></div>
                             </div>
                             <div class="row card-row align-center " id="quantity-row">
                                 <div class="col align-center-vertical align-center-horizontal">
-                                    <button type="button" class="btn fa-solid fa-square-minus fa-2xl decrease-quantity"
+                                    <button type="button" class="btn fa-solid fa-square-minus fa-2xl "
                                         id="decrease-quantity"></button>
                                 </div>
                                 <div class="col  align-center-vertical align-center-horizontal quantity-div"
                                     id="quantity-div"></div>
                                 <div class="col  align-center-vertical align-center-horizontal">
-                                    <button type="button" class="btn fa-solid fa-square-plus fa-2xl increase-quantity"
+                                    <button type="button" class="btn fa-solid fa-square-plus fa-2xl "
                                         id="increase-quantity"></button>
                                 </div>
                             </div>
                             <div class="row modal-row-padding  ">
                                 <div class="col  align-center-vertical align-center-horizontal">
-                                    {% csrf_token %}
-
                                     <button class="btn select-product-btn">Add to order</button>
-
                                 </div>
                             </div>
                         </div>

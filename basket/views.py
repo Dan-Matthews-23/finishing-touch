@@ -1,29 +1,23 @@
 from django.shortcuts import render
+from django.http import JsonResponse  # For sending JSON responses
+from django.shortcuts import render
+import json
 
 def basket(request):
     return render(request, 'basket/basket.html')
 
 
-#def add_items_to_basket(request, product-id):
-def create_basket(request, product_id):
 
-    product_id = request.form.get("product_id")
-    product_name = request.form.get("product_name")   
-    product_price = request.form.get("product_price") 
-    quantity = request.form.get("quantity")
 
-    quantity = int(request.POST.get('quantity'))
-    redirect_url = request.POST.get('redirect_url')
-    basket = request.session.get('basket', {})
+def process_order(request):
+    if request.method == 'POST':
+        order_data = request.POST.get('orderData')  
+        order_array = json.loads(order_data)
 
-    if product_id in list(bag.keys()):
-        basket[item_id] += quantity
+        # Process the order_array in Django
+        # ...
+
+        return JsonResponse({'status': 'success'}) # Return success response
     else:
-        basket[item_id] = quantity
-
-    request.session['basket'] = basket
-    print(request.session['basket'])
-    return redirect(redirect_url)
-    
-# YOU NEED TO GO BACK THROUGH SCRIPT.JS AND SANDWICHES AND REPLACE ALL IDS WITH UNDERSCROLLS (_) 
-# WHERE THERE ARE DASHES (-). aLSO CHECK STYLES. tHIS IS BECAUSE DASHES WILL NOT WORK WITH PYTHON
+        # Handle other request methods if needed
+        return render(request, 'error_page.html')  # Example error handling
