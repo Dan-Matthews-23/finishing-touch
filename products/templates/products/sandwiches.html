@@ -68,6 +68,9 @@
                     <div class="col " id="display_order"></div>
                 </div>
                 <div class="row">
+                    <div class="col " id="total_cost"></div>
+                </div>
+                <div class="row">
                     <div class="col">
                         <form method="POST">
                             {% csrf_token %}
@@ -156,9 +159,12 @@
                                 </div>
                             </div>
                             <div class="row modal-row-padding  ">
-                                <div class="col  align-center-vertical align-center-horizontal">
-                                    <button class="btn select-product-btn">Add to order</button>
-                                </div>
+                                <form method="POST" action="">
+                                    {% csrf_token %}
+                                    <div class="col  align-center-vertical align-center-horizontal">
+                                        <button class="btn select-product-btn">Add to order</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

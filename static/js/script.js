@@ -5,7 +5,7 @@
 //localStorage.removeItem("selectedItem");
 //localStorage.removeItem("orderArray");
 
-
+/*
 const order_div = document.getElementById("display_order");
 let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
 orderArray = orderArray.map(item => ({
@@ -18,28 +18,53 @@ updateOrderDisplay();
 
 //console.log(orderArray);
 
+*/
 
+let order_div = document.getElementById("display_order");
+let total_cost = document.getElementById("total_cost");
+let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
 
-function updateOrderDisplay() {
-    if (orderArray.length > 0) {
-        order_div.innerHTML = orderArray.map((entry, index) => `
+//function updateOrderDisplay() {
+if (orderArray.length > 0) {
+    order_div.innerHTML = orderArray.map((entry, index) => `
             ${entry.product_name} (x ${entry.product_quantity})<br>
-            &pound;${entry.default_price}<br>
+            &pound;${entry.price}<br>
             <br>
             <span id="delete_item" data-index="${index}"><i class="btn fa-solid fa-trash fa-xl"></i></span>
             <br><br>
         `).join('');
 
-        // Add event listeners for delete buttons
-        const deleteButtons = order_div.querySelectorAll('#delete_item');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', () => deleteItem(button.dataset.index));
-        });
+    let totalSum = orderArray.reduce((accumulator, entry) => {
+        // Convert price to float before adding
+        entry.price = parseFloat(entry.price);
 
-    } else {
-        order_div.innerHTML = "Your basket is empty";
-    }
+        // Make sure the conversion was successful
+        if (isNaN(entry.price)) {
+            console.error("Failed to convert price to float:", entry);
+        }
+
+        return accumulator + entry.price;
+    }, 0);
+
+    // Round to two decimal places
+    totalSum = totalSum.toFixed(2);
+
+    total_cost.innerHTML = (`Total: ${totalSum}`); // Display the rounded total
+    //console.log(`The total sum is ${totalSum} and its type is ${typeof totalSum}`);
+
+
+
+
+
+    // Add event listeners for delete buttons
+    const deleteButtons = order_div.querySelectorAll('#delete_item');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', () => deleteItem(button.dataset.index));
+    });
+} else {
+    order_div.innerHTML = "Your basket is empty";
 }
+//}
 
 // Function to delete an item
 function deleteItem(index) {
@@ -58,7 +83,7 @@ selectProductBtns.forEach(btn => {
 function openModal(event) {
 
     const modal = document.getElementById("modal-div");
-    const quantityDiv = document.getElementById('quantity-div');
+    document.getElementById('quantity-div').innerHTML = 1;
     const confirmBtn = document.querySelector('.select-product-btn');
 
     modal.classList.add("show");
@@ -68,7 +93,7 @@ function openModal(event) {
     //increaseBtn.addEventListener('click', () => updateQuantity(true));
     decreaseBtn.addEventListener('click', () => updateQuantity(false));
 
-    confirmBtn.addEventListener('click', () => confirmAndClose(selectedItem));
+    confirmBtn.addEventListener('click', () => confirmAndClose());
 
     // Close modal
     window.onclick = function (event) {
@@ -119,7 +144,7 @@ openModalButtons.forEach(modalBtn => {
                 product_id: product_id,
                 product_name: product_name,
                 default_price: default_price,
-                product_quantity: 1,
+                //product_quantity: 1,
                 price: 0
             };
             orderArray.push(insertNewProduct);
@@ -142,20 +167,25 @@ openModalButtons.forEach(modalBtn => {
     });
 });
 
-
 function updateQuantity(product_id, product_name, default_price) { // Pass product_id if not using event
 
     if (product_id) { product_id = parseInt(product_id); }
     if (default_price) { default_price = parseFloat(default_price); }
-    //if (product_quantity) { product_quantity = parseInt(product_quantity); }
+    //if (product_quantity) { product_quantity = parseFloat(product_quantity); }
     console.log(product_id);
 
     const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);
 
     if (pullOrderArrayIndex !== -1) {
-        // Update the product quantity and price
+
         orderArray[pullOrderArrayIndex].product_quantity += 1;
-        orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].default_price * orderArray[pullOrderArrayIndex].product_quantity;
+        document.getElementById('quantity-div').innerHTML = orderArray[pullOrderArrayIndex].product_quantity;
+
+        //document.getElementById('display_product_name').innerHTML = orderArray[pullOrderArrayIndex].product_name;
+
+        orderArray[pullOrderArrayIndex].price_calc = orderArray[pullOrderArrayIndex].default_price * orderArray[pullOrderArrayIndex].product_quantity;
+        orderArray[pullOrderArrayIndex].price = parseFloat(orderArray[pullOrderArrayIndex].price_calc).toFixed(2);
+        //document.getElementById('display_product_price').innerHTML = orderArray[pullOrderArrayIndex].price;
 
         // Save the updated order array to local storage
         localStorage.setItem("orderArray", JSON.stringify(orderArray));
@@ -166,97 +196,7 @@ function updateQuantity(product_id, product_name, default_price) { // Pass produ
     } else {
         console.log("Product not found in the order array");
     }
-
-
-
-
-
-
-
-
-
-
-
-    /*if (pullOrderArray) {
-        console.log(`In updateQuantity function, a product was found`);
-        //console.log(pullOrderArray);
-        pullOrderArray.product_quantity += 1;
-        let new_price = parseFloat(pullOrderArray.default_price * pullOrderArray.product_quantity);
-        //console.log(`The quantity is ${pullOrderArray.product_quantity}`);
-        //product_quantity = pullOrderArray.product_quantity;
-        console.log(`The new quantity is ${pullOrderArray.product_quantity} with type of ${typeof pullOrderArray.product_quantity}. The default price is ${pullOrderArray.default_price} with type of ${pullOrderArray.default_price}. The new price is ${new_price} with type of ${typeof new_price}`);
-        pullOrderArray.price = new_price;
-       // orderArray.update(pullOrderArray);
-        localStorage.setItem("orderArray", JSON.stringify(orderArray));
-        //pullOrderArray = [];
-        console.log(orderArray);*/
-
-
-
-
-
-    //} 
-
-
-
-
-
-
-    ////console.log(`In updateQuantity function, this product has an ID of ${product_id}, its name is ${product_name} and its price is ${default_price}`);// and the quantity is ${product_quantity}`);
-    ////console.log(`In updateQuantity function, the typeof ID is ${typeof product_id}. The typeof product_name is  is ${typeof product_name}. The typeof price is ${typeof default_price}.`);// The typeof quantity is ${typeof product_quantity} `);
-    ////console.log(msg);
-    ////console.log(product_quantity);
-
-
-    /* if (isIncrease) {
-        const itemIndex = orderArray.findIndex(item => item.product_id === productId);
-
-        ////console.log(`ID is ${productId} and its type is ${typeof productId}`)
-        if (itemIndex !== -1) {
-            //console.log(`Yes, there is an item here with the product ID of ${productId}. We will update the quantity to ${orderArray[itemIndex].product_quantity}`);
-            //let new_quantity = 0;
-            //orderArray[itemIndex].product_quantity += 1;
-
-            //orderArray[itemIndex].product_quantity = new_quantity; // Update existing property
-            //orderArray[itemIndex].product_quantity = productName,
-            //orderArray[itemIndex].product_name,
-            //default_price: parseFloat(productPrice),
-            //default_price: parseFloat(productPrice),
-            //product_quantity: new_quantity
-
-            //orderArray[itemIndex].update(new_values);
-            //localStorage.setItem("orderArray", JSON.stringify(orderArray));
-            //new_values = [];
-            ////console.log(orderArray);
-            ////console.log("The quantity was increased. It is now " + orderArray[itemIndex].product_quantity);
-            ////console.log(`The index is ${itemIndex}`)
-            ////console.log(`The product ID is ${orderArray[itemIndex].product_id} and its type is ${typeof orderArray[itemIndex].product_id} `)
-            //return productId;
-        } else {
-            /*
-            let quantity = 0;
-            quantity += 1;
-            newItem = {
-                product_id: productId,
-                product_name: productName,
-                default_price: parseFloat(productPrice),
-                default_price: parseFloat(productPrice),
-                product_quantity: quantity
-            };
-            orderArray.push(newItem);
-            //console.log(`Item not found, so we've created it instead. The product ID is ${productId} and its type is ${typeof productId}`);
-            ////console.log(itemIndex);
-            ////console.log(orderArray);
-            ////console.log(`All details have been pulled from the orderArray and are: Product ID: ${productId}, Product Name: ${productName}  `)
-        }
-    } else {
-        const itemIndex = orderArray.findIndex(item => item.product_id === productId);
-        if (itemIndex !== -1) { // Check for item before decreasing
-            //console.log(itemIndex)
-            orderArray[itemIndex].product_quantity = Math.max(orderArray[itemIndex].product_quantity - 1, 1);
-            //console.log("The quantity was decreased");
-        }
-    }*/
+    //updateOrderDisplay();
 }
 
 
@@ -266,19 +206,19 @@ function updateQuantity(product_id, product_name, default_price) { // Pass produ
 
 
 // Confirm order and close modal function
-function confirmAndClose(selectedItem) {
+function confirmAndClose() {
     // Find the index of the item to update in orderArray
-    const existingIndex = orderArray.findIndex(i => i.product_id === selectedItem.product_id);
+    //const existingIndex = orderArray.findIndex(i => i.product_id === selectedItem.product_id);
 
-    if (existingIndex !== -1) {
-        orderArray[existingIndex] = { ...selectedItem }; // Create a new copy
-    } else {
-        orderArray.push(selectedItem);
-    }
+    //if (existingIndex !== -1) {
+    //    orderArray[existingIndex] = { ...selectedItem }; // Create a new copy
+    //} else {
+    //     orderArray.push(selectedItem);
+    // }
 
-    localStorage.setItem("orderArray", JSON.stringify(orderArray));
-    selectedItem = [];
-    updateOrderDisplay();
+    // localStorage.setItem("orderArray", JSON.stringify(orderArray));
+    //selectedItem = [];
+    //updateOrderDisplay();
 
 
     document.getElementById("modal-div").classList.remove("show");
