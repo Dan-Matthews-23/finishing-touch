@@ -24,8 +24,19 @@ let order_div = document.getElementById("display_order");
 let total_cost = document.getElementById("total_cost");
 
 let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
-const jsonData = JSON.stringify(orderArray);
-document.getElementById('orderData').value = jsonData;
+
+if (orderArray.length > 0) {
+    orderArray.map((entry, index) => `
+    <input type="hidden" id="arrayProductID" value="${entry.product_id}">
+    <input type="hidden" id="arrayQuantity" value="${entry.product_id}">
+    <input type="hidden" id="arrayPrice" value="${entry.price}">
+    <input type="hidden" id="arrayTotalPrice" value="${entry.totalPrice}">            
+        `).join('');
+} //LETS SEE IF THIS WORKS. DID IT AFTER A DRINK
+
+
+//const jsonData = JSON.stringify(orderArray);
+//document.getElementById('orderData').value = jsonData;
 
 //FIND A WAY TO MAKE EVERY FUNCTION HERE ONLY EXECUTE ON A CERTAIN PAGE
 
