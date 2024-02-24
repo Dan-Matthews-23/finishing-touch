@@ -118,7 +118,7 @@
             <div class="col" id="open-modal-btn-div">
                 <p class=" align-center">
                     <button class="btn open-modal" id="open-modal-value" value="{{i.product_id}}"
-                        data-productName="{{i.product_name}}" data-productPrice="{{i.product_price}}">Select
+                        data-product-name="{{i.product_name}}" data-product-price="{{i.product_price}}">Select
                         item</button>
                 <p class="item-added">Item Added</p>
                 </p>
@@ -150,7 +150,9 @@
                                     id="quantity-div"></div>
                                 <div class="col  align-center-vertical align-center-horizontal">
                                     <button type="button" class="btn fa-solid fa-square-plus fa-2xl "
-                                        id="increase-quantity"></button>
+                                        id="increase-quantity" value="{{i.product_id}}"
+                                        data-product-name="{{i.product_name}}"
+                                        data-product-price="{{i.product_price}}"></button>
                                 </div>
                             </div>
                             <div class="row modal-row-padding  ">
