@@ -74,7 +74,7 @@
                     <div class="col">
                         <form method="POST" action="{% url 'process_order' %}">
                             {% csrf_token %}
-                            <input type="hidden" name="order_data" id="orderData">
+                            <input type="hidden" name="order_data" id="orderData" value="">
                             <button type="submit" class="btn" id="checkout">Checkout</button>
                         </form>
                     </div>

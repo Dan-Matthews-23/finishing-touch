@@ -39,4 +39,4 @@ def process_order(request):
         request.session['orderData'] = request.POST.get('jsonData')
     # Assuming basket.html loads this view...
     order_data = request.session.get('orderData') 
-    return render(request, 'basket/basket.html', {'order_data': order_data}) 
+    return render(request, 'basket/basket.html', order_data) 

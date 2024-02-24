@@ -22,10 +22,12 @@ updateOrderDisplay();
 
 let order_div = document.getElementById("display_order");
 let total_cost = document.getElementById("total_cost");
-let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
 
+let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
 const jsonData = JSON.stringify(orderArray);
 document.getElementById('orderData').value = jsonData;
+
+//FIND A WAY TO MAKE EVERY FUNCTION HERE ONLY EXECUTE ON A CERTAIN PAGE
 
 
 
