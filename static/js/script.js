@@ -24,6 +24,13 @@ let order_div = document.getElementById("display_order");
 let total_cost = document.getElementById("total_cost");
 let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
 
+const jsonData = JSON.stringify(orderArray);
+document.getElementById('orderData').value = jsonData;
+
+
+
+console.log(jsonData)
+
 //function updateOrderDisplay() {
 if (orderArray.length > 0) {
     order_div.innerHTML = orderArray.map((entry, index) => `
