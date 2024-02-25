@@ -370,7 +370,7 @@ body {
 
 
 /* Basket  */
-.order-details {
+#order-details-container {
     width: 50%;
 }
 
