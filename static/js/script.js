@@ -35,8 +35,8 @@ if (orderArray.length > 0) {
 } //LETS SEE IF THIS WORKS. DID IT AFTER A DRINK
 
 
-//const jsonData = JSON.stringify(orderArray);
-//document.getElementById('orderData').value = jsonData;
+const jsonData = JSON.stringify(orderArray);
+document.getElementById('orderData').value = jsonData;
 
 //FIND A WAY TO MAKE EVERY FUNCTION HERE ONLY EXECUTE ON A CERTAIN PAGE
 
