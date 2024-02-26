@@ -36,11 +36,18 @@
                     <h5 class="card-title">Order Details</h5>
                     {% for i in order_items %}
                     <p>
+                        <input type="hidden" id="product_name" value="{{i.product_name}}">
+                        <input type="hidden" id="product_quantity" value="{{i.product_quantity}}">
                         <span class="order ">{{i.product_name}} (X) {{i.product_quantity}}</span>
                     </p>
                     <p>
+                        <input type="hidden" id="product_price" value="{{i.price}}">
                         <span class="order ">£{{i.price}}</span>
-                    </p>                   
+                    </p>
+                    <p>
+                        <input type="hidden" id="total_price" value="{{i.total_price}}">
+                        <span class="order ">Total price: £{{total_price}}</span>
+                    </p>
                     {% endfor %}
                     <a href="#" class="btn btn-priindex">Go somewhere</a>
                 </div>
@@ -49,5 +56,26 @@
     </div>
 </div>
 
+<div class="container-fluid align-center with-borders" id="order-details-container">
+    <div class="row  product-row align-center ">
+        <div class="col  align-center product-col">
+            <div class="card ">
+                <div class="card-body ">
+                    <h5 class="card-title">Order Details</h5>
+                    {% for i in order_items %}
+                    <p><span class="order ">Product Name: {{i.product_name}} (X) {{i.product_quantity}}</span></p>
+                    <p><span class="order ">Product Quantity: {{i.product_quantity}}</span></p>
+                    <p><span class="order ">Default Price: {{i.default_price}}</span></p>
+                    <p><span class="order ">Price Calc: {{i.price_calc}}</span></p>
+                    <p><span class="order ">Price: {{i.price}}</span></p>
+                    
+                    <p><span class="order ">Total price: £{{total_price}}</span></p>
+                    {% endfor %}
+                    <a href="#" class="btn btn-priindex">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

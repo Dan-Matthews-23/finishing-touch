@@ -27,10 +27,14 @@ let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
 
 if (orderArray.length > 0) {
     orderArray.map((entry, index) => `
-    <input type="hidden" id="arrayProductID" value="${entry.product_id}">
-    <input type="hidden" id="arrayQuantity" value="${entry.product_id}">
-    <input type="hidden" id="arrayPrice" value="${entry.price}">
-    <input type="hidden" id="arrayTotalPrice" value="${entry.totalPrice}">            
+    ${entry.product_id}
+    <br>
+    ${entry.product_name}
+    <br>
+    ${entry.price}
+    <br>
+    ${entry.totalPrice}
+    <br>         
         `).join('');
 } //LETS SEE IF THIS WORKS. DID IT AFTER A DRINK
 
@@ -147,7 +151,7 @@ openModalButtons.forEach(modalBtn => {
             // //console.log(foundProduct.product_name);
             product_id = productIdFromBtn;
             product_name = foundProduct.product_name;
-            default_price = foundProduct.default_price;
+            default_price = parseFloat(foundProduct.default_price).toFixed(2);
             //product_quantity = 1;
             msg = "Product was found";
             //console.log(`A product was found and its default price is ${default_price}`);
@@ -155,7 +159,7 @@ openModalButtons.forEach(modalBtn => {
 
             product_id = productIdFromBtn;
             product_name = productNameFromBtn;
-            default_price = productPriceFromBtn;
+            default_price = parseFloat(productPriceFromBtn).toFixed(2);;
             //product_quantity = 1;
             msg = "Product was NOT found";
             //console.log(`A product was found and its default price is ${default_price}`);
@@ -163,9 +167,9 @@ openModalButtons.forEach(modalBtn => {
             insertNewProduct = {
                 product_id: product_id,
                 product_name: product_name,
-                default_price: default_price,
+                default_price: parseFloat(default_price).toFixed(2),
                 //product_quantity: 1,
-                price: 0
+                price: 0.00
             };
             orderArray.push(insertNewProduct);
             ////console.log(`Product not found, so we have added a new item with ID of ${productId}, name of ${product_name} and price of ${default_price}`);
@@ -203,12 +207,19 @@ function updateQuantity(product_id, product_name, default_price) { // Pass produ
 
         //document.getElementById('display_product_name').innerHTML = orderArray[pullOrderArrayIndex].product_name;
 
-        orderArray[pullOrderArrayIndex].price_calc = orderArray[pullOrderArrayIndex].default_price * orderArray[pullOrderArrayIndex].product_quantity;
+        orderArray[pullOrderArrayIndex].price_calc = parseFloat(orderArray[pullOrderArrayIndex].default_price).toFixed(2) * orderArray[pullOrderArrayIndex].product_quantity;
         orderArray[pullOrderArrayIndex].price = parseFloat(orderArray[pullOrderArrayIndex].price_calc).toFixed(2);
+       
+
+
         //document.getElementById('display_product_price').innerHTML = orderArray[pullOrderArrayIndex].price;
+
+
 
         // Save the updated order array to local storage
         localStorage.setItem("orderArray", JSON.stringify(orderArray));
+
+
 
         //console.log("Product quantity updated successfully!");
         //console.log(orderArray);
