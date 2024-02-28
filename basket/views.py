@@ -19,39 +19,28 @@ def basket(request, context):
 def process_order(request):
     if request.method == "POST":
         orderArrayData = request.POST.get("orderData")
-        print(orderArrayData)
-        order_items = json.loads(orderArrayData) 
+        order_items = json.loads(orderArrayData)
         total_price = 0
+
         for item in order_items:
             try:
-                product_id = item['product_id']
-
-                product_name = item['product_name']
+                default_price = float(item['default_price'])              
+                quantity = item['product_quantity']
                 
-                default_price = round(float(item['default_price']), 2)
-                print(f"The type of default_price is {type(default_price)}")
+                total_price = float(total_price)
+                total_price += default_price * quantity
+                total_price = f"{total_price:.2f}"              
+                
 
-                                
-                product_quantity = item['product_quantity']
-                print(f"The type of quantity is {type(product_quantity)}")
-
-                price_calc = round(float(item['price_calc']), 2)
-                print(f"The type of price_calc is {type(price_calc)}")
-
-
-                for item in order_items:
-                    total_price += round(float(item['default_price']), 2) * item['product_quantity']
-                    print(f"The type of total_price is {type(total_price)}")   
-                                   
-                          
             except KeyError as e:
-                print(f"Missing key '{e}' in order item: {item}")            
-            context = {
-                'order_items': order_items,
-                'total_price': round(float(total_price), 2)
-            }
-            #return redirect('basket', order_details)
-            return render(request, 'basket/basket.html', context)
+                print(f"Missing key '{e}' in order item: {item}")
+
+        context = {
+            'order_items': order_items,
+            'total_price': total_price
+        }
+        return render(request, 'basket/basket.html', context)
+
     elif request.method == "GET":
         return render(request, 'basket/basket.html')
 
@@ -65,4 +54,21 @@ def process_order(request):
 
 
 
+"""
 
+ product_id_from_array = item['product_id']
+                print(f"The type of product_id_from_array is {type(product_id_from_array)} and its value is {product_id_from_array}")
+
+                product_name_from_array = item['product_name']
+                print(f"The type of product_name_from_array is {type(product_name_from_array)} and its value is {product_name_from_array}")
+
+                default_price_from_array = item['default_price']                
+                print(f"The type of default_price_from_array is {type(default_price_from_array)} and its value is {default_price_from_array}")
+                
+                product_quantity_from_array = item['product_quantity']
+                print(f"The type of product_quantity_from_array is {type(product_quantity_from_array)} and its value is {product_quantity_from_array}")
+
+                price_from_array = item['price']
+                print(f"The type of price_from_array is {type(price_from_array)} and its value is {price_from_array}")      
+
+                """
