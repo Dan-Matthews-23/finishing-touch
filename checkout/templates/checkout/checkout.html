@@ -38,15 +38,14 @@
                             <h5 class="card-title">Order Details</h5>
                         </div>
                     </div>
-                    <form method="POST" action="{% url 'checkout' %}">
-                        {% csrf_token %}
+                   
 
                     <div class="row with-borders align-center">
                         <div class="col with-borders col-sm-12 col-md-12 col-lg-9 col-xl-9">
                             {{ order_form.customer_name | as_crispy_field }} 
                         </div>
                         <div class="col with-borders col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{total_price}}</div>
-                    </div> </form>
+                    </div> 
                     
                     <a href="#" class="btn btn-priindex">Go to checkout</a>
                 </div>

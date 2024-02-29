@@ -53,7 +53,8 @@
                     <div class="row with-borders align-center">
                         <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">Contact Number</div>
                         <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                            <input type="text" name="contact_number" id="contact_number" placeholder="000000000000" required>
+                            <input type="text" name="contact_number" id="contact_number" placeholder="000000000000"
+                                required>
                         </div>
                     </div>
                     <div class="row with-borders align-center">
@@ -62,10 +63,11 @@
                             <textarea class="text-area" name="more_info" id="more_info"></textarea>
                         </div>
                     </div>
-                    <form method="POST" action="{% url 'checkout' %}">
+                    <form method="POST" action="{url 'checkout'}">
                         {% csrf_token %}
-                        <a href="#" class="btn btn-priindex">Go to checkout</a>
+                        <button type="submit" id="checkout" class="btn">Checkout</button>
                     </form>
+
                 </div>
             </div>
         </div>

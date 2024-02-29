@@ -39,7 +39,6 @@ def process_order(request):
             'order_items': order_items,
             'total_price': total_price
         }
-        #request.session['basket'] = '1'
         return render(request, 'basket/basket.html', context)
 
     elif request.method == "GET":
