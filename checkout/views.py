@@ -2,7 +2,7 @@
 
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
-#from .forms import OrderForm 
+from .forms import OrderForm 
 
 def checkout(request):
     return render(request, 'home/index.html')
