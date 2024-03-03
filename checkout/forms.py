@@ -28,8 +28,8 @@ class OrderForm(forms.ModelForm):
             'customer_tel_number': 'Phone Number',            
             'customer_postcode': 'Postal Code',
             'customer_address_three': 'Town or City',
-            'customer_address_one': 'Street Address 1',
-            'customer_address_two': 'Street Address 2',
+            'customer_address_one': 'House / Flat Number',
+            'customer_address_two': 'Street',
             'customer_address_four': 'County',
         }
 

@@ -35,23 +35,11 @@
                 <div class="card-body ">
                     <div class="row with-borders align-center">
                         <div class="col with-borders align-center">
-                            <h5 class="card-title">Order Details</h5>
+                            <h5 class="card-title">Confirm your details</h5>
                         </div>
                     </div>
-                   
 
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-4 col-xl-4">
-                            <label for="tel_num">Telephone Number:</label>
-                        </div>
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">
-                        {% if session.is_logged_in %}
-                            {{ user_details.contact_number }}
-                        {% else %}
-                            {{ order_form.customer_tel_number | as_crispy_field }}
-                        {% endif %}                           
-                        </div>                        
-                    </div>
+
                     <div class="row with-borders align-center">
                         <div class="col with-borders col-sm-12 col-md-12 col-lg-4 col-xl-4">
                             <label for="tel_num">Telephone Number:</label>
@@ -64,8 +52,73 @@
                             {% endif %}
                         </div>
                     </div>
-                    
-                    
+                    <div class="row with-borders align-center">
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <label for="tel_num">House/Apartment Number:</label>
+                        </div>
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                            {% if session.is_logged_in %}
+                            {{ user_details.customer_address_one }}
+                            {% else %}
+                            {{ order_form.customer_address_one | as_crispy_field }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row with-borders align-center">
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <label for="tel_num">Street:</label>
+                        </div>
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                            {% if session.is_logged_in %}
+                            {{ user_details.customer_address_two }}
+                            {% else %}
+                            {{ order_form.customer_address_two | as_crispy_field }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row with-borders align-center">
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <label for="tel_num">Town/City:</label>
+                        </div>
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                            {% if session.is_logged_in %}
+                            {{ user_details.customer_address_three }}
+                            {% else %}
+                            {{ order_form.customer_address_three | as_crispy_field }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row with-borders align-center">
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <label for="tel_num">County:</label>
+                        </div>
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                            {% if session.is_logged_in %}
+                            {{ user_details.customer_address_four }}
+                            {% else %}
+                            {{ order_form.customer_address_four | as_crispy_field }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row with-borders align-center">
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <label for="tel_num">Postcode:</label>
+                        </div>
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                            {% if session.is_logged_in %}
+                            {{ user_details.customer_postcode }}
+                            {% else %}
+                            {{ order_form.customer_postcode | as_crispy_field }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row with-borders align-center">
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <button class="btn" id="payment">Go to payment</button>
+                        </div>
+                    </div>
+
+
 
                     <!--<a href="#" class="btn btn-priindex">Go to checkout</a>-->
                 </div>

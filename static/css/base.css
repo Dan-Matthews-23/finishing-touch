@@ -372,6 +372,7 @@ body {
 /* Basket  */
 #order-details-container {
     width: 50%;
+    height: 800px;
 }
 
 .text-area {
