@@ -63,7 +63,7 @@
                             <textarea class="text-area" name="more_info" id="more_info"></textarea>
                         </div>
                     </div>
-                    <form method="POST" action="{% url 'checkout' %}">
+                    <form method="POST" action="{% url 'process_checkout' %}">
                         {% csrf_token %}
                         <button type="submit" id="checkout" class="btn">Checkout</button>
                     </form>

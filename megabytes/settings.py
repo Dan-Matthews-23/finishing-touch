@@ -149,6 +149,11 @@ INSTALLED_APPS = [
     'home',
     'products',
     'basket',
+    'checkout',
+
+    #Crispy Forms
+    'crispy_forms',
+
 ]
 
 MIDDLEWARE = [
@@ -163,6 +168,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'megabytes.urls'
+CRISPY_TEMPLATE_PACL = 'bootstrap5'
 
 TEMPLATES = [
     {
@@ -177,8 +183,13 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages', 
             ],
+            'builtins': [
+                'crispy_forms.templatetags.crispy_forms_tags',
+                'crispy_forms.templatetags.crispy_forms_field',
+            ]
+
         },
     },
 ]

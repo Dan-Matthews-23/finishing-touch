@@ -7,7 +7,7 @@ from django import forms
 # Create your views here.
 
 """
-('[{"product_id":"6","product_name":"Egg Mayonnaise","default_price":2.4,"price":"2.40","product_quantity":1,"price_calc":2.4}]')
+('[{"product_id":"6","product_name":"Egg Mayonnaise","default_price":2.4,"price":"2.40","product_quantity":1,"price_calc":2.4}]') 
 """
 
 def basket(request, context):
