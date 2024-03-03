@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+
+{% endblock %}
+
 {% block content %}
 
 <section class="index-banner">
@@ -120,13 +126,29 @@
 
 
 
-                    <!--<a href="#" class="btn btn-priindex">Go to checkout</a>-->
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<div class="container-fluid align-center with-borders" id="">
+    <div class="row with-borders align-center">
+        <div class="mb-3" id="card-element"></div>
+    </div>
+</div>          
+
+
+                    
+
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{{ stripe_public_key|json_script:"id_stripe_public_key" }}
+{{ client_secret|json_script:"id_client_secret" }}
+<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 
 
 {% endblock %}
