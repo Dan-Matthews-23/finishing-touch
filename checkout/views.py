@@ -1,11 +1,7 @@
 from django.shortcuts import render, redirect, reverse
-from .models import Orders
-import json
-from django import forms
-
-
 from django.contrib import messages
-from .forms import OrderForm 
+
+from .forms import OrderForm
 
 def checkout(request):
     return render(request, 'home/index.html')
@@ -13,10 +9,10 @@ def checkout(request):
 
 
 def process_checkout(request):
-    basket = request.session.get()('basket', {})
-    if not basket:
-        messages.error(request, 'There is nothing in your bag')
-        return redirect(reverse('products'))
+    #basket = request.session.get()('basket', {})
+    #if not basket:
+        #messages.error(request, 'There is nothing in your bag')
+        #return redirect(reverse('products'))
     
     order_form = OrderForm()
     template = 'checkout/checkout.html'

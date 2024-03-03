@@ -151,8 +151,8 @@ INSTALLED_APPS = [
     'basket',
     'checkout',
 
-    #Crispy Forms
     'crispy_forms',
+    'crispy_bootstrap5' ,
 
 ]
 
@@ -168,7 +168,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'megabytes.urls'
-CRISPY_TEMPLATE_PACL = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 TEMPLATES = [
     {
