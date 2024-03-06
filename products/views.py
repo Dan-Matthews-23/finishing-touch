@@ -21,7 +21,7 @@ def list_sandwich_creator_items(request):
     }
     return render(request, 'products/sandwich-creator.html', context) 
 
-
+"""
 def add_to_basket(request):
     if request.method == "POST":
         orderArrayData = request.POST.get("orderData")
@@ -51,3 +51,5 @@ def add_to_basket(request):
 
     elif request.method == "GET":
         return render(request, 'basket/basket.html')
+
+        """

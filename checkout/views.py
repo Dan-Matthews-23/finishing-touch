@@ -1,15 +1,12 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.conf import settings
-
+from checkout.contexts import bag_contents
 from .forms import OrderForm
-
 import stripe
 
 def checkout(request):
     return render(request, 'home/index.html')
-
-
 
 def process_checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
@@ -21,7 +18,11 @@ def process_checkout(request):
         #return redirect(reverse('prepacked_sandwiches'))
 
     current_bag = bag_contents(request)
-    total = current_bag['grand_total']
+    #total = 10
+    total = int(float(request.session.get('total_price')))  # Convert to float, then truncate
+
+    print(f"The type of total is {type(total)} and its value is {total}")
+    
     stripe_total = round(total * 100)
     stripe.api_key = stripe_secret_key
     intent = stripe.PaymentIntent.create(
@@ -30,6 +31,7 @@ def process_checkout(request):
     )
 
     order_form = OrderForm()
+    #print(intent)
 
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. \
@@ -43,7 +45,3 @@ def process_checkout(request):
     }
 
     return render(request, template, context)
-
-
-
-

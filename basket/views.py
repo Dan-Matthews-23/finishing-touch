@@ -39,7 +39,11 @@ def process_order(request):
             'order_items': order_items,
             'total_price': total_price
         }
+        request.session['basket'] = order_items
+        request.session['total_price'] = total_price
+        #print(f" The type of session is {type(request.session['total_price'])} and the value is {request.session['total_price']}")
         return render(request, 'basket/basket.html', context)
+        
 
     elif request.method == "GET":
         return render(request, 'basket/basket.html')
