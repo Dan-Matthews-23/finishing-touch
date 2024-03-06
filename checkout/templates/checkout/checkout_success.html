@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+<section class="index-banner">
+    <div class="container-fluid g-0">
+        <div class="row g-0">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0">
+                <div class="row row-index-left g-0">
+                    <div class=" col-index-background-left g-0" aria-hidden="true"></div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0">
+                <div class="row row-index-right g-0">
+                    <div class="col-index-background-right g-0">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0 align-center ">
+                            <h1 class="index-header">Hungry?</h2>
+                                <h2 class="index-header">We've got you covered</h3>
+                                    <p class="index-header lg-padding-not-left">
+                                        <button type="button" class="btn btn-light">Shop Now</button>
+                                    </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid align-center with-borders" id="order-details-container">
+    <div class="row  product-row align-center ">
+        <div class="col  align-center product-col">
+            <div class="card ">
+                <div class="card-body ">
+                    <div class="row with-borders align-center">
+                        <div class="col with-borders align-center">
+                            <h5 class="card-title">Order confirmed</h5>
+                        </div>
+                    </div>
+                    <div class="row with-borders align-center">                        
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">Order confirmed!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+{% block postloadjs %}
+{{ block.super }}
+{{ stripe_public_key|json_script:"id_stripe_public_key" }}
+{{ client_secret|json_script:"id_client_secret" }}
+<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
+
+
+{% endblock %}
