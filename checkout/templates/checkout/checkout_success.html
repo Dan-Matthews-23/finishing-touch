@@ -44,7 +44,7 @@
                             <h5 class="card-title">Order confirmed</h5>
                         </div>
                     </div>
-                    <div class="row with-borders align-center">                        
+                    <div class="row with-borders align-center">
                         <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">Order confirmed!</div>
                     </div>
                 </div>
@@ -52,19 +52,4 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-{% endblock %}
-
-{% block postloadjs %}
-{{ block.super }}
-{{ stripe_public_key|json_script:"id_stripe_public_key" }}
-{{ client_secret|json_script:"id_client_secret" }}
-<script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
-
-
 {% endblock %}
