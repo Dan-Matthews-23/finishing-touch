@@ -5,6 +5,32 @@ from checkout.contexts import bag_contents
 from .forms import OrderForm
 import stripe
 
+
+
+
+
+## STRIPE IS NOW WORKING AGAIN. THERE IS SOMETHING IN THE PART 7 TUTORIAL VIDEO THAT BREAKS THE CODE (  'client_secret': intent.client_secret, ). INTENT NO LONGER WORKS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def checkout(request):
     return render(request, 'home/index.html')
 
