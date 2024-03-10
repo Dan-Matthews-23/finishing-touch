@@ -28,51 +28,132 @@
     </div>
 </section>
 
-<div class="container-fluid align-center with-borders" id="order-details-container">
-    <div class="row  product-row align-center ">
-        <div class="col  align-center product-col">
-            <div class="card ">
-                <div class="card-body ">
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders align-center">
-                            <h5 class="card-title">Order Details</h5>
-                        </div>
-                    </div>
-                    {% for i in order_items %}
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-9 col-xl-9">{{i.product_name}} (X)
-                            {{i.product_quantity}}</div>
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{i.price}}</div>
-                    </div>
-                    {% endfor %}
+<form method="POST" action="{% url 'process_checkout' %}">
+    {% csrf_token %}
 
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-9 col-xl-9">Total Price: </div>
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{total_price}}</div>
-                    </div>
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">Contact Number</div>
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                            <input type="text" name="contact_number" id="contact_number" placeholder="000000000000"
-                                required>
+    <div class="container-fluid align-center with-borders" id="order-details-container">
+        <div class="row  product-row align-center ">
+            <div class="col  align-center product-col">
+                <div class="card ">
+                    <div class="card-body ">
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders align-center">
+                                <h5 class="card-title">Order Details</h5>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">Allergy Information</div>
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                            <textarea class="text-area" name="more_info" id="more_info"></textarea>
+                        {% for i in order_items %}
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-9 col-xl-9">{{i.product_name}} (X)
+                                {{i.product_quantity}}</div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{i.price}}</div>
                         </div>
-                    </div>
-                    <form method="POST" action="{% url 'process_checkout' %}">
-                        {% csrf_token %}
-                        <button type="submit" id="checkout" class="btn">Open process_checkout function</button>
-                    </form>
+                        {% endfor %}
 
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-9 col-xl-9">Total Price: </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{total_price}}</div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">Contact Number</div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                <input type="text" name="contact_number" id="contact_number" placeholder="000000000000">
+                            </div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">Allergy Information
+                            </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                <textarea class="text-area" name="more_info" id="more_info"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <label for="customer_name">Your Name</label>
+                            </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <input type="text" id="customer_name" name="customer_name" placeholder="Your name">
+                            </div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <label for="customer_email">Email</label>
+                            </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <input type="text" id="customer_email" name="customer_email"
+                                    placeholder="Email Address">
+                            </div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <label for="customer_tel_number">Contact Number</label>
+                            </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <input type="text" id="customer_tel_number" name="customer_tel_number"
+                                    placeholder="Contact Number">
+                            </div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <label for="customer_address_one">House/Flat number</label>
+                            </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <input type="text" id="customer_address_one" name="customer_address_one"
+                                    placeholder="First line">
+                            </div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <label for="customer_address_two">Street Name</label>
+                            </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <input type="text" id="customer_address_two" name="customer_address_two"
+                                    placeholder="Street Name">
+                            </div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <label for="customer_address_three">Town/City</label>
+                            </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <input type="text" id="customer_address_three" name="customer_address_three"
+                                    placeholder="Town/City">
+                            </div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <label for="customer_address_four">County</label>
+                            </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <input type="text" id="customer_address_four" name="customer_address_four"
+                                    placeholder="County">
+                            </div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <label for="customer_postcode">Postcode</label>
+                            </div>
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <input type="text" id="customer_postcode" name="customer_postcode"
+                                    placeholder="Postcode">
+                            </div>
+                        </div>
+                        <div class="row with-borders align-center">
+                            <div class="col with-borders col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                <button type="submit" id="checkout" class="btn">Open process_checkout function</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
+
+
+
+
+
 
 
 
