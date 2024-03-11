@@ -44,8 +44,8 @@ class Orders(models.Model):
 
 
 class OrderPlaceholder(models.Model):
-    order_id = models.AutoField(primary_key=True, default=1)
-    order_number = models.IntegerField(blank=False, editable=False, default=1)
+    order_id = models.AutoField(primary_key=True)
+    order_number = models.CharField(max_length=32, null=False, editable=False)
     product_id = models.IntegerField(blank=False, editable=False, default=1)
     quantity = models.IntegerField(blank=False, editable=False, default=1)
     default_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
@@ -59,9 +59,12 @@ class OrderPlaceholder(models.Model):
     street_address2 = models.CharField(max_length=50, blank=False, default="Test")
     county = models.CharField(max_length=50, blank=False, default="Test")
 
-    def save(self, *args, **kwargs):       
-        self.total_cost = self.product.price * self.quantity
-        super().save(*args, **kwargs)
-
     def __str__(self):
-        return f'SKU {self.product.sku} on order {self.order.order_number}'
+        return self.order_number
+
+    #def save(self, *args, **kwargs):       
+        #self.total_cost = self.product.price * self.quantity
+        #super().save(*args, **kwargs)
+
+    #def __str__(self):
+        #return f'SKU {self.product.sku} on order {self.order.order_number}'

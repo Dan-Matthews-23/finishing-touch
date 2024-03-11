@@ -4,6 +4,8 @@ from django.conf import settings
 from checkout.contexts import bag_contents
 from .forms import OrderForm
 import stripe
+from basket.models import Basket
+from .models import OrderPlaceholder
 
 
 
@@ -14,6 +16,41 @@ import stripe
 
 
 
+def create_placeholder(request):
+    order_number = request.session['order_number']
+    basket_items = Basket.objects.filter(order_number=order_number)
+
+    if basket_items:
+        for item in basket_items:
+            defaults = {
+            'quantity': item.quantity,
+            'default_price': item.default_price,
+            'total_price': item.total_price,
+            'full_name': request.POST['customer_name'],  # Assuming this is correct 
+            'email': request.POST['customer_email'],
+            'phone_number': request.POST['customer_tel_number'],
+            'postcode': request.POST['customer_postcode'],
+            'town_or_city': request.POST['customer_address_three'],
+            'street_address1': request.POST['customer_address_one'],
+            'street_address2': request.POST['customer_address_two'],
+            'county': request.POST['customer_address_four'], 
+}
+
+         
+
+            placeholder_item, created = OrderPlaceholder.objects.get_or_create(
+                order_number=order_number, 
+                product_id=item.product_id,
+                defaults=defaults 
+            )
+            placeholder_item.save()
+
+        print("Order placed!") 
+        print("Yes, items were found")
+    else:
+        print("No items found") 
+
+    return render(request, 'checkout/checkout.html') 
 
 
 
@@ -30,6 +67,7 @@ import stripe
 
 
 
+"""
 
 def create_placeholder(request):
     form_data = {
@@ -40,17 +78,65 @@ def create_placeholder(request):
             'town_or_city': request.POST['customer_address_three'],
             'street_address1': request.POST['customer_address_one'],
             'street_address2': request.POST['customer_address_two'],
-            'county': request.POST['customer_address_four'],
-            
+            'county': request.POST['customer_address_four'],                      
         }
-    print(form_data)
-    request.session['customer_form_details'] = form_data
+    order_number = request.session['order_number']
+
+    basket_items = Basket.objects.filter(order_number=order_number)
+    if basket_items.exists():
+        for item in basket_items:
+            check_existing_order = OrderPlaceholder.objects.filter(order_number=order_number)
+            if check_existing_order.exists:
+                check_existing_order.order_number = order_number,
+                check_existing_order.product_id = item.product_id,
+                check_existing_order.quantity =  item.quantity,
+                check_existing_order.default_price =  item.default_price,
+                check_existing_order.total_price =  item.total_price,
+                check_existing_order.full_name = form_data['full_name'],
+                check_existing_order.email = form_data['email'],
+                check_existing_order.phone_number = form_data['phone_number'],
+                check_existing_order.postcode = form_data['postcode'],
+                check_existing_order.town_or_city = form_data['town_or_city'],
+                check_existing_order.street_address1 = form_data['street_address1'],
+                check_existing_order.street_address2 = form_data['street_address2'],
+                check_existing_order.county = form_data['county'],
+                check_existing_order.save()
+            else:
+                create_placeholder_item = OrderPlaceholder.objects.create(
+                order_number = order_number,
+                product_id = item.product_id,
+                quantity =  item.quantity,
+                default_price =  item.default_price,
+                total_price =  item.total_price,
+                full_name = form_data['full_name'],
+                email = form_data['email'],
+                phone_number = form_data['phone_number'],
+                postcode = form_data['postcode'],
+                town_or_city = form_data['town_or_city'],
+                street_address1 = form_data['street_address1'],
+                street_address2 = form_data['street_address2'],
+                county = form_data['county'],
+                ) 
+                create_placeholder_item.save()
+                print("Order placed!")          
+                print("Yes, items were found")
+        # Process each basket item
+    else:
+        print("No items found")   
     return render(request, 'checkout/checkout.html')
+
+"""
+
+
+
 
 def process_checkout(request):
 
     if request.method == 'POST':
         #bag = request.session.get('bag', {})
+        
+        
+        
         form_data = request.session['customer_form_details']
         print(form_data)
 

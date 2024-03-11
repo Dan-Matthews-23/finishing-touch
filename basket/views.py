@@ -49,9 +49,11 @@ def process_order(request):
 
         context = {
             'order_items': order_items,
-            'total_price': total_price
+            'total_price': total_price,
+            
         }
-        #print(context)
+       
+        request.session['order_number'] =str(order_number)
         request.session['basket'] = order_items
         request.session['total_price'] = total_price
         #print(f" The type of session is {type(request.session['total_price'])} and the value is {request.session['total_price']}")
