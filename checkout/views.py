@@ -31,7 +31,7 @@ import stripe
 
 
 
-def payment_selection(request):
+def create_placeholder(request):
     form_data = {
             'full_name': request.POST['customer_name'],
             'email': request.POST['customer_email'],
@@ -41,7 +41,9 @@ def payment_selection(request):
             'street_address1': request.POST['customer_address_one'],
             'street_address2': request.POST['customer_address_two'],
             'county': request.POST['customer_address_four'],
+            
         }
+    print(form_data)
     request.session['customer_form_details'] = form_data
     return render(request, 'checkout/checkout.html')
 
@@ -50,6 +52,7 @@ def process_checkout(request):
     if request.method == 'POST':
         #bag = request.session.get('bag', {})
         form_data = request.session['customer_form_details']
+        print(form_data)
 
         """
         form_data = {

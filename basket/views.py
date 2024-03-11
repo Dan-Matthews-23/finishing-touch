@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Basket
 import json
 from django import forms
+import uuid
+
 
 
 # Create your views here.
@@ -21,6 +23,7 @@ def process_order(request):
         orderArrayData = request.POST.get("orderData")
         order_items = json.loads(orderArrayData)
         total_price = 0
+        order_number = uuid.uuid4() 
 
         for item in order_items:
             try:
@@ -29,7 +32,16 @@ def process_order(request):
                 
                 total_price = float(total_price)
                 total_price += default_price * quantity
-                total_price = f"{total_price:.2f}"              
+                total_price = f"{total_price:.2f}"
+
+                create_basket_item = Basket.objects.create(
+                    order_number = order_number,
+                    product_id = item['product_id'],
+                    quantity = item['product_quantity'],
+                    default_price = item['default_price'],
+                    total_price = item['price'],
+                    ) 
+                create_basket_item.save()           
                 
 
             except KeyError as e:
@@ -39,6 +51,7 @@ def process_order(request):
             'order_items': order_items,
             'total_price': total_price
         }
+        #print(context)
         request.session['basket'] = order_items
         request.session['total_price'] = total_price
         #print(f" The type of session is {type(request.session['total_price'])} and the value is {request.session['total_price']}")

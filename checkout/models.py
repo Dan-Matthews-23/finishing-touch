@@ -44,10 +44,20 @@ class Orders(models.Model):
 
 
 class OrderPlaceholder(models.Model):
-    order = models.ForeignKey(Orders, null=False, blank=False, on_delete=models.CASCADE)
-    item = models.ForeignKey(Products, null=False, blank=False, on_delete=models.CASCADE)
-    quantity = models.IntegerField(null=False, blank=False, default=0)
-    total = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False, default=0, editable=False)
+    order_id = models.AutoField(primary_key=True, default=1)
+    order_number = models.IntegerField(blank=False, editable=False, default=1)
+    product_id = models.IntegerField(blank=False, editable=False, default=1)
+    quantity = models.IntegerField(blank=False, editable=False, default=1)
+    default_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
+    total_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
+    full_name = models.CharField(max_length=50,blank=False, default="Test")
+    email = models.CharField(max_length=50, blank=False, default="Test")
+    phone_number = models.CharField(max_length=50, blank=False, default="Test")
+    postcode = models.CharField(max_length=50, blank=False, default="Test")
+    town_or_city = models.CharField(max_length=50, blank=False, default="Test")
+    street_address1 = models.CharField(max_length=50, blank=False, default="Test")
+    street_address2 = models.CharField(max_length=50, blank=False, default="Test")
+    county = models.CharField(max_length=50, blank=False, default="Test")
 
     def save(self, *args, **kwargs):       
         self.total_cost = self.product.price * self.quantity
