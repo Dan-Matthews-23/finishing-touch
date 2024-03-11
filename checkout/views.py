@@ -31,14 +31,27 @@ import stripe
 
 
 
-def checkout(request):
-    return render(request, 'home/index.html')
+def payment_selection(request):
+    form_data = {
+            'full_name': request.POST['customer_name'],
+            'email': request.POST['customer_email'],
+            'phone_number': request.POST['customer_tel_number'],            
+            'postcode': request.POST['customer_postcode'],
+            'town_or_city': request.POST['customer_address_three'],
+            'street_address1': request.POST['customer_address_one'],
+            'street_address2': request.POST['customer_address_two'],
+            'county': request.POST['customer_address_four'],
+        }
+    request.session['customer_form_details'] = form_data
+    return render(request, 'checkout/checkout.html')
 
 def process_checkout(request):
 
     if request.method == 'POST':
         #bag = request.session.get('bag', {})
+        form_data = request.session['customer_form_details']
 
+        """
         form_data = {
             'full_name': request.POST['customer_name'],
             'email': request.POST['customer_email'],
@@ -49,6 +62,7 @@ def process_checkout(request):
             'street_address2': request.POST['customer_address_two'],
             'county': request.POST['customer_address_four'],
         }
+        """
         #print(form_data)
         
     

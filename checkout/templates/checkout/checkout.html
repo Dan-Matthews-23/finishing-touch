@@ -34,77 +34,45 @@
     </div>
 </section>
 
-<div class="container-fluid align-center with-borders" id="order-details-container">
-    <div class="row  product-row align-center ">
-        <div class="col  align-center product-col">
-            <div class="card ">
-                <div class="card-body ">
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders align-center">
-                            <h5 class="card-title">Confirm your details</h5>
-                        </div>
-                    </div>
-                    <form method="POST" action="">
-                        
-
-                            
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                <!--
-                                 order_form.customer_name | as_crispy_field 
-                                 order_form.customer_email | as_crispy_field 
-                                 order_form.customer_tel_number | as_crispy_field 
-                                 order_form.customer_address_one | as_crispy_field 
-                                 order_form.customer_address_two | as_crispy_field 
-                                 order_form.customer_address_three | as_crispy_field 
-                                 order_form.customer_address_four | as_crispy_field 
-                                 order_form.customer_postcode | as_crispy_field 
-                                -->
+<section id="payment-selection">
+    <form method="POST" action="{% url 'process_checkout' %}">
+        {% csrf_token %}
+        <div class="container-fluid align-center with-borders" id="order-details-container">
+            <div class="row  product-row align-center ">
+                <div class="col  align-center product-col">
+                    <div class="card ">
+                        <div class="card-body ">
+                            <div class="row with-borders align-center">
+                                <div class="col with-borders align-center">
+                                    <h5 class="card-title">Payment Method</h5>
+                                </div>
                             </div>
-                        </div>                        
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<br><br>
-
-<div class="container-fluid align-center with-borders" id="order-details-container">
-    <div class="row  product-row align-center ">
-        <div class="col  align-center product-col">
-            <div class="card ">
-                <div class="card-body ">
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders align-center">
-                            <h5 class="card-title">Payment Method</h5>
-                        </div>
-                    </div>
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <button type="button" class="collapsible bold">Pay with card</button>
-                            <div class="content">
-                                <div class="mb-3" id="card-element"></div>
+                            <div class="row with-borders align-center">
+                                <div class="col with-borders col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <button type="button" class="collapsible bold">Pay with card</button>
+                                    <div class="content">
+                                        <div class="mb-3" id="card-element"></div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <button class="btn" id="payment">Go to payment</button>
+                            <div class="row with-borders align-center">
+                                <div class="col with-borders col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <button class="btn" id="payment">Go to payment</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </form>
+</section>
+
+
+
+
+
+
 
 
 
