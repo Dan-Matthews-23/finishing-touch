@@ -63,40 +63,32 @@
         </div>
         </div>
     </section>
-    <!--End of order summary section-->
+<!--End of order summary section-->
 
 
 
 
 
     <!--This is the product selection section-->
-    <section class="product-listings">
+    <section class="customer-details">
         <div class="container-fluid align-center card product-container">
             <div class="row  product-row align-center ">
                 <div class="col  align-center product-col">
                     <div class="card ">
                         <div class="card-body ">
                             <div class="row  align-center">
-                                <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">Contact Number</div>
-                                <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                                    <input type="text" name="contact_number" id="contact_number"
-                                        placeholder="000000000000">
-                                </div>
-                            </div>
-                            <div class="row  align-center">
-                                <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">Allergy Information
-                                </div>
-                                <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                                    <textarea class="text-area" name="more_info" id="more_info"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="row  align-center">
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
                                     <label for="customer_name">Your Name</label>
                                 </div>
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    {% if session.is_logged_in %}
+                                    <input type="text" name="customer_name" id="customer_name" value="{{user.full_name}}" required>
+                                    {% else %}
                                     <input type="text" id="customer_name" name="customer_name" placeholder="Your name">
+                                    {% endif %}
+                                    
+                                    
+                                    
                                 </div>
                             </div>
                             <div class="row  align-center">
@@ -175,5 +167,7 @@
         </div>
         </div>
     </section>
-    <!--End of product selection section-->
-    {% endblock %}
+</form>
+
+<!--End of product selection section-->
+{% endblock %}
