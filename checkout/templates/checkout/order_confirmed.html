@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
+
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container-fluid align-center with-borders" id="order-details-container">
+    <div class="row  product-row align-center ">
+        <div class="col  align-center product-col">
+            <div class="card ">
+                <div class="card-body ">
+                    <div class="row with-borders align-center">
+                        <div class="col with-borders align-center">
+                            <h5 class="card-title">Order confirmed</h5>
+                        </div>
+                    </div>
+                    <div class="row with-borders align-center">
+                        <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">Order confirmed!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

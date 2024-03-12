@@ -46,7 +46,19 @@ def create_placeholder(request):
     else:
         print("No items found") 
 
-    return render(request, 'checkout/checkout.html') 
+    
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
+
+
+    template = 'checkout/checkout.html'
+    context = {
+        #'order_form': order_form,
+        'stripe_public_key': stripe_public_key,
+        #'client_secret': client_secret,
+    }
+
+    return render(request, template, context)
 
 
 
@@ -117,7 +129,7 @@ def process_checkout(request):
         amount=stripe_total,
         currency=settings.STRIPE_CURRENCY,
     )
-    print(intent)
+    #print(intent)
 
     #order_form = OrderForm()
     #print(intent)
@@ -126,11 +138,12 @@ def process_checkout(request):
         messages.warning(request, 'Stripe public key is missing. \
             Did you forget to set it in your environment?')
 
-    template = 'checkout/checkout.html'
+    template = 'checkout/order_confirmed.html'
     context = {
         #'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
+        'defaults':defaults,
     }
 
     return render(request, template, context)

@@ -9,30 +9,7 @@
 
 {% block content %}
 
-<section class="index-banner">
-    <div class="container-fluid g-0">
-        <div class="row g-0">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0">
-                <div class="row row-index-left g-0">
-                    <div class=" col-index-background-left g-0" aria-hidden="true"></div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0">
-                <div class="row row-index-right g-0">
-                    <div class="col-index-background-right g-0">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0 align-center ">
-                            <h1 class="index-header">Hungry?</h2>
-                                <h2 class="index-header">We've got you covered</h3>
-                                    <p class="index-header lg-padding-not-left">
-                                        <button type="button" class="btn btn-light">Shop Now</button>
-                                    </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <section id="payment-selection">
     <form method="POST" action="{% url 'process_checkout' %}">
