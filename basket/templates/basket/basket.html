@@ -3,173 +3,177 @@
 
 {% block content %}
 
-<section class="index-banner">
-    <div class="container-fluid g-0">
-        <div class="row g-0">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0">
-                <div class="row row-index-left g-0">
-                    <div class=" col-index-background-left g-0" aria-hidden="true"></div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0">
-                <div class="row row-index-right g-0">
-                    <div class="col-index-background-right g-0">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0 align-center ">
-                            <h1 class="index-header">Hungry?</h2>
-                                <h2 class="index-header">We've got you covered</h3>
-                                    <p class="index-header lg-padding-not-left">
-                                        <button type="button" class="btn btn-light">Shop Now</button>
-                                    </p>
-                        </div>
-                    </div>
-                </div>
+
+
+<!--This is the section that holds the secondary navigation where users can navigate on the same page-->
+<section class="menu-navigation">
+    <div class="container-fluid align-center card product-container" id="menu-navigation">
+        <div class="row ">
+            <div class="col ">
+                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#specials">MegaBytes Specials</a>
+                </h3>
             </div>
         </div>
+        <div class="row ">
+            <div class="col ">
+                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#sundries">Sundries</a></h3>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col ">
+                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#extras">Extras</a></h3>
+            </div>
+        </div>
+
     </div>
 </section>
+<!--End of secondary navigation section-->
+
 
 <form method="POST" action="{% url 'create_placeholder' %}">
     {% csrf_token %}
+    <!--This is the order sumary section that holds details of the current order-->
+    <section class="order-details">
+        <div class="container-fluid align-center card product-container" id="order-details">
+            <div class="row ">
+                <div class="col ">
+                    <div class="row  align-center">
+                        <div class="col  align-center">
+                            <h5 class="card-title">Order Details</h5>
+                        </div>
+                    </div>
+                    {% for i in order_items %}
+                    <div class="row  align-center">
+                        <div class="col  col-sm-12 col-md-12 col-lg-9 col-xl-9">{{i.product_name}} (X)
+                            {{i.product_quantity}}</div>
+                        <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{i.price}}</div>
+                    </div>
 
-    <div class="container-fluid align-center " id="order-details-container">
-        <div class="row  product-row align-center ">
-            <div class="col  align-center product-col">
-                <div class="card ">
-                    <div class="card-body ">
-                        <div class="row  align-center">
-                            <div class="col  align-center">
-                                <h5 class="card-title">Order Details</h5>
+                    {% endfor %}
+
+
+                    <div class="row  align-center">
+                        <div class="col  col-sm-12 col-md-12 col-lg-9 col-xl-9">Total Price: </div>
+                        <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{total_price}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col  col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xm-2 col-xxl-2" id="remove-item-div">
+            </div>
+        </div>
+        </div>
+    </section>
+    <!--End of order summary section-->
+
+
+
+
+
+    <!--This is the product selection section-->
+    <section class="product-listings">
+        <div class="container-fluid align-center card product-container">
+            <div class="row  product-row align-center ">
+                <div class="col  align-center product-col">
+                    <div class="card ">
+                        <div class="card-body ">
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">Contact Number</div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                    <input type="text" name="contact_number" id="contact_number"
+                                        placeholder="000000000000">
+                                </div>
                             </div>
-                        </div>
-                        {% for i in order_items %}
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-9 col-xl-9">{{i.product_name}} (X)
-                                {{i.product_quantity}}</div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{i.price}}</div>
-                        </div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">Allergy Information
+                                </div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                    <textarea class="text-area" name="more_info" id="more_info"></textarea>
+                                </div>
+                            </div>
 
-                        {% endfor %}
-
-
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-9 col-xl-9">Total Price: </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{total_price}}</div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <label for="customer_name">Your Name</label>
+                                </div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <input type="text" id="customer_name" name="customer_name" placeholder="Your name">
+                                </div>
+                            </div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <label for="customer_email">Email</label>
+                                </div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <input type="text" id="customer_email" name="customer_email"
+                                        placeholder="Email Address">
+                                </div>
+                            </div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <label for="customer_tel_number">Contact Number</label>
+                                </div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <input type="text" id="customer_tel_number" name="customer_tel_number"
+                                        placeholder="Contact Number">
+                                </div>
+                            </div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <label for="customer_address_one">House/Flat number</label>
+                                </div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <input type="text" id="customer_address_one" name="customer_address_one"
+                                        placeholder="First line">
+                                </div>
+                            </div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <label for="customer_address_two">Street Name</label>
+                                </div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <input type="text" id="customer_address_two" name="customer_address_two"
+                                        placeholder="Street Name">
+                                </div>
+                            </div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <label for="customer_address_three">Town/City</label>
+                                </div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <input type="text" id="customer_address_three" name="customer_address_three"
+                                        placeholder="Town/City">
+                                </div>
+                            </div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <label for="customer_address_four">County</label>
+                                </div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <input type="text" id="customer_address_four" name="customer_address_four"
+                                        placeholder="County">
+                                </div>
+                            </div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <label for="customer_postcode">Postcode</label>
+                                </div>
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <input type="text" id="customer_postcode" name="customer_postcode"
+                                        placeholder="Postcode">
+                                </div>
+                            </div>
+                            <div class="row  align-center">
+                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    <button type="submit" id="checkout" class="btn">Open process_checkout
+                                        function</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-<br><br>
-
-    <div class="container-fluid align-center " id="customer-details-container">
-        <div class="row  product-row align-center ">
-            <div class="col  align-center product-col">
-                <div class="card ">
-                    <div class="card-body ">
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">Contact Number</div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                                <input type="text" name="contact_number" id="contact_number" placeholder="000000000000">
-                            </div>
-                        </div>
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">Allergy Information
-                            </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-6 col-xl-6">
-                                <textarea class="text-area" name="more_info" id="more_info"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <label for="customer_name">Your Name</label>
-                            </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <input type="text" id="customer_name" name="customer_name" placeholder="Your name">
-                            </div>
-                        </div>
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <label for="customer_email">Email</label>
-                            </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <input type="text" id="customer_email" name="customer_email"
-                                    placeholder="Email Address">
-                            </div>
-                        </div>
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <label for="customer_tel_number">Contact Number</label>
-                            </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <input type="text" id="customer_tel_number" name="customer_tel_number"
-                                    placeholder="Contact Number">
-                            </div>
-                        </div>
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <label for="customer_address_one">House/Flat number</label>
-                            </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <input type="text" id="customer_address_one" name="customer_address_one"
-                                    placeholder="First line">
-                            </div>
-                        </div>
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <label for="customer_address_two">Street Name</label>
-                            </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <input type="text" id="customer_address_two" name="customer_address_two"
-                                    placeholder="Street Name">
-                            </div>
-                        </div>
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <label for="customer_address_three">Town/City</label>
-                            </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <input type="text" id="customer_address_three" name="customer_address_three"
-                                    placeholder="Town/City">
-                            </div>
-                        </div>
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <label for="customer_address_four">County</label>
-                            </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <input type="text" id="customer_address_four" name="customer_address_four"
-                                    placeholder="County">
-                            </div>
-                        </div>
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <label for="customer_postcode">Postcode</label>
-                            </div>
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <input type="text" id="customer_postcode" name="customer_postcode"
-                                    placeholder="Postcode">
-                            </div>
-                        </div>
-                        <div class="row  align-center">
-                            <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                <button type="submit" id="checkout" class="btn">Open process_checkout function</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
-</form>
-
-
-
-
-
-
-
-
-{% endblock %}
+    </section>
+    <!--End of product selection section-->
+    {% endblock %}
