@@ -60,12 +60,11 @@ def create_placeholder(request):
 
 
 def process_checkout(request):
-
     if request.method == 'POST':
         #bag = request.session.get('bag', {})
-
         order_number = request.session['order_number']
-        get_order_placeholder = OrderPlaceholder.objects.filter(order_number=order_number)        
+        get_order_placeholder = OrderPlaceholder.objects.filter(order_number=order_number)
+        get_basket_items = Basket.objects.filter(order_number=order_number)        
         #form_data = request.session['customer_form_details']
        # print(form_data)
 
@@ -90,16 +89,12 @@ def process_checkout(request):
                 defaults=defaults 
             )
                 create_order.save()
-
-        print("Order placed!") 
-        print("Yes, items were found")
+                get_order_placeholder.delete()
+                get_basket_items.delete()
+                
+       
     else:
-        print("No items found") 
-
-       
-       
-        
-    
+        print("No items found")    
     
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
