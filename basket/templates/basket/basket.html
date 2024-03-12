@@ -63,7 +63,7 @@
         </div>
         </div>
     </section>
-<!--End of order summary section-->
+    <!--End of order summary section-->
 
 
 
@@ -82,13 +82,11 @@
                                 </div>
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
                                     {% if session.is_logged_in %}
-                                    <input type="text" name="customer_name" id="customer_name" value="{{user.full_name}}" required>
+                                    <input type="text" name="customer_name" id="customer_name"
+                                        value="{{user.full_name}}" required>
                                     {% else %}
                                     <input type="text" id="customer_name" name="customer_name" placeholder="Your name">
                                     {% endif %}
-                                    
-                                    
-                                    
                                 </div>
                             </div>
                             <div class="row  align-center">
@@ -96,8 +94,13 @@
                                     <label for="customer_email">Email</label>
                                 </div>
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    {% if session.is_logged_in %}
+                                    <input type="text" name="customer_email" id="customer_email" value="{{user.email}}"
+                                        required>
+                                    {% else %}
                                     <input type="text" id="customer_email" name="customer_email"
                                         placeholder="Email Address">
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="row  align-center">
@@ -105,8 +108,13 @@
                                     <label for="customer_tel_number">Contact Number</label>
                                 </div>
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    {% if session.is_logged_in %}
+                                    <input type="text" name="customer_tel_number" id="customer_tel_number"
+                                        value="{{user.contact_number}}" required>
+                                    {% else %}
                                     <input type="text" id="customer_tel_number" name="customer_tel_number"
-                                        placeholder="Contact Number">
+                                        placeholder="+44">
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="row  align-center">
@@ -114,8 +122,13 @@
                                     <label for="customer_address_one">House/Flat number</label>
                                 </div>
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    {% if session.is_logged_in %}
+                                    <input type="text" name="customer_address_one" id="customer_address_one"
+                                        value="{{user.customer_address_one}}" required>
+                                    {% else %}
                                     <input type="text" id="customer_address_one" name="customer_address_one"
-                                        placeholder="First line">
+                                        placeholder="Flat/House Number">
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="row  align-center">
@@ -123,8 +136,13 @@
                                     <label for="customer_address_two">Street Name</label>
                                 </div>
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    {% if session.is_logged_in %}
+                                    <input type="text" name="customer_address_two" id="customer_address_two"
+                                        value="{{user.customer_address_two}}" required>
+                                    {% else %}
                                     <input type="text" id="customer_address_two" name="customer_address_two"
                                         placeholder="Street Name">
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="row  align-center">
@@ -132,8 +150,13 @@
                                     <label for="customer_address_three">Town/City</label>
                                 </div>
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    {% if session.is_logged_in %}
+                                    <input type="text" name="customer_address_three" id="customer_address_three"
+                                        value="{{user.customer_address_three}}" required>
+                                    {% else %}
                                     <input type="text" id="customer_address_three" name="customer_address_three"
                                         placeholder="Town/City">
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="row  align-center">
@@ -141,8 +164,13 @@
                                     <label for="customer_address_four">County</label>
                                 </div>
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    {% if session.is_logged_in %}
+                                    <input type="text" name="customer_address_four" id="customer_address_four"
+                                        value="{{user.customer_address_four}}" required>
+                                    {% else %}
                                     <input type="text" id="customer_address_four" name="customer_address_four"
                                         placeholder="County">
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="row  align-center">
@@ -150,14 +178,18 @@
                                     <label for="customer_postcode">Postcode</label>
                                 </div>
                                 <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
+                                    {% if session.is_logged_in %}
+                                    <input type="text" name="customer_postcode" id="customer_postcode"
+                                        value="{{user.customer_postcode}}" required>
+                                    {% else %}
                                     <input type="text" id="customer_postcode" name="customer_postcode"
                                         placeholder="Postcode">
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="row  align-center">
-                                <div class="col  col-sm-12 col-md-12 col-lg-16 col-xl-6">
-                                    <button type="submit" id="checkout" class="btn">Open process_checkout
-                                        function</button>
+                                <div class="col  col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <button type="submit" id="checkout" class="btn">Go to payment</button>
                                 </div>
                             </div>
                         </div>
