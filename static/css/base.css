@@ -154,10 +154,9 @@ body {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #888;    
+    height: 30%;
     width: 30%;
-    height: 450px;
-    width: 50%;
     border-radius: 10% 10% 10% 10%;
 }
 
