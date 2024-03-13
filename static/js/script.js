@@ -19,10 +19,6 @@ selectProductBtns.forEach(btn => {
 
 
 
-
-
-
-
 function updateOrder() {
     if (orderArray.length > 0) {
         order_div.innerHTML = orderArray.map((entry, index) => `
@@ -34,16 +30,19 @@ function updateOrder() {
         `).join('');
 
         let totalSum = orderArray.reduce((accumulator, entry) => {
-            entry.price = entry.price;
+            const itemPrice = parseFloat(entry.price); // Convert price to number
 
-            if (isNaN(entry.price)) {
+            if (isNaN(itemPrice)) {
                 console.error("Failed to convert price to float:", entry);
+                return accumulator; // Skip invalid prices
             }
 
-            return accumulator + entry.price;
+            return accumulator + itemPrice;
         }, 0);
 
-        total_cost.innerHTML = (`Total: ${totalSum}`);
+        totalSum = parseFloat(totalSum).toFixed(2);
+
+        total_cost.innerHTML = (`Total: £${totalSum}`);
 
 
         const deleteButtons = order_div.querySelectorAll('#delete_item');
@@ -96,7 +95,7 @@ openModalButtons.forEach(modalBtn => {
         const productNameFromBtn = this.dataset.productName;
         const productPriceFromBtn = this.dataset.productPrice;
         const foundProduct = orderArray.find(item => item.product_id === productIdFromBtn);
-        if (foundProduct) {       
+        if (foundProduct) {
             product_id = productIdFromBtn;
             product_name = foundProduct.product_name;
             default_price = foundProduct.default_price;
@@ -129,8 +128,8 @@ openModalButtons.forEach(modalBtn => {
 
 function increaseQuantity(product_id, default_price) {
     if (product_id) { product_id = product_id; }
-    if (default_price) { default_price = default_price; }    
-    const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);  
+    if (default_price) { default_price = default_price; }
+    const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);
     if (pullOrderArrayIndex !== -1) {
         if (!isNaN(orderArray[pullOrderArrayIndex].product_quantity)) {
             orderArray[pullOrderArrayIndex].product_quantity += 1;
