@@ -96,81 +96,76 @@ openModalButtons.forEach(modalBtn => {
         const productNameFromBtn = this.dataset.productName;
         const productPriceFromBtn = this.dataset.productPrice;
         const foundProduct = orderArray.find(item => item.product_id === productIdFromBtn);
-        if (foundProduct) {
-            //document.getElementById('quantity-div').innerHTML = 1;
-            
-
-            
+        if (foundProduct) {       
             product_id = productIdFromBtn;
             product_name = foundProduct.product_name;
             default_price = foundProduct.default_price;
-
             const resetQuantity = orderArray.findIndex(a => a.product_id == product_id);
             document.getElementById('quantity-div').innerHTML = orderArray[resetQuantity].product_quantity;
             console.log(orderArray[resetQuantity].product_quantity)
-
             msg = "Product was found";
         } else {
             document.getElementById('quantity-div').innerHTML = 1;
             product_id = productIdFromBtn;
             product_name = productNameFromBtn;
             default_price = productPriceFromBtn
-
             msg = "Product was NOT found";
             insertNewProduct = {
                 product_id: product_id,
                 product_name: product_name,
                 default_price: default_price,
                 price: 0.00,
-
             };
             orderArray.push(insertNewProduct);
             localStorage.setItem("orderArray", JSON.stringify(orderArray));
         }
         const increaseBtn = document.getElementById('increase-quantity');
-        increaseBtn.addEventListener('click', () => updateQuantity(product_id, product_name, default_price));
+        const decreaseBtn = document.getElementById('decrease-quantity');
+        increaseBtn.addEventListener('click', () => {
+            updateQuantity(product_id, product_name, default_price, 1);
+        }); 
+        decreaseBtn.addEventListener('click', () => {
+            updateQuantity(product_id, product_name, default_price, -1);
+        });
     });
-
-
-
-
     updateOrder();
-
-
-
 });
 
-function updateQuantity(product_id, product_name, default_price) {
-
+function updateQuantity(product_id, default_price, quantityChange) {
     if (product_id) { product_id = product_id; }
     if (default_price) { default_price = default_price; }
-
+    
     const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);
+    
+    
     if (pullOrderArrayIndex !== -1) {
         if (!isNaN(orderArray[pullOrderArrayIndex].product_quantity)) {
-            orderArray[pullOrderArrayIndex].product_quantity += 1
+            orderArray[pullOrderArrayIndex].product_quantity += quantityChange;
+
+            // Prevent quantity from going below 0
+            if (orderArray[pullOrderArrayIndex].product_quantity < 0) {
+                orderArray[pullOrderArrayIndex].product_quantity = 0;
+            }
         } else {
             orderArray[pullOrderArrayIndex].product_quantity = 1;
         }
 
+
         document.getElementById('quantity-div').innerHTML = orderArray[pullOrderArrayIndex].product_quantity;
         orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].default_price * orderArray[pullOrderArrayIndex].product_quantity;
         orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].price.toFixed(2);
-
         localStorage.setItem("orderArray", JSON.stringify(orderArray));
-
         //console.log(`The value of produdct_id is ${orderArray[pullOrderArrayIndex].product_id} and its type is ${typeof orderArray[pullOrderArrayIndex].product_id}`);
         //console.log(`The value of product_name is ${orderArray[pullOrderArrayIndex].product_name} and its type is ${typeof orderArray[pullOrderArrayIndex].product_name}`);
         //console.log(`The value of price is ${orderArray[pullOrderArrayIndex].price} and its type is ${typeof orderArray[pullOrderArrayIndex].price}`);
         //console.log(`The value of price_calc is ${orderArray[pullOrderArrayIndex].price_calc} and its type is ${typeof orderArray[pullOrderArrayIndex].price_calc}`);
         //console.log(`The value of quantity is ${orderArray[pullOrderArrayIndex].product_quantity} and its type is ${typeof orderArray[pullOrderArrayIndex].product_quantity}`);
         //console.log(`The value of default_price is ${orderArray[pullOrderArrayIndex].default_price} and its type is ${typeof orderArray[pullOrderArrayIndex].default_price}`);
-    } else {
-        console.log("Product not found in the order array");
-    }
+    } //else {
+        //console.log("Product not found in the order array");
+    //}
     updateOrder()
 }
-
 
 
 function confirmAndClose() {
