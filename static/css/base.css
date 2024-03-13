@@ -13,6 +13,7 @@ body {
     font-family: 'Anton', sans-serif;
     font-size: 36px;
     letter-spacing: 2px;
+    color: white;
 }
 
 .nav-link-font {
@@ -20,6 +21,7 @@ body {
     font-size: 20px;
     letter-spacing: 2px;
     font-weight: bold;
+    color: white;
 }
 
 #nav-bar-container {
