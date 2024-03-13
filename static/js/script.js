@@ -72,8 +72,8 @@ function openModal(event) {
     //document.getElementById('quantity-div').innerHTML = 1;
     const confirmBtn = document.querySelector('.select-product-btn');
     modal.classList.add("show");
-    const decreaseBtn = document.getElementById('decrease-quantity');
-    decreaseBtn.addEventListener('click', () => updateQuantity(false));
+    //const decreaseBtn = document.getElementById('decrease-quantity');
+    //decreaseBtn.addEventListener('click', () => updateQuantity(false));
     confirmBtn.addEventListener('click', () => confirmAndClose());
 
     window.onclick = function (event) {
@@ -121,35 +121,23 @@ openModalButtons.forEach(modalBtn => {
         }
         const increaseBtn = document.getElementById('increase-quantity');
         const decreaseBtn = document.getElementById('decrease-quantity');
-        increaseBtn.addEventListener('click', () => {
-            updateQuantity(product_id, product_name, default_price, 1);
-        }); 
-        decreaseBtn.addEventListener('click', () => {
-            updateQuantity(product_id, product_name, default_price, -1);
-        });
+        increaseBtn.addEventListener('click', () => increaseQuantity(product_id, product_name, default_price));
+        decreaseBtn.addEventListener('click', () => decreaseQuantity(product_id, product_name, default_price));
     });
     updateOrder();
 });
 
-function updateQuantity(product_id, default_price, quantityChange) {
+function increaseQuantity(product_id, default_price) {
     if (product_id) { product_id = product_id; }
-    if (default_price) { default_price = default_price; }
-    
-    const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);
-    
-    
+    if (default_price) { default_price = default_price; }    
+    const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);  
     if (pullOrderArrayIndex !== -1) {
         if (!isNaN(orderArray[pullOrderArrayIndex].product_quantity)) {
-            orderArray[pullOrderArrayIndex].product_quantity += quantityChange;
-
-            // Prevent quantity from going below 0
-            if (orderArray[pullOrderArrayIndex].product_quantity < 0) {
-                orderArray[pullOrderArrayIndex].product_quantity = 0;
-            }
+            orderArray[pullOrderArrayIndex].product_quantity += 1;
+            // Prevent quantity from going below 0            
         } else {
             orderArray[pullOrderArrayIndex].product_quantity = 1;
         }
-
 
         document.getElementById('quantity-div').innerHTML = orderArray[pullOrderArrayIndex].product_quantity;
         orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].default_price * orderArray[pullOrderArrayIndex].product_quantity;
@@ -161,9 +149,41 @@ function updateQuantity(product_id, default_price, quantityChange) {
         //console.log(`The value of price_calc is ${orderArray[pullOrderArrayIndex].price_calc} and its type is ${typeof orderArray[pullOrderArrayIndex].price_calc}`);
         //console.log(`The value of quantity is ${orderArray[pullOrderArrayIndex].product_quantity} and its type is ${typeof orderArray[pullOrderArrayIndex].product_quantity}`);
         //console.log(`The value of default_price is ${orderArray[pullOrderArrayIndex].default_price} and its type is ${typeof orderArray[pullOrderArrayIndex].default_price}`);
-    } //else {
-        //console.log("Product not found in the order array");
-    //}
+    } else {
+        console.log("Product not found in the order array");
+    }
+    updateOrder()
+}
+
+function decreaseQuantity(product_id, default_price) {
+    if (product_id) { product_id = product_id; }
+    if (default_price) { default_price = default_price; }
+    const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);
+    if (pullOrderArrayIndex !== -1) {
+        if (!isNaN(orderArray[pullOrderArrayIndex].product_quantity)) {
+            if (orderArray[pullOrderArrayIndex].product_quantity < 2) {
+                orderArray[pullOrderArrayIndex].product_quantity = 1
+            } else {
+                orderArray[pullOrderArrayIndex].product_quantity -= 1;
+            }
+            // Prevent quantity from going below 0            
+        } else {
+            orderArray[pullOrderArrayIndex].product_quantity = 1;
+        }
+
+        document.getElementById('quantity-div').innerHTML = orderArray[pullOrderArrayIndex].product_quantity;
+        orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].default_price * orderArray[pullOrderArrayIndex].product_quantity;
+        orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].price.toFixed(2);
+        localStorage.setItem("orderArray", JSON.stringify(orderArray));
+        //console.log(`The value of produdct_id is ${orderArray[pullOrderArrayIndex].product_id} and its type is ${typeof orderArray[pullOrderArrayIndex].product_id}`);
+        //console.log(`The value of product_name is ${orderArray[pullOrderArrayIndex].product_name} and its type is ${typeof orderArray[pullOrderArrayIndex].product_name}`);
+        //console.log(`The value of price is ${orderArray[pullOrderArrayIndex].price} and its type is ${typeof orderArray[pullOrderArrayIndex].price}`);
+        //console.log(`The value of price_calc is ${orderArray[pullOrderArrayIndex].price_calc} and its type is ${typeof orderArray[pullOrderArrayIndex].price_calc}`);
+        //console.log(`The value of quantity is ${orderArray[pullOrderArrayIndex].product_quantity} and its type is ${typeof orderArray[pullOrderArrayIndex].product_quantity}`);
+        //console.log(`The value of default_price is ${orderArray[pullOrderArrayIndex].default_price} and its type is ${typeof orderArray[pullOrderArrayIndex].default_price}`);
+    } else {
+        console.log("Product not found in the order array");
+    }
     updateOrder()
 }
 
