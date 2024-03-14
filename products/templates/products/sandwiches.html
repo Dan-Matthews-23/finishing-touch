@@ -67,6 +67,11 @@
     {% for i in sandwich_items %}
     {% if i.category_id == 9 %}
     <div class="container-fluid align-center card product-container">
+        <div class="row  card-row">
+            <div class="col  align-center">
+                <h5 class="card-title">{{i.product_id}}</h5>
+            </div>
+        </div>
         
         <div class="row  card-row">
             <div class="col  align-center">

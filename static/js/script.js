@@ -2,9 +2,6 @@
 //localStorage.removeItem("orderArray");
 
 
-
-
-
 // Variables
 let order_div = document.getElementById("display_order");
 let total_cost = document.getElementById("total_cost");
@@ -15,28 +12,25 @@ document.getElementById('orderData').value = jsonData;
 const selectProductBtns = document.querySelectorAll('.open-modal');
 
 
-
-
-
-
 // Event Listeners
 selectProductBtns.forEach(btn => {
     btn.addEventListener('click', openModal);
 });
 
+// Initial call to update everything
+updateOrder();
+updateSum();
 
 
 function updateOrder() {
     if (orderArray.length > 0) {
         order_div.innerHTML = orderArray.map((entry, index) => `
             ${entry.product_name} (x ${entry.product_quantity})<br>
-            &pound;${entry.price}<br>
+            £${entry.price}<br>
             <br>
             <span id="delete_item" data-index="${index}"><i class="btn fa-solid fa-trash fa-xl"></i></span>
             <br><br>
         `).join('');
-
-
 
 
         const deleteButtons = order_div.querySelectorAll('#delete_item');
@@ -48,7 +42,7 @@ function updateOrder() {
         order_div.innerHTML = "Your basket is empty";
 
     }
-    updateSum()
+    //updateSum()
 
 }
 
@@ -74,7 +68,7 @@ function updateSum() {
     } else {
         basketTotalElement.innerHTML = (`£0.00`);
     }
-    updateOrder()
+    //updateOrder()
 
 }
 
@@ -84,7 +78,6 @@ function deleteItem(index) {
     localStorage.setItem("orderArray", JSON.stringify(orderArray));
     updateOrder();
 }
-
 
 
 function openModal(event) {
@@ -148,8 +141,12 @@ openModalButtons.forEach(modalBtn => {
 });
 
 function increaseQuantity(product_id, default_price) {
-    if (product_id) { product_id = product_id; }
-    if (default_price) { default_price = default_price; }
+    if (product_id) {
+        product_id = product_id;
+    }
+    if (default_price) {
+        default_price = default_price;
+    }
     const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);
     if (pullOrderArrayIndex !== -1) {
         if (!isNaN(orderArray[pullOrderArrayIndex].product_quantity)) {
@@ -176,8 +173,12 @@ function increaseQuantity(product_id, default_price) {
 }
 
 function decreaseQuantity(product_id, default_price) {
-    if (product_id) { product_id = product_id; }
-    if (default_price) { default_price = default_price; }
+    if (product_id) {
+        product_id = product_id;
+    }
+    if (default_price) {
+        default_price = default_price;
+    }
     const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);
     if (pullOrderArrayIndex !== -1) {
         if (!isNaN(orderArray[pullOrderArrayIndex].product_quantity)) {
