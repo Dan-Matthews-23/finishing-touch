@@ -4,6 +4,7 @@
 
 
 
+
 // Variables
 let order_div = document.getElementById("display_order");
 let total_cost = document.getElementById("total_cost");
@@ -35,18 +36,18 @@ function updateOrder() {
             <br><br>
         `).join('');
 
-              
+
 
 
         const deleteButtons = order_div.querySelectorAll('#delete_item');
         deleteButtons.forEach(button => {
             button.addEventListener('click', () => deleteItem(button.dataset.index));
         });
-        
+
     } else {
         order_div.innerHTML = "Your basket is empty";
-        
-    }  
+
+    }
     updateSum()
 
 }

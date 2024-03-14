@@ -137,6 +137,11 @@ def process_checkout(request):
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. \
             Did you forget to set it in your environment?')
+    
+    if 'order_number' in request.session:
+        del request.session['order_number']
+    if 'total_price' in request.session:
+        del request.session['total_price']
 
     template = 'checkout/order_confirmed.html'
     context = {
@@ -144,6 +149,11 @@ def process_checkout(request):
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
         'defaults':defaults,
+        
     }
+
+    
+    
+
 
     return render(request, template, context)
