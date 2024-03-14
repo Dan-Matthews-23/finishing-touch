@@ -33,24 +33,27 @@
 <section class="order-details">
     <div class="container-fluid align-center card product-container" id="order-details">
         <div class="row ">
-            <div class="col ">
+            <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
                 <div class="row ">
-                    <div class="col ">
+                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
                         <h3 class=" modal-text-styling">Order Details</h3>
                     </div>
                 </div>
                 <div class="row ">
-                    <div class="col " id="display_order"></div>
+                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 " id="display_order">
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col " id="total_cost"></div>
+                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 " id="total_cost">
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col">
+                    <div
+                        class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 align-center-horizontal align-center-vertical">
                         <form method="POST" action="{% url 'process_order' %}">
                             {% csrf_token %}
                             <input type="hidden" name="orderData" id="orderData" value="">
-                            <button type="submit" class="btn" id="checkout">Open process_order function</button>
+                            <button type="submit" class="btn orderBtn" id="checkout">Checkout items</button>
                         </form>
                     </div>
                 </div>
@@ -67,12 +70,7 @@
     {% for i in sandwich_items %}
     {% if i.category_id == 9 %}
     <div class="container-fluid align-center card product-container">
-        <div class="row  card-row">
-            <div class="col  align-center">
-                <h5 class="card-title">{{i.product_id}}</h5>
-            </div>
-        </div>
-        
+
         <div class="row  card-row">
             <div class="col  align-center">
                 <h5 class="card-title">{{i.product_name}}</h5>

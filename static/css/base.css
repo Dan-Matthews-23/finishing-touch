@@ -8,6 +8,52 @@ body {
     background-color: #F7F9F9;
 }
 
+
+
+/* Order Forms and layouts */
+.orderBtn {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+    font-weight: bold;
+}
+
+
+#order-details {
+    width: 25%;
+    position: absolute;
+    right: 75px;
+    padding-top: 25px;
+}
+
+#display_order {
+    padding: 30px;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Nav Page */
 #main-title {
     font-family: 'Anton', sans-serif;
@@ -61,7 +107,6 @@ body {
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 0px
-
 }
 
 #basket-total {
@@ -175,7 +220,7 @@ body {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;    
+    border: 1px solid #888;
     height: 30%;
     width: 30%;
     border-radius: 10% 10% 10% 10%;
@@ -189,12 +234,6 @@ body {
 
 }
 
-#order-details {
-    width: 25%;
-    position: absolute;
-    right: 75px;
-    padding-top: 25px;
-}
 
 .menu-nav-links {
     font-size: 14px;
@@ -298,12 +337,7 @@ body {
     padding: 5px;
 }
 
-#display_order {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-bottom-style: solid;
-    border-bottom-color: black;
-}
+
 
 .hide {
     display: none;
@@ -492,6 +526,18 @@ h3 {
 
 .md-padding-bottom {
     padding-bottom: 10px;
+}
+
+.md-padding {
+    padding: 10px;
+}
+
+.lg-padding {
+    padding: 20px;
+}
+
+.xl-padding {
+    padding: 40px;
 }
 
 /* End of generic classes */
