@@ -10,7 +10,16 @@
 {% block content %}
 
 
+<!--
+    THINK ABOUT USING THE PAYMENT LOADING FORM 
+    FROM HERE https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+FSF_102+Q1_2020/courseware/4201818c00aa4ba3a0dae243725f6e32/90cda137ebaa461894ba8c89cd83291a/
 
+    AND HERE ARE THE DOCS
+
+    https://docs.stripe.com/connect/creating-a-payments-page?platform=web&ui=elements&locale=en-GB
+
+
+-->
 <section id="payment-selection">
     <form method="POST" action="{% url 'process_checkout' %}">
         {% csrf_token %}
