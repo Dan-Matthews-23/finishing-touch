@@ -8,9 +8,15 @@
 let order_div = document.getElementById("display_order");
 let total_cost = document.getElementById("total_cost");
 let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
+basketTotalElement = document.getElementById("basket-total");
 const jsonData = JSON.stringify(orderArray);
 document.getElementById('orderData').value = jsonData;
 const selectProductBtns = document.querySelectorAll('.open-modal');
+
+
+
+
+
 
 // Event Listeners
 selectProductBtns.forEach(btn => {
@@ -29,33 +35,47 @@ function updateOrder() {
             <br><br>
         `).join('');
 
-        let totalSum = orderArray.reduce((accumulator, entry) => {
-            const itemPrice = parseFloat(entry.price); // Convert price to number
-
-            if (isNaN(itemPrice)) {
-                console.error("Failed to convert price to float:", entry);
-                return accumulator; // Skip invalid prices
-            }
-
-            return accumulator + itemPrice;
-        }, 0);
-
-        totalSum = parseFloat(totalSum).toFixed(2);
-
-        total_cost.innerHTML = (`Total: £${totalSum}`);
+              
 
 
         const deleteButtons = order_div.querySelectorAll('#delete_item');
         deleteButtons.forEach(button => {
             button.addEventListener('click', () => deleteItem(button.dataset.index));
         });
+        
     } else {
         order_div.innerHTML = "Your basket is empty";
-    }
+        
+    }  
+    updateSum()
 
 }
 
+function updateSum() {
 
+    let totalSum = orderArray.reduce((accumulator, entry) => {
+        const itemPrice = parseFloat(entry.price); // Convert price to number
+
+        if (isNaN(itemPrice)) {
+            console.error("Failed to convert price to float:", entry);
+            return accumulator; // Skip invalid prices
+        }
+
+        return accumulator + itemPrice;
+    }, 0);
+
+    totalSum = parseFloat(totalSum).toFixed(2);
+
+    total_cost.innerHTML = (`Total: £${totalSum}`);
+
+    if (totalSum) {
+        basketTotalElement.innerHTML = (`£${totalSum}`);
+    } else {
+        basketTotalElement.innerHTML = (`£0.00`);
+    }
+    updateOrder()
+
+}
 
 
 function deleteItem(index) {

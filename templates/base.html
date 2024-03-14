@@ -43,11 +43,15 @@
                                 <i class="fa-solid fa-user fa-2xl "></i>
                             </a>Login
                         </li>
-                        <li>
-                            <a href="" aria-label="basket">
+                        <li id="basket-icon">                            
                                 <i class=" fa-solid fa-cart-shopping fa-2xl"></i>
-                            </a>£0.00
+                            </a>
                         </li>
+                        {% if 'total_price' in request.session %}                        
+                        <li id="basket-total">£{{request.session.total_price}}</li>
+                        {% else %}
+                        <li id="basket-total">£0.00</li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

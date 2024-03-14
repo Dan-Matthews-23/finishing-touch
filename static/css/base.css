@@ -56,6 +56,27 @@ body {
     color: white;
 }
 
+#basket-icon {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 0px
+
+}
+
+#basket-total {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    padding-right: 10px
+}
+
+
+
+
+
+
+
 /* Index Page */
 
 #index-banner {
