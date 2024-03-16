@@ -32,6 +32,9 @@ def cache_checkout_data(request):
 
 
 def create_placeholder(request):
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
+    
     order_number = request.session['order_number']
     basket_items = Basket.objects.filter(order_number=order_number)
     if basket_items:
@@ -87,6 +90,8 @@ def create_placeholder(request):
 
 
 def process_checkout(request):
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
     if request.method == 'POST':
         #bag = request.session.get('bag', {})
         order_number = request.session['order_number']
@@ -123,8 +128,7 @@ def process_checkout(request):
     else:
         print("No items found")    
     
-    stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY
+    
 
    # bag = request.session.get('bag', {})
     #if not bag:
