@@ -41,7 +41,7 @@ def create_placeholder(request):
     if basket_items:
         for item in basket_items:
             try:
-                product = Products.objects.get(product_id=item.product_id)
+                
                 defaults = {
                 'quantity': item.quantity,
                 'default_price': item.default_price,
@@ -54,9 +54,9 @@ def create_placeholder(request):
                 'street_address1': request.POST['customer_address_one'],
                 'street_address2': request.POST['customer_address_two'],
                 'county': request.POST['customer_address_four'],
-                'product_name': product.product_name,
+                'product_name': item.product_name,
                 }
-                
+                            
                 
                     
                 
@@ -80,6 +80,7 @@ def create_placeholder(request):
         'stripe_public_key': stripe_public_key,
         #'defaults_display': defaults_display,
         'defaults': defaults,
+        'order_items': basket_items,
                
     }
     #print(f"The value of product_name is {product_name}")
