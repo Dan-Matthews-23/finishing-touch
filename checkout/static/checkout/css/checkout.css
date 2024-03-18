@@ -36,38 +36,31 @@
     border: 1px solid #000;
 }
 
-.collapsible {
-    color: black;
-    cursor: pointer;
-    padding: 18px;
-    width: 50%;
-    border: none;
-    text-align: center;
-    outline: none;
-    font-size: 15px;
+select,
+select option {
+    color: #000000;
 }
 
-.active,
-.collapsible:hover {
-    background-color: #555;
+select:invalid,
+select option[value=""] {
+    color: #aab7c4 !important;
 }
 
-.collapsible:after {
-    content: "\002B";
-    color: black;
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
+#loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(23, 162, 184, .85);
+    z-index: 9999;
 }
 
-.active:after {
-    content: "\2212";
-}
-
-.content {
-    padding: 0 18px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-    background-color: #f1f1f1;
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    height: 100%;
 }

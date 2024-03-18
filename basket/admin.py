@@ -6,7 +6,8 @@ class BasketAdmin(admin.ModelAdmin):
     list_display = (
     'basket_id',
     'order_number',
-    'product_id', 
+    'product_id',
+    'product_name', 
     'quantity',
     'default_price',
     'total_price',    

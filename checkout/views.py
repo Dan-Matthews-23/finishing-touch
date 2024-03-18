@@ -7,26 +7,26 @@ from checkout.contexts import bag_contents
 import stripe
 from basket.models import Basket
 from .models import OrderPlaceholder, Orders
+from products.models import Products
 
 
 
 
 
-## STRIPE IS NOW WORKING AGAIN. THERE IS SOMETHING IN THE PART 7 TUTORIAL VIDEO THAT BREAKS THE CODE (  'client_secret': intent.client_secret, ). INTENT NO LONGER WORKS
 @require_POST
 def cache_checkout_data(request):
     try:
-        pid = request.POST.get('client_secret').split('_secret')[0]
+        secret_id = request.POST.get('client_secret').split('_secret')[0]
         stripe.api_key = settings.STRIPE_SECRET_KEY
-        stripe.PaymentIntent.modify(pid, metadata={
-            'bag': json.dumps(request.session.get('bag', {})),
+        
+        stripe.PaymentIntent.modify(
+            secret_id, metadata={            
             'save_info': request.POST.get('save_info'),
             'username': request.user,
         })
         return HttpResponse(status=200)
     except Exception as e:
-        messages.error(request, 'Sorry, your payment cannot be \
-            processed right now. Please try again later.')
+        messages.error(request, 'There was an error while processing your payment. Please try again in a few minutes.')
         return HttpResponse(content=e, status=400)
 
 
@@ -37,44 +37,52 @@ def create_placeholder(request):
     
     order_number = request.session['order_number']
     basket_items = Basket.objects.filter(order_number=order_number)
+    
     if basket_items:
         for item in basket_items:
-            defaults = {
-            'quantity': item.quantity,
-            'default_price': item.default_price,
-            'total_price': item.total_price,
-            'full_name': request.POST['customer_name'],  # Assuming this is correct 
-            'email': request.POST['customer_email'],
-            'phone_number': request.POST['customer_tel_number'],
-            'postcode': request.POST['customer_postcode'],
-            'town_or_city': request.POST['customer_address_three'],
-            'street_address1': request.POST['customer_address_one'],
-            'street_address2': request.POST['customer_address_two'],
-            'county': request.POST['customer_address_four'], 
-}
+            try:
+                product = Products.objects.get(product_id=item.product_id)
+                defaults = {
+                'quantity': item.quantity,
+                'default_price': item.default_price,
+                'total_price': item.total_price,
+                'full_name': request.POST['customer_name'],  # Assuming this is correct 
+                'email': request.POST['customer_email'],
+                'phone_number': request.POST['customer_tel_number'],
+                'postcode': request.POST['customer_postcode'],
+                'town_or_city': request.POST['customer_address_three'],
+                'street_address1': request.POST['customer_address_one'],
+                'street_address2': request.POST['customer_address_two'],
+                'county': request.POST['customer_address_four'],
+                'product_name': product.product_name,
+                }
+                
+                
+                    
+                
+                
+                
+    
+            except Products.DoesNotExist:
+                print("Product with id {} not found".format(item.product_id))
+
             placeholder_item, created = OrderPlaceholder.objects.get_or_create(
                 order_number=order_number, 
                 product_id=item.product_id,
                 defaults=defaults 
             )
-            placeholder_item.save()
-
-        print("Order placed!") 
-        print("Yes, items were found")
+            placeholder_item.save()        
     else:
         print("No items found") 
 
-    
-    stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY
-
-
     template = 'checkout/checkout.html'
-    context = {
-        #'order_form': order_form,
+    context = {       
         'stripe_public_key': stripe_public_key,
-        #'client_secret': client_secret,
+        #'defaults_display': defaults_display,
+        'defaults': defaults,
+               
     }
+    #print(f"The value of product_name is {product_name}")
 
     return render(request, template, context)
 

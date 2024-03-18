@@ -8,7 +8,8 @@ class OrdersAdmin(admin.ModelAdmin):
     list_display = (
         'order_id',
     'order_number',
-    'product_id', 
+    'product_id',
+    'product_name',  
     'quantity',
     'default_price',
     'total_price',
@@ -30,7 +31,8 @@ class OrderPlaceholderAdmin(admin.ModelAdmin):
     list_display = (
     'order_id',
     'order_number',
-    'product_id', 
+    'product_id',
+    'product_name',  
     'quantity',
     'default_price',
     'total_price',

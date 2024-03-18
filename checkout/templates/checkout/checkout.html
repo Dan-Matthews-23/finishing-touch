@@ -28,6 +28,65 @@
                 <div class="col  align-center product-col">
                     <div class="card ">
                         <div class="card-body ">
+
+
+                            <!--form-->
+                            <div class="row ">
+                                <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <p>Your Details</p>
+                                    <p>
+                                        <span>Name:</span>
+                                        <span>{{defaults.full_name}}:</span>
+
+                                    </p>
+                                    <p>
+                                        <span>Email:</span>
+                                        <span>{{defaults.email}}:</span>
+
+                                    </p>
+                                    <p>
+                                        <span>Contact Number:</span>
+                                        <span>{{defaults.phone_number}}:</span>
+
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row ">
+                                <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <p>Order Details</p>
+
+                                    <p>
+                                        <span>{{defaults.product_name}}:</span>
+                                    </p>
+                                    <p>
+                                        <span>{{defaults.quantity}}:</span>
+                                    </p>
+                                    <p>
+                                        <span>{{defaults.total_price}}:</span>
+                                    </p>
+                                    
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <br><br>
+
                             <div class="row with-borders align-center">
                                 <div class="col with-borders align-center">
                                     <h5 class="card-title">Payment Method</h5>
@@ -38,6 +97,7 @@
                                     <button type="button" class="collapsible bold">Pay with card</button>
                                     <div class="content">
                                         <div class="mb-3" id="card-element"></div>
+                                        <div class="mb-3" id="card-errors"></div>
                                     </div>
                                 </div>
                             </div>
@@ -46,6 +106,7 @@
                                     <button class="btn orderBtn" id="payment">Go to payment</button>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -64,11 +125,7 @@
 
 
 
-<div class="container-fluid align-center with-borders" id="">
-    <div class="row with-borders align-center">
-        <div class="mb-3" id="card-element"></div>
-    </div>
-</div>
+
 
 
 
