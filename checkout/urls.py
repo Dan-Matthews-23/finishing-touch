@@ -10,7 +10,8 @@ urlpatterns = [
     path('process_checkout/', views.process_checkout, name='process_checkout'),
     path('create_placeholder/', views.create_placeholder, name='create_placeholder'),
     path('cache_checkout_data/', views.cache_checkout_data, name='cache_checkout_data'),
-    path('wh/', webhook, name='webhook'), 
+    path('wh/', webhook, name='webhook'),
+    
 
 
 ] 

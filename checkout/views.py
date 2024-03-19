@@ -8,6 +8,7 @@ import stripe
 from basket.models import Basket
 from .models import OrderPlaceholder, Orders
 from products.models import Products
+from django.http import HttpResponse
 
 
 
@@ -141,6 +142,7 @@ def process_checkout(request):
                 create_order.save()
                 get_order_placeholder.delete()
                 get_basket_items.delete()
+                request.session['clear_localStorage'] = True
                 
        
     else:
@@ -189,9 +191,17 @@ def process_checkout(request):
         del request.session['order_number']
     if 'total_price' in request.session:
         del request.session['total_price']
-
+    
+    if (request.session['clear_localStorage']):
+        print("The clear local storage session is true")
+    else:
+        print("The clear local storage session is false")
     
     
-
-
+    
+    
     return render(request, template, context)
+
+   
+
+

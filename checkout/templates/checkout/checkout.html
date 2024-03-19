@@ -36,17 +36,17 @@
                                     <p>Your Details</p>
                                     <p>
                                         <span>Name:</span>
-                                        <span>{{defaults.full_name}}:</span>
+                                        <span>{{defaults.full_name}}</span>
 
                                     </p>
                                     <p>
                                         <span>Email:</span>
-                                        <span>{{defaults.email}}:</span>
+                                        <span>{{defaults.email}}</span>
 
                                     </p>
                                     <p>
                                         <span>Contact Number:</span>
-                                        <span>{{defaults.phone_number}}:</span>
+                                        <span>{{defaults.phone_number}}</span>
 
                                     </p>
                                 </div>
@@ -65,23 +65,16 @@
                                     </p>
                                 </div>
                             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            <div class="row ">
+                                <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <p>Delivery Address</p>
+                                    <p>{{defaults.street_address1}}</p>
+                                    <p>{{defaults.street_address2}}</p>
+                                    <p>{{defaults.town_or_city}}</p>
+                                    <p>{{defaults.county}} </p>
+                                    <p>{{defaults.postcode}}</p>
+                                </div>
+                            </div>
 
                             <br><br>
 
@@ -92,7 +85,7 @@
                             </div>
                             <div class="row with-borders align-center">
                                 <div class="col with-borders col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button type="button" class="collapsible bold">Pay with card</button>
+                                    <!--<button type="button" class="collapsible bold">Pay with card</button>-->
                                     <div class="content">
                                         <div class="mb-3" id="card-element"></div>
                                         <div class="mb-3" id="card-errors"></div>

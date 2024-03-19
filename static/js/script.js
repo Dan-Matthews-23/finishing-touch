@@ -2,6 +2,8 @@
 //localStorage.removeItem("orderArray");
 
 
+
+
 // Variables
 let order_div = document.getElementById("display_order");
 let total_cost = document.getElementById("total_cost");
