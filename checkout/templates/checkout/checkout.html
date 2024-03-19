@@ -56,20 +56,16 @@
                                     <p>Order Details</p>
                                     {% for i in order_items %}
                                     <p>
-                                        <span>{{i.product_name}} ({{i.quantity}})</span>
-                                    </p>
-                                    <p>
-                                        <span>{{i.sub_price}}:</span>
-                                    </p>
-                                    <p>
-                                        <span>Total: {{i.total_price}}:</span>
+                                        <span>{{i.product_name}} (x{{i.quantity}})</span>
+                                        <span>£{{i.sub_price}}</span>
                                     </p>
                                     {% endfor %}
-
-
+                                    <p>
+                                        <span>Total: £{{request.session.total_price}}:</span>
+                                    </p>
                                 </div>
                             </div>
-                            
+
 
 
 
