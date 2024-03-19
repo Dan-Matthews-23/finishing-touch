@@ -37,15 +37,17 @@ def create_placeholder(request):
     
     order_number = request.session['order_number']
     basket_items = Basket.objects.filter(order_number=order_number)
+
+    total_price = int(float(request.session.get('total_price')))  # Convert to float, then truncate
     
     if basket_items:
         for item in basket_items:
-            try:
-                
+            try:                
                 defaults = {
                 'quantity': item.quantity,
                 'default_price': item.default_price,
-                'total_price': item.total_price,
+                'sub_price': item.sub_price,
+                'total_price':total_price,
                 'full_name': request.POST['customer_name'],  # Assuming this is correct 
                 'email': request.POST['customer_email'],
                 'phone_number': request.POST['customer_tel_number'],
@@ -54,8 +56,13 @@ def create_placeholder(request):
                 'street_address1': request.POST['customer_address_one'],
                 'street_address2': request.POST['customer_address_two'],
                 'county': request.POST['customer_address_four'],
-                'product_name': item.product_name,
+                'product_name': item.product_name,               
+                
                 }
+                
+            
+               
+                
                             
                 
                     
@@ -80,7 +87,7 @@ def create_placeholder(request):
         'stripe_public_key': stripe_public_key,
         #'defaults_display': defaults_display,
         'defaults': defaults,
-        'order_items': basket_items,
+        'order_items': basket_items,        
                
     }
     #print(f"The value of product_name is {product_name}")
@@ -108,13 +115,15 @@ def process_checkout(request):
         get_basket_items = Basket.objects.filter(order_number=order_number)        
         #form_data = request.session['customer_form_details']
        # print(form_data)
+        total_price = int(float(request.session.get('total_price')))  # Convert to float, then truncate
 
         if get_order_placeholder:
             for item in get_order_placeholder:
                 defaults = {
                 'quantity': item.quantity,
                 'default_price': item.default_price,
-                'total_price': item.total_price,
+                'sub_price': item.sub_price,
+                'total_price':total_price,
                 'full_name': item.full_name,  # Assuming this is correct 
                 'email': item.email,
                 'phone_number': item.phone_number,
@@ -166,19 +175,20 @@ def process_checkout(request):
         messages.warning(request, 'Stripe public key is missing. \
             Did you forget to set it in your environment?')
     
-    if 'order_number' in request.session:
-        del request.session['order_number']
-    if 'total_price' in request.session:
-        del request.session['total_price']
+    
 
     template = 'checkout/order_confirmed.html'
     context = {
         #'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
-        'defaults':defaults,
+        'defaults':defaults,        
         
     }
+    if 'order_number' in request.session:
+        del request.session['order_number']
+    if 'total_price' in request.session:
+        del request.session['total_price']
 
     
     

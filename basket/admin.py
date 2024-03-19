@@ -10,6 +10,7 @@ class BasketAdmin(admin.ModelAdmin):
     'product_name', 
     'quantity',
     'default_price',
+    'sub_price',
     'total_price',    
     )
     ordering = ('basket_id',)

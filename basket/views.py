@@ -39,8 +39,9 @@ def process_order(request):
                     product_id = item['product_id'],
                     quantity = item['product_quantity'],
                     default_price = item['default_price'],
-                    total_price = item['price'],
+                    sub_price = item['price'],
                     product_name = item['product_name'],
+                    
                     ) 
                 create_basket_item.save()           
                 

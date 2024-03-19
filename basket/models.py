@@ -8,6 +8,7 @@ class Basket(models.Model):
     product_id = models.IntegerField(blank=False, editable=False, default=1)
     quantity = models.IntegerField(blank=False, editable=False, default=1)
     default_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
+    sub_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
     total_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)    
 
     #def _generate_order_number(self):        
