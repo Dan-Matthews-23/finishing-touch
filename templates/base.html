@@ -36,12 +36,26 @@
                     {% include 'includes/nav-bar.html' %}
                 </div>
 
+
+
+
+
+
+
+
                 <div class="  col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 g-0 " id="nav-icon-div">
                     <ul class="nav-icons ">
                         <li>
-                            <a href="https://facebook.com" aria-label="Contact Us On Facebook" target="_blank">
-                                <i class="fa-solid fa-user fa-2xl "></i>
-                            </a>Login
+                            {% if request.user.is_authenticated %}
+                            {% if request.user.is_superuser %}
+                            <a href="" class="dropdown-item">Product Management</a>
+                            {% endif %}
+                            <a href="{% url 'showOrders' %}" class="dropdown-item">My Profile</a>
+                            <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                            {% else %}
+                            <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                            <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                            {% endif %}
                         </li>
                         <li id="basket-icon">                            
                                 <i class=" fa-solid fa-cart-shopping fa-2xl"></i>
