@@ -8,7 +8,7 @@ from django.shortcuts import render
 def showOrders(request):
     
 
-    template = 'accounts/profile.html'
+    template = 'account/profile.html'
     context = {       
                 
                
