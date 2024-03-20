@@ -1,4 +1,18 @@
 from django.shortcuts import render
 
-def showOrders(request, context):
-    return render(request, 'accounts/account.html')
+
+
+
+
+
+def showOrders(request):
+    
+
+    template = 'accounts/profile.html'
+    context = {       
+                
+               
+    }
+   
+
+    return render(request, template, context)
