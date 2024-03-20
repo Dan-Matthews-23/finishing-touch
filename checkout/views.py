@@ -190,15 +190,7 @@ def process_checkout(request):
     if 'order_number' in request.session:
         del request.session['order_number']
     if 'total_price' in request.session:
-        del request.session['total_price']
-    
-    if (request.session['clear_localStorage']):
-        print("The clear local storage session is true")
-    else:
-        print("The clear local storage session is false")
-    
-    
-    
+        del request.session['total_price']    
     
     return render(request, template, context)
 

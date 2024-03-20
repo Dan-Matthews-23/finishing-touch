@@ -13,3 +13,11 @@ for (i = 0; i < coll.length; i++) {
     });
 }
 
+function clearLocalStorage() {
+    //console.log("Order placed successfully!");   
+    localStorage.removeItem("selectedItem");
+    localStorage.removeItem("orderArray");
+}
+
+// Call the function immediately since we're on the confirmation page
+clearLocalStorage();
