@@ -9,7 +9,20 @@
 
 {% block content %}
 
-THIS IS THE PROFILE
+<div class="container">
+    <div class="row">
+        <div class="col align-center col-sm-5 col-md-5 col-lg-5 col-xl-5 with-borders">
+            {% for i in orders %}
+            <p>{{i.order_number}}</p>
+
+            {% endfor %}
+            <p>{{profile}}</p>
+
+        </div>
+    </div>
+</div>
+
+
 
 
 
