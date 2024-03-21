@@ -5,12 +5,10 @@ from django.conf import settings
 import uuid
 from products.models import Products
 
-from accounts.models import UserProfile
+from accounts.models import Users
 
 class Orders(models.Model):
-    order_id = models.AutoField(primary_key=True)
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
-                                     null=True, blank=True, related_name='orders')
+    order_id = models.AutoField(primary_key=True)    
     order_number = models.CharField(max_length=32, null=False, editable=False)
     product_id = models.IntegerField(blank=False, editable=False, default=1)
     product_name = models.CharField(max_length=32, null=False, editable=False, default="Test")
