@@ -10,6 +10,9 @@ from .models import OrderPlaceholder, Orders
 from products.models import Products
 from django.http import HttpResponse
 
+from accounts.models import UserProfile
+from accounts.forms import UserProfileForm
+
 
 
 
@@ -57,20 +60,8 @@ def create_placeholder(request):
                 'street_address1': request.POST['customer_address_one'],
                 'street_address2': request.POST['customer_address_two'],
                 'county': request.POST['customer_address_four'],
-                'product_name': item.product_name,               
-                
+                'product_name': item.product_name,
                 }
-                
-            
-               
-                
-                            
-                
-                    
-                
-                
-                
-    
             except Products.DoesNotExist:
                 print("Product with id {} not found".format(item.product_id))
 
@@ -88,10 +79,8 @@ def create_placeholder(request):
         'stripe_public_key': stripe_public_key,
         #'defaults_display': defaults_display,
         'defaults': defaults,
-        'order_items': basket_items,        
-               
+        'order_items': basket_items,              
     }
-    #print(f"The value of product_name is {product_name}")
 
     return render(request, template, context)
 
@@ -177,6 +166,34 @@ def process_checkout(request):
         messages.warning(request, 'Stripe public key is missing. \
             Did you forget to set it in your environment?')
     
+    save_info = request.session.get('save_info')
+    order = get_object_or_404(Orders, order_number=order_number)
+
+    if request.user.is_authenticated:
+        profile = UserProfile.objects.get(user=request.user)
+        # Attach the user's profile to the order
+        order.user_profile = profile
+        order.save()
+
+        # Save the user's info
+        if save_info:
+            profile_data = {
+                'default_phone_number': order.phone_number,
+                'default_country': order.country,
+                'default_postcode': order.postcode,
+                'default_town_or_city': order.town_or_city,
+                'default_street_address1': order.street_address1,
+                'default_street_address2': order.street_address2,
+                'default_county': order.county,
+            }
+            user_profile_form = UserProfileForm(profile_data, instance=profile)
+            if user_profile_form.is_valid():
+                user_profile_form.save()
+
+    messages.success(request, f'Order successfully processed! \
+        Your order number is {order_number}. A confirmation \
+        email will be sent to {order.email}.')
+    
     
 
     template = 'checkout/order_confirmed.html'
@@ -194,6 +211,7 @@ def process_checkout(request):
     
     return render(request, template, context)
 
-   
+
+
 
 

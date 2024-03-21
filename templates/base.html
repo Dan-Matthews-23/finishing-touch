@@ -57,8 +57,8 @@
                                         Username
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark">
-                                        <li><a class="dropdown-item" href="{% url 'showOrders' %}">Your profile</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'showOrders' %}">Previous Orders</a>
+                                        <li><a class="dropdown-item" href="{% url 'profile' %}">Your profile</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'profile' %}">Previous Orders</a>
                                         </li>
                                         <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
                                     </ul>
@@ -73,11 +73,11 @@
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark">
                                         <li><a class="dropdown-item" href="{% url 'account_login' %}">Log in</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>                                        
+                                        <li><a class="dropdown-item" href="{% url 'account_signup' %}">Register</a></li>
                                     </ul>
                                 </li>
                             </ul>
-                            {% endif %}                          
+                            {% endif %}
                         <li id="basket-icon">
                             <i class=" fa-solid fa-cart-shopping fa-2xl"></i>
                             </a>

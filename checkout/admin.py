@@ -6,8 +6,9 @@ from .models import Orders, OrderPlaceholder
 
 class OrdersAdmin(admin.ModelAdmin):
     list_display = (
-        'order_id',
+    'order_id',
     'order_number',
+    'user_profile',
     'product_id',
     'product_name',  
     'quantity',
@@ -23,6 +24,10 @@ class OrdersAdmin(admin.ModelAdmin):
     'street_address2',
     'county',
     )
+
+
+
+
     ordering = ('order_id',)  
 
 # Register your models here.
