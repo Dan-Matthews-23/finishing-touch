@@ -2,7 +2,7 @@
 //localStorage.removeItem("orderArray");
 
 
-/*
+
 
 // Variables
 let order_div = document.getElementById("display_order");
@@ -218,5 +218,3 @@ function confirmAndClose() {
 }
 
 
-
-*/

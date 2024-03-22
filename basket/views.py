@@ -1,8 +1,16 @@
-from django.shortcuts import render, redirect
 from .models import Basket
+from products.models import Products
 import json
 from django import forms
 import uuid
+from django.db import transaction
+from django.db.models import Prefetch
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib import messages
+from django.conf import settings
+from django.views.decorators.http import require_POST
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -18,52 +26,83 @@ def basket(request, context):
 
 
 
+@require_POST  # Only allow POST requests
+@login_required(login_url=settings.LOGIN_URL)
 def process_order(request):
     if request.method == "POST":
-        orderArrayData = request.POST.get("orderData")
-        order_items = json.loads(orderArrayData)
-        total_price = 0
-        order_number = uuid.uuid4() 
+        try:
+            # Input Validation
+            order_data = json.loads(request.POST.get("orderData"))
+            if 'orderData' not in request.POST:
+                raise ValueError("Missing orderData")
 
-        for item in order_items:
-            try:
-                default_price = float(item['default_price'])              
-                quantity = item['product_quantity']
-                
-                total_price = float(total_price)
-                total_price += default_price * quantity
-                total_price = f"{total_price:.2f}"
+            # Ensure basket belongs to the user
+            basket, created = Basket.objects.get_or_create(
+                user_profile=request.user.userprofile,
+                defaults={'order_number': uuid.uuid4().hex.upper()}  
+            )
 
-                create_basket_item = Basket.objects.create(
-                    order_number = order_number,
-                    product_id = item['product_id'],
-                    quantity = item['product_quantity'],
-                    default_price = item['default_price'],
-                    sub_price = item['price'],
-                    product_name = item['product_name'],
-                    
-                    ) 
-                create_basket_item.save()           
-                
+            # Enhanced data validation (assuming 'quantity' is required)
+            for item_data in order_data:
+                if 'product_id' not in item_data or 'quantity' not in item_data:
+                    raise ValueError("Invalid order item data")
+                if not isinstance(item_data['quantity'], int) or item_data['quantity'] <= 0:
+                    raise ValueError("Invalid quantity")
 
-            except KeyError as e:
-                print(f"Missing key '{e}' in order item: {item}")
+            with transaction.atomic(): 
+                product_ids = [item['product_id'] for item in order_data]
+                products = Products.objects.filter(product_id__in=product_ids).prefetch_related('items')
 
-        context = {
-            'order_items': order_items,
-            'total_price': total_price,
-            
-        }
-       
-        request.session['order_number'] =str(order_number)
-        request.session['basket'] = order_items
-        request.session['total_price'] = total_price
-        #print(f" The type of session is {type(request.session['total_price'])} and the value is {request.session['total_price']}")
-        return render(request, 'basket/basket.html', context)
+                order_items = []  # Collect validated order items
+                total_price = 0
+
+                for item_data in order_data:
+                    product = get_object_or_404(Products, product_id=item_data['product_id'])
+                    order_item = OrderItem(
+                        basket=basket,
+                        product=product,
+                        product_name=product.name,
+                        price=product.price,
+                        quantity=item_data['quantity']
+                    )
+                    order_items.append(order_item)
+                    total_price += order_item.price * order_item.quantity
+
+                # Bulk create validated items for efficiency
+                OrderItem.objects.bulk_create(order_items)
+
+                order_number = basket.order_number  # Retrieve generated order number
+                order = Order( 
+                    basket=basket,
+                    total_price=total_price,
+                    order_number=order_number
+                )
+                order.save()
+
+                request.session['order_number'] = str(order_number)
+                request.session['order_id'] = order.id
+
+                basket.delete()  # Clear the basket
+
+            messages.success(request, "Order placed successfully!")
+            return JsonResponse({
+                'order_number': str(order_number),
+                'total_price': total_price,
+            })
+
+        except (Products.DoesNotExist, ValueError, json.JSONDecodeError) as e:
+            messages.error(request, f"Order processing failed: {str(e)}")
+            return render(request, 'basket/basket.html') 
         
+        # If order processing was successful, return the JsonResponse
+        return JsonResponse({
+            'order_number': str(order_number),
+            'total_price': total_price,
+        })    
 
     elif request.method == "GET":
-        return render(request, 'basket/basket.html')
+        # Assuming you have a way to render the basket from the session
+        return render(request, 'basket/basket.html') 
 
 
 
@@ -72,24 +111,3 @@ def process_order(request):
 
 
 
-
-
-
-"""
-
- product_id_from_array = item['product_id']
-                print(f"The type of product_id_from_array is {type(product_id_from_array)} and its value is {product_id_from_array}")
-
-                product_name_from_array = item['product_name']
-                print(f"The type of product_name_from_array is {type(product_name_from_array)} and its value is {product_name_from_array}")
-
-                default_price_from_array = item['default_price']                
-                print(f"The type of default_price_from_array is {type(default_price_from_array)} and its value is {default_price_from_array}")
-                
-                product_quantity_from_array = item['product_quantity']
-                print(f"The type of product_quantity_from_array is {type(product_quantity_from_array)} and its value is {product_quantity_from_array}")
-
-                price_from_array = item['price']
-                print(f"The type of price_from_array is {type(price_from_array)} and its value is {price_from_array}")      
-
-                """

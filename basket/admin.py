@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Basket
+from .models import Basket, BasketItem
 
 # Register your models here.
 class BasketAdmin(admin.ModelAdmin):
@@ -15,6 +15,21 @@ class BasketAdmin(admin.ModelAdmin):
     )
     ordering = ('basket_id',)
 
+class BasketItemAdmin(admin.ModelAdmin):
+    list_display = (
+    'basket',
+    'product_id',
+    'product_name',
+    'default_price', 
+    'quantity',
+    'sub_total',    
+    )
+    ordering = ('basket',)
+
+
+
+
 admin.site.register(Basket, BasketAdmin)
+admin.site.register(BasketItem, BasketItemAdmin)
 
 

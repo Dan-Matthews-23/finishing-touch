@@ -26,11 +26,15 @@ def add_to_favourites(request):
     products = Products.objects.all()
 """
 
+"""
+
 def add_to_basket(request):
     # Get form data
     if request.method == 'POST':
         product_id = request.POST.get("increase-quantity") 
         print(f" The value of the button is {product_id}")
     return render(request, 'products/sandwiches.html')
+"""
+
 
 
