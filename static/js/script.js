@@ -2,7 +2,7 @@
 //localStorage.removeItem("orderArray");
 
 
-
+/*
 
 // Variables
 let order_div = document.getElementById("display_order");
@@ -216,3 +216,7 @@ function confirmAndClose() {
     document.getElementById("modal-div").classList.add("hide");
     updateOrder()
 }
+
+
+
+*/
