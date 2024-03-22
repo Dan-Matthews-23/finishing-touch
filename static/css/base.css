@@ -9,6 +9,18 @@ body {
 }
 
 
+#welcome-banner-container {
+    width: 90%;
+    padding-top: 25px;
+    padding-bottom: 25px;
+
+}
+
+.welcome-banner-text {
+    font-size: 16px;
+}
+
+
 
 /* Order Forms and layouts */
 .orderBtn {
@@ -31,7 +43,18 @@ body {
     position: absolute;
     right: 75px;
     padding-top: 25px;
+    
 }
+/*
+div.sticky-element {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: yellow;
+    padding: 50px;
+    font-size: 20px;
+}*/
+
 
 #display_order {
     padding: 30px;

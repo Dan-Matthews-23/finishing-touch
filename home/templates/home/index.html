@@ -3,67 +3,183 @@
 
 {% block content %}
 
-<div class="container-fluid align-center" id="index-body">
-    <div class="row  product-row align-center ">
+<!--Welcome banner-->
+<section class="menu-navigation">
+    <div class="container-fluid align-center card " id="welcome-banner-container">
+        <div class="row ">
+            <div class="col ">
+                <h3 class="welcome-banner-text">
 
-        <div class="col  align-center product-col">
-            <div class="card ">
-                <img class="card-img-top"
-                    src="https://images.pexels.com/photos/708488/pexels-photo-708488.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Placeholder image" id="placeholder-image">
-                <div class="card-body ">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text ">
-                        This will be one of the products that use Bootstrap's card tool.
-                    </p>
-                    <a href="#" class="btn btn-priindex">Go somewhere</a>
-                </div>
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat. Duis
+                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                    Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                </h3>
+
             </div>
         </div>
-        <div class="col  align-center product-col">
-            <div class="card ">
-                <img class="card-img-top"
-                    src="https://images.pexels.com/photos/708488/pexels-photo-708488.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Placeholder image" id="placeholder-image">
-                <div class="card-body ">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text ">
-                        This will be one of the products that use Bootstrap's card tool.
-                    </p>
-                    <a href="#" class="btn btn-priindex">Go somewhere</a>
-                </div>
+
+
+    </div>
+</section>
+
+<br><br>
+
+<!--This is the section that holds the secondary navigation where users can navigate on the same page-->
+<section class="menu-navigation">
+    <div class="container-fluid align-center card product-container" id="menu-navigation">
+        <div class="row ">
+            <div class="col ">
+                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#specials">MegaBytes Specials</a>
+                </h3>
             </div>
         </div>
-        <div class="col  align-center product-col">
-            <div class="card ">
-                <img class="card-img-top"
-                    src="https://images.pexels.com/photos/708488/pexels-photo-708488.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Placeholder image" id="placeholder-image">
-                <div class="card-body ">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text ">
-                        This will be one of the products that use Bootstrap's card tool.
-                    </p>
-                    <a href="#" class="btn btn-priindex">Go somewhere</a>
-                </div>
+        <div class="row ">
+            <div class="col ">
+                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#sundries">Sundries</a></h3>
             </div>
         </div>
-        <div class="col  product-col">
-            <div class="card ">
-                <img class="card-img-top"
-                    src="https://images.pexels.com/photos/708488/pexels-photo-708488.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    alt="Placeholder image" id="placeholder-image">
-                <div class="card-body ">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text ">
-                        This will be one of the products that use Bootstrap's card tool.
-                    </p>
-                    <a href="#" class="btn btn-priindex">Go somewhere</a>
+        <div class="row ">
+            <div class="col ">
+                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#extras">Extras</a></h3>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--End of secondary navigation section-->
+
+<!--This is the order sumary section that holds details of the current order-->
+<section class="order-details">
+    <div class="container-fluid align-center card product-container" id="order-details">
+        <!--<div class="sticky-element">-->
+        <!--<div class="sticky-element"></div>-->
+            <div class="row ">
+                <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
+                    <div class="row ">
+                        <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
+                            <h3 class=" modal-text-styling">Order Details</h3>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 "
+                            id="display_order">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 " id="total_cost">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div
+                            class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 align-center-horizontal align-center-vertical">
+                            <form method="POST" action="{% url 'process_order' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="orderData" id="orderData" value="">
+                                <button type="submit" class="btn orderBtn" id="checkout">Checkout items</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col  col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xm-2 col-xxl-2" id="remove-item-div">
+                </div>
+            </div>
+        <!--</div>-->
+    </div>
+</section>
+<!--End of order summary section-->
+
+<!--This is the product selection section-->
+<section class="product-listings">
+    {% for i in sandwich_items %}
+    {% if i.category_id == 9 %}
+    <div class="container-fluid align-center card product-container">
+
+        <div class="row  card-row">
+            <div class="col  align-center">
+                <h5 class="card-title">{{i.product_name}}</h5>
+            </div>
+        </div>
+        <div class="row  card-row">
+            <div class="col  align-center">{{i.product_short_description}}</div>
+        </div>
+        <div class="row  card-row">
+            <div class="col  align-center bold protein">
+                {% if i.protein_source %}Source of protein{% endif %}
+            </div>
+        </div>
+        <div class="row  card-row">
+            <div class="col  align-center bold fibre">
+                {% if i.protein_source %}Source of fibre{% endif %}
+            </div>
+        </div>
+        <div class="row  card-row">
+            <div class="col  align-center bold">£{{i.product_price}}</div>
+        </div>
+        <div class="row  card-row">
+            <div class="col" id="open-modal-btn-div">
+                <p class=" align-center">
+                    <button class="btn open-modal" id="open-modal-value" value="{{i.product_id}}"
+                        data-product-name="{{i.product_name}}" data-product-price="{{i.product_price}}">Select
+                        item</button>
+                <p class="item-added">Item Added</p>
+                </p>
+            </div>
+        </div>
+
+
+
+        <!--This is the pop-up modal led by customer interaction-->
+        <div id="modal-div" class="select-sandwich ">
+            <div class="select-sandwich-modal-content">
+                <div class="container-fluid  align-center">
+                    <div class="row card-row align-center">
+                        <div class="col  align-center">
+                            <span class="close">&times;</span>
+                            <div class="row card-row ">
+
+                            </div>
+                            <div class="row card-row ">
+
+                                <div class="col modal-text-styling" id="product-price"></div>
+                            </div>
+                            <div class="row card-row align-center " id="quantity-row">
+                                <div class="col align-center-vertical align-center-horizontal">
+                                    <button type="button" class="btn fa-solid fa-square-minus fa-2xl "
+                                        id="decrease-quantity"></button>
+                                </div>
+                                <div class="col  align-center-vertical align-center-horizontal quantity-div"
+                                    id="quantity-div"></div>
+                                <div class="col  align-center-vertical align-center-horizontal">
+                                    <button type="button" class="btn fa-solid fa-square-plus fa-2xl "
+                                        id="increase-quantity" value="{{i.product_id}}"
+                                        data-product-name="{{i.product_name}}"
+                                        data-product-price="{{i.product_price}}"></button>
+                                </div>
+                            </div>
+                            <div class="row modal-row-padding  ">
+                                <form method="POST" action="">
+                                    {% csrf_token %}
+                                    <div class="col  align-center-vertical align-center-horizontal">
+                                        <button class="btn select-product-btn">Add to order</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <!--End of popup modal -->
+    </div>
+    {% endif %}
+    {% endfor %}
+</section>
+<!--End of product selection section-->
 
 
 {% endblock %}
