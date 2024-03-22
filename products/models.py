@@ -37,6 +37,11 @@ class Products(models.Model):
 
     def __str__(self):
         return self.product_name
+
+"""
+class Favourites(models.Model):
+    favourite_item_id = models.ForeignKey(Products, on_delete=models.SET_NULL, null=True, blank=True, related_name='products')
+"""
     
     
 

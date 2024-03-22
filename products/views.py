@@ -21,3 +21,8 @@ def list_sandwich_creator_items(request):
     }
     return render(request, 'products/sandwich-creator.html', context) 
 
+"""
+def add_to_favourites(request):
+    products = Products.objects.all()
+"""
+
