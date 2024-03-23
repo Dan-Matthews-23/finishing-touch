@@ -3,7 +3,19 @@
 
 {% block content %}
 
-
+<div class="container">
+    <div class="row">
+        <div class="col col-sm-12 col-lg-12">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 <!--This is the section that holds the secondary navigation where users can navigate on the same page-->
 <section class="menu-navigation">
@@ -64,6 +76,11 @@
     </div>
 </section>
 <!--End of order summary section-->
+
+
+
+
+
 
 <!--This is the product selection section-->
 <section class="product-listings">
@@ -135,7 +152,7 @@
                             </div>
                             <div class="row modal-row-padding  ">
                                 <form method="POST" action="">
-                                    
+
                                     {% csrf_token %}
                                     <div class="col  align-center-vertical align-center-horizontal">
                                         <button class="btn select-product-btn">Add to order</button>

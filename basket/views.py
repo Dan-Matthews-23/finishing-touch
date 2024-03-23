@@ -3,6 +3,7 @@ from products.models import Products
 import json
 from django import forms
 import uuid
+import logging
 from django.db import transaction
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
@@ -26,6 +27,96 @@ def basket(request, context):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+logger = logging.getLogger(__name__)  # Set up basic logging
+
+@require_POST  # Only allow POST requests
+@login_required(login_url=settings.LOGIN_URL)
+def process_order(request):
+    if request.method == "POST":
+        try:
+            order_data = json.loads(request.POST.get("orderData"))
+            logger.debug(f"Received order_data: {order_data}")  # Log the data
+            # Basket handling
+            try:
+                basket, created = Basket.objects.get_or_create(
+                    user_profile=request.user.userprofile,
+                    defaults={'order_number': uuid.uuid4().hex.upper()}
+                )
+            except Exception as e:  
+                messages.error(request, f"There was an error associating your basket: {e}")
+                return render(request, 'basket/basket.html')
+
+            if order_data is None or len(order_data) == 0:
+                messages.error(request, "Your basket is empty.")
+                logger.info("Empty order data detected")
+
+                # ... Handle UUID if needed
+
+                return redirect('prepacked_sandwiches')  
+
+        except json.JSONDecodeError:
+            messages.error(request, "Invalid order data format. Please check and try again.")
+            logger.warning("JSON decoding error") 
+            return render(request, 'basket/basket.html') 
+
+        except ValueError:  
+            messages.error(request, "Your order data is missing. Please try again.")
+            logger.warning("Missing 'orderData'")
+            return render(request, 'basket/basket.html') 
+
+        logger.warning("Unexpected condition - order data not processed")
+        messages.error(request, "An unexpected error occurred. Please try again.") 
+
+    elif request.method == "GET": 
+        return render(request, 'basket/basket.html') 
+
+ 
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# BaCKUP FUNCTION AS OF 23/03
+"""
 @require_POST  # Only allow POST requests
 @login_required(login_url=settings.LOGIN_URL)
 def process_order(request):
@@ -33,7 +124,6 @@ def process_order(request):
         try:
             # Input Validation
             order_data = json.loads(request.POST.get("orderData"))
-            #print(f"The order_data is {order_data}") - this works
             if 'orderData' not in request.POST:
                 raise ValueError("Missing orderData")
 
@@ -104,11 +194,5 @@ def process_order(request):
     elif request.method == "GET":
         # Assuming you have a way to render the basket from the session
         return render(request, 'basket/basket.html') 
-
-
-
-
-
-
-
+    """
 
