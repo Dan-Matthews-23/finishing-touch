@@ -15,60 +15,80 @@ from django.contrib.auth.decorators import login_required
 
 
 
-# Create your views here.
-
-"""
-('[{"product_id":"6","product_name":"Egg Mayonnaise","default_price":2.4,"price":"2.40","product_quantity":1,"price_calc":2.4}]') 
-"""
-
-def basket(request, context):
-    return render(request, 'basket/basket.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 logger = logging.getLogger(__name__)  # Set up basic logging
 
 @require_POST  # Only allow POST requests
 @login_required(login_url=settings.LOGIN_URL)
 def process_order(request):
+    logger.debug("order_data received")
     if request.method == "POST":
         try:
             order_data = json.loads(request.POST.get("orderData"))
             logger.debug(f"Received order_data: {order_data}")  # Log the data
             # Basket handling
             try:
-                basket, created = Basket.objects.get_or_create(
-                    user_profile=request.user.userprofile,
-                    defaults={'order_number': uuid.uuid4().hex.upper()}
-                )
+                if order_data is None or len(order_data) == 0:
+                    logger.debug(f"Received order_data: {order_data}")
+                    messages.error(request, "Your basket is empty.")
+                    logger.info("Empty order data detected")
+                    # ... Handle UUID if needed
+                    return redirect('prepacked_sandwiches')  
+            
+                else: #If order_data exists and is not empty
+                    
+
+                    basket, created = Basket.objects.get_or_create(
+                        user_profile=request.user.userprofile,
+                        defaults={'order_number': uuid.uuid4().hex.upper()}
+                    )
+
+                    # Enhanced data validation (assuming 'quantity' is required)
+                    for item_data in order_data:
+                        if 'product_id' not in item_data or 'quantity' not in item_data:
+                            raise ValueError("Invalid order item data")
+                        if not isinstance(item_data['quantity'], int) or item_data['quantity'] <= 0:
+                            raise ValueError("Invalid quantity")
+                    
+                    with transaction.atomic(): 
+                        product_ids = [item['product_id'] for item in order_data]
+                        products = Products.objects.filter(product_id__in=product_ids).prefetch_related('items')
+
+                        order_items = []  # Collect validated order items
+                        total_price = 0
+
+                        for item_data in order_data:
+                            logger.debug(f"Processing item: {item_data}") 
+                            product = get_object_or_404(Products, product_id=item_data['product_id'])
+                            order_item = OrderItem(
+                                basket=basket,
+                                product=product,
+                                product_name=product.name,
+                                price=product.price,
+                                quantity=item_data['quantity']
+                            )
+                            order_items.append(order_item)
+                            total_price += order_item.price * order_item.quantity
+
+                        # Bulk create validated items for efficiency
+                        OrderItem.objects.bulk_create(order_items)
+
+                        order_number = basket.order_number  # Retrieve generated order number
+                        order = Order( 
+                            basket=basket,
+                            total_price=total_price,
+                            order_number=order_number
+                        )
+                        order.save()
+
+                        request.session['order_number'] = str(order_number)
+                        request.session['order_id'] = order.id
+
+                        basket.delete()  # Clear the basket
+
             except Exception as e:  
                 messages.error(request, f"There was an error associating your basket: {e}")
-                return render(request, 'basket/basket.html')
-
-            if order_data is None or len(order_data) == 0:
-                messages.error(request, "Your basket is empty.")
-                logger.info("Empty order data detected")
-
-                # ... Handle UUID if needed
-
-                return redirect('prepacked_sandwiches')  
+                return render(request, 'basket/basket.html')           
 
         except json.JSONDecodeError:
             messages.error(request, "Invalid order data format. Please check and try again.")
@@ -89,7 +109,8 @@ def process_order(request):
  
 
 
-   
+def basket(request, context):
+    return render(request, 'basket/basket.html')
 
 
 
