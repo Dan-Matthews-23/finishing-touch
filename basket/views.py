@@ -1,5 +1,6 @@
 from .models import Basket
 from products.models import Products
+from accounts.models import UserProfile
 import json
 from django import forms
 import uuid
@@ -25,6 +26,7 @@ def process_order(request):
     if request.method == "POST":
         try:
             order_data = json.loads(request.POST.get("orderData"))
+            #print(order_data)
             logger.debug(f"Received order_data: {order_data}")  # Log the data
             # Basket handling
             try:
@@ -35,78 +37,133 @@ def process_order(request):
                     # ... Handle UUID if needed
                     return redirect('prepacked_sandwiches')  
             
-                else: #If order_data exists and is not empty
-                    
+                else:                   
 
                     basket, created = Basket.objects.get_or_create(
                         user_profile=request.user.userprofile,
                         defaults={'order_number': uuid.uuid4().hex.upper()}
                     )
-
-                    # Enhanced data validation (assuming 'quantity' is required)
-                    for item_data in order_data:
-                        if 'product_id' not in item_data or 'quantity' not in item_data:
-                            raise ValueError("Invalid order item data")
-                        if not isinstance(item_data['quantity'], int) or item_data['quantity'] <= 0:
-                            raise ValueError("Invalid quantity")
-                    
-                    with transaction.atomic(): 
-                        product_ids = [item['product_id'] for item in order_data]
-                        products = Products.objects.filter(product_id__in=product_ids).prefetch_related('items')
-
-                        order_items = []  # Collect validated order items
-                        total_price = 0
-
-                        for item_data in order_data:
-                            logger.debug(f"Processing item: {item_data}") 
-                            product = get_object_or_404(Products, product_id=item_data['product_id'])
-                            order_item = OrderItem(
-                                basket=basket,
-                                product=product,
-                                product_name=product.name,
-                                price=product.price,
-                                quantity=item_data['quantity']
-                            )
-                            order_items.append(order_item)
-                            total_price += order_item.price * order_item.quantity
-
-                        # Bulk create validated items for efficiency
-                        OrderItem.objects.bulk_create(order_items)
-
-                        order_number = basket.order_number  # Retrieve generated order number
-                        order = Order( 
-                            basket=basket,
-                            total_price=total_price,
-                            order_number=order_number
-                        )
-                        order.save()
-
-                        request.session['order_number'] = str(order_number)
-                        request.session['order_id'] = order.id
-
-                        basket.delete()  # Clear the basket
+                    logger.debug(f"Full order_data: {order_data}")
+                    print(f"The basket code works fine")
+                    """
+                    Code here
+                    """
+                    return render(request, 'basket/basket.html') 
+                            
 
             except Exception as e:  
                 messages.error(request, f"There was an error associating your basket: {e}")
-                return render(request, 'basket/basket.html')           
+                return redirect('prepacked_sandwiches')     
+                      
 
         except json.JSONDecodeError:
             messages.error(request, "Invalid order data format. Please check and try again.")
             logger.warning("JSON decoding error") 
-            return render(request, 'basket/basket.html') 
+            return redirect('prepacked_sandwiches')  
 
         except ValueError:  
             messages.error(request, "Your order data is missing. Please try again.")
             logger.warning("Missing 'orderData'")
-            return render(request, 'basket/basket.html') 
-
-        logger.warning("Unexpected condition - order data not processed")
-        messages.error(request, "An unexpected error occurred. Please try again.") 
+            return redirect('prepacked_sandwiches')         
 
     elif request.method == "GET": 
         return render(request, 'basket/basket.html') 
 
  
+"""
+
+                    # Enhanced data validation (assuming 'quantity' is required)
+                    for item_data in order_data:
+
+                        with transaction.atomic(): 
+                            product_ids = [item['product_id'] for item in order_data]
+                            products = Products.objects.filter(product_id__in=product_ids).prefetch_related('items')
+
+                            if 'product_id' not in item_data or 'quantity' not in item_data:
+                                logger.info("There is no product or quantity in item data (line 47 and 48)")
+                                raise ValueError("Invalid order item data")                            
+                                return redirect('prepacked_sandwiches') 
+
+                            if not isinstance(item_data['quantity'], int) or item_data['quantity'] <= 0:
+                                logger.info("There is no product or quantity in item data (line 47 and 48)")
+                                raise ValueError("Invalid quantity")                            
+                                return redirect('prepacked_sandwiches') 
+                    
+                        
+
+                            order_items = []  # Collect validated order items
+                            total_price = 0
+
+                            for item_data in order_data:
+                                logger.debug(f"Processing item: {item_data}") 
+                                product = get_object_or_404(Products, product_id=item_data['product_id'])
+                                order_item = OrderItem(
+                                    basket=basket,
+                                    product=product,
+                                    product_name=product.name,
+                                    price=product.price,
+                                    quantity=item_data['quantity']
+                                )
+                                order_items.append(order_item)
+                                total_price += order_item.price * order_item.quantity
+
+                            # Bulk create validated items for efficiency
+                            OrderItem.objects.bulk_create(order_items)
+
+                            order_number = basket.order_number  # Retrieve generated order number
+                            order = Order( 
+                                basket=basket,
+                                total_price=total_price,
+                                order_number=order_number
+                            )
+                            order.save()
+
+                            request.session['order_number'] = str(order_number)
+                            request.session['order_id'] = order.id
+
+                            basket.delete()  # Clear the basket
+                            """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def basket(request, context):
