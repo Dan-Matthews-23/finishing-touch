@@ -33,6 +33,7 @@ def process_order(request):
         try:
             # Input Validation
             order_data = json.loads(request.POST.get("orderData"))
+            #print(f"The order_data is {order_data}") - this works
             if 'orderData' not in request.POST:
                 raise ValueError("Missing orderData")
 

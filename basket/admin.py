@@ -12,6 +12,7 @@ class BasketAdmin(admin.ModelAdmin):
     'default_price',
     'sub_price',
     'total_price',    
+    'date_time',
     )
     ordering = ('basket_id',)
 
@@ -22,7 +23,8 @@ class BasketItemAdmin(admin.ModelAdmin):
     'product_name',
     'default_price', 
     'quantity',
-    'sub_total',    
+    'sub_total',
+    'date_time',    
     )
     ordering = ('basket',)
 

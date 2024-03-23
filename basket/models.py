@@ -2,6 +2,7 @@ from django.db import models
 from products.models import Products
 from accounts.models import UserProfile
 import uuid
+import datetime
 
 class Basket(models.Model):
     basket_id = models.AutoField(primary_key=True)
@@ -14,7 +15,8 @@ class Basket(models.Model):
     quantity = models.IntegerField(blank=False, editable=False, default=1)
     default_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
     sub_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
-    total_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)    
+    total_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
+    date_time =  models.DateTimeField(auto_now_add=True)
 
     #def _generate_order_number(self):        
         #return uuid.uuid4().hex.upper()
@@ -33,6 +35,7 @@ class BasketItem(models.Model):
     default_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False)
     quantity = models.IntegerField(blank=False, default=1)
     sub_total = models.DecimalField(max_digits=6, decimal_places=2, blank=False)
+    date_time =  models.DateTimeField(auto_now_add=True)
 
 """
 This is now working but it should be putting an order into Basket Item I believe
