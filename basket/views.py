@@ -1,3 +1,5 @@
+from .models import UserProfile
+from .forms import BasketForm
 from .models import Basket
 from products.models import Products
 from accounts.models import UserProfile
@@ -13,6 +15,7 @@ from django.conf import settings
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -37,18 +40,48 @@ def process_order(request):
                     # ... Handle UUID if needed
                     return redirect('prepacked_sandwiches')  
             
-                else:                   
+                else:
+                    request.session['basket'] = order_data
+                    basket_session = request.session['basket']
+                    print(basket_session)  
 
-                    basket, created = Basket.objects.get_or_create(
-                        user_profile=request.user.userprofile,
-                        defaults={'order_number': uuid.uuid4().hex.upper()}
-                    )
-                    logger.debug(f"Full order_data: {order_data}")
-                    print(f"The basket code works fine")
+                    profile = get_object_or_404(UserProfile, user=request.user)
+
+                    if request.method == 'POST':
+                        form = BasketForm(request.POST, instance=profile)
+                        if form.is_valid():
+                            form.save()
+                            messages.success(request, 'Profile updated successfully')
+                        else:
+                            messages.error(request,
+                                        ('Update failed. Please ensure '
+                                            'the form is valid.'))
+                    else:
+                        form = BasketForm(instance=profile)
+                    orders = profile.orders.all()
+
+                    template = 'basket/basket.html'
+                    context = {
+                        'form': form,        
+                    }
+
+                    return render(request, template, context)
+
+
+
+
+
+
+
+
+                           
+                                       
+
+                    
                     """
                     Code here
                     """
-                    return render(request, 'basket/basket.html') 
+                    return render(request, template, context) 
                             
 
             except Exception as e:  
@@ -71,6 +104,13 @@ def process_order(request):
 
  
 """
+
+basket, created = Basket.objects.get_or_create(
+                        user_profile=request.user.userprofile,
+                        defaults={'order_number': uuid.uuid4().hex.upper()}
+                    )
+                    logger.debug(f"Full order_data: {order_data}")
+                    print(f"The basket code works fine")
 
                     # Enhanced data validation (assuming 'quantity' is required)
                     for item_data in order_data:
@@ -166,8 +206,6 @@ def process_order(request):
 
 
 
-def basket(request, context):
-    return render(request, 'basket/basket.html')
 
 
 
