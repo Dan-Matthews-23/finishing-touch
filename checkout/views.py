@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpR
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
-from checkout.contexts import bag_contents
+#from checkout.contexts import basket_contents
 #from .forms import OrderForm
 import stripe
 from basket.models import Basket
@@ -102,106 +102,122 @@ def create_placeholder(request):
 def process_checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+
     if request.method == 'POST':
-        basket = request.session.get('basket')        
+        basket = request.session.get('basket', {})
 
-        order_details = request.session['basket']
-        
+        form_data = {
+            'full_name': request.POST['full_name'],
+            'email': request.POST['email'],
+            'phone_number': request.POST['phone_number'],
+            #'country': request.POST['country'],
+            'postcode': request.POST['postcode'],
+            'town_or_city': request.POST['town_or_city'],
+            'street_address1': request.POST['street_address1'],
+            'street_address2': request.POST['street_address2'],
+            'county': request.POST['county'],
+        }
 
-        customer_details = {
-                
-                'full_name': request.POST['full_name'],  # Assuming this is correct 
-                'email': request.POST['email'],
-                'phone_number': request.POST['phone_number'],
-                'postcode': request.POST['postcode'],                
-                'street_address1': request.POST['street_address1'],
-                'street_address2': request.POST['street_address2'],
-                'town_or_city': request.POST['town_or_city'],                
-                'county': request.POST['county'],
-            }
-
-
-        profile = get_object_or_404(UserProfile, user=request.user)
-        basket_form = BasketForm(customer_details)
-        if basket_form.is_valid(): # Add form validation
-            order = basket_form.save(commit=False)  
-
-
-
-        print(f"The basket array is: {basket}")
-        total_quantity = 0
-        total_price = 0.00
-        for item in basket:
-            try:
-                product = Products.objects.get(product_id=item['product_id'])
-                print("Product found")
-                total_quantity += int(item['product_quantity'])
-                total_price += float(item['price'])
-                order_items = OrderItems(
-                    order=order,  # Now we pass the saved order
-                    product=product, 
-                    quantity=total_quantity,
-                )
-                order_items.save()
-            except Products.DoesNotExist:
-                messages.error(request, (
-                        "One of the products in your bag wasn't "
+        order_form = BasketForm(form_data)
+        if order_form.is_valid():
+            order = order_form.save(commit=False)
+            pid = request.POST.get('client_secret').split('_secret')[0]
+            order.stripe_pid = pid
+            order.original_basket = json.dumps(basket)
+            order.save()
+            for item_id, item_data in basket.items():
+                try:
+                    product = Product.objects.get(id=item_id)
+                    if isinstance(item_data, int):
+                        order_line_item = OrderLineItem(
+                            order=order,
+                            product=product,
+                            quantity=item_data,
+                        )
+                        order_line_item.save()
+                    else:
+                        for size, quantity in item_data['items_by_size'].items():
+                            order_line_item = OrderLineItem(
+                                order=order,
+                                product=product,
+                                quantity=quantity,
+                                product_size=size,
+                            )
+                            order_line_item.save()
+                except Product.DoesNotExist:
+                    messages.error(request, (
+                        "One of the products in your basket wasn't "
                         "found in our database. "
                         "Please call us for assistance!")
                     )
+                    order.delete()
+                    return redirect(reverse('view_basket'))
 
+            # Save the info to the user's profile if all is well
+            request.session['save_info'] = 'save-info' in request.POST
+            return redirect(reverse('checkout_success',
+                                    args=[order.order_number]))
+        else:
+            messages.error(request, ('There was an error with your form. '
+                                     'Please double check your information.'))
+    else:
+        basket = request.session.get('basket', {})
+        if not basket:
+            messages.error(request,
+                           "There's nothing in your basket at the moment")
+            return redirect(reverse('products'))
 
-        #print(f" Customer details are {customer_details}")
-        #print(f" Order details are {order_details}")
-
-        
-               
-   
-        create_order, created = Orders.objects.get_or_create(
-            order_number=order_details[0]['order_number'],  # Use the extracted order_number
-            product_id=order_details[0]['product_id'], # Assuming this is correct
-            customer_details=customer_details 
+        current_basket = basket_contents(request)
+        total = current_basket['grand_total']
+        stripe_total = round(total * 100)
+        stripe.api_key = stripe_secret_key
+        intent = stripe.PaymentIntent.create(
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
         )
-        create_order.save()
-        #get_order_placeholder.delete()
-        #get_basket_items.delete()
-        #request.session['clear_localStorage'] = True
-                
-       
-    #else:
-        #print("No items found")    
-    
-    """
 
-   # bag = request.session.get('bag', {})
-    #if not bag:
-        #messages.error(request, "There's nothing in your bag at the moment")
-        #return redirect(reverse('prepacked_sandwiches'))
-
-    current_bag = bag_contents(request)
-    #total = 10
-    total = int(float(request.session.get('total_price')))  # Convert to float, then truncate
-    print(total)
-
-    #print(f"The type of total is {type(total)} and its value is {total}")
-    
-    stripe_total = round(total * 100)
-    stripe.api_key = stripe_secret_key
-    intent = stripe.PaymentIntent.create(
-        amount=stripe_total,
-        currency=settings.STRIPE_CURRENCY,
-    )
-    #print(intent)
-
-    #order_form = OrderForm()
-    #print(intent)
+        # Attempt to prefill the form with any info
+        # the user maintains in their profile
+        if request.user.is_authenticated:
+            try:
+                profile = UserProfile.objects.get(user=request.user)
+                order_form = OrderForm(initial={
+                    'full_name': profile.user.get_full_name(),
+                    'email': profile.user.email,
+                    'phone_number': profile.default_phone_number,
+                    'country': profile.default_country,
+                    'postcode': profile.default_postcode,
+                    'town_or_city': profile.default_town_or_city,
+                    'street_address1': profile.default_street_address1,
+                    'street_address2': profile.default_street_address2,
+                    'county': profile.default_county,
+                })
+            except UserProfile.DoesNotExist:
+                order_form = OrderForm()
+        else:
+            order_form = OrderForm()
 
     if not stripe_public_key:
-        messages.warning(request, 'Stripe public key is missing. \
-            Did you forget to set it in your environment?')
-    
+        messages.warning(request, ('Stripe public key is missing. '
+                                   'Did you forget to set it in '
+                                   'your environment?'))
+
+    template = 'checkout/checkout.html'
+    context = {
+        'order_form': order_form,
+        'stripe_public_key': stripe_public_key,
+        'client_secret': intent.client_secret,
+    }
+
+    return render(request, template, context)
+
+
+def checkout_success(request, order_number):
+    """
+    Handle successful checkouts
+    """
     save_info = request.session.get('save_info')
-    order = get_object_or_404(Orders, order_number=order_number)
+    order = get_object_or_404(Order, order_number=order_number)
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
@@ -227,22 +243,15 @@ def process_checkout(request):
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
-    
-    """
 
-    template = 'checkout/order_confirmed.html'
+    if 'basket' in request.session:
+        del request.session['basket']
+
+    template = 'checkout/checkout_success.html'
     context = {
-        #'order_form': order_form,
-        'stripe_public_key': stripe_public_key,
-        #'client_secret': intent.client_secret,
-        #'defaults':defaults,        
-        
+        'order': order,
     }
-    if 'order_number' in request.session:
-        del request.session['order_number']
-    if 'total_price' in request.session:
-        del request.session['total_price']    
-    
+
     return render(request, template, context)
 
 
