@@ -21,8 +21,18 @@ class UserProfile(models.Model):
     street_address2 = models.CharField(max_length=80, null=True, blank=True)
     county = models.CharField(max_length=80, null=True, blank=True)
 
-    def __str__(self):
-        return self.user.username
+    """
+    Find a way to remove these next values
+    """
+    full_name = models.CharField(max_length=80, null=True, blank=True)
+    email = models.CharField(max_length=80, null=True, blank=True)
+   
+
+  
+
+
+    #def __str__(self):
+        #return self.user.phone_number
 
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):

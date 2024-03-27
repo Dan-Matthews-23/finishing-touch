@@ -14,6 +14,8 @@ from accounts.models import UserProfile
 #from accounts.forms import UserProfileForm
 
 from basket.forms import BasketForm
+from django.contrib.auth.decorators import login_required
+
 
 
 
@@ -96,11 +98,12 @@ def create_placeholder(request):
 
  
 
-
+@login_required(login_url=settings.LOGIN_URL)
 def process_checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-    if request.method == 'POST':        
+    if request.method == 'POST':
+        basket = request.session.get('basket')        
 
         order_details = request.session['basket']
         
@@ -116,18 +119,42 @@ def process_checkout(request):
                 'town_or_city': request.POST['town_or_city'],                
                 'county': request.POST['county'],
             }
+
+
+        profile = get_object_or_404(UserProfile, user=request.user)
         basket_form = BasketForm(customer_details)
-        order = basket_form.save(commit=False)
+        if basket_form.is_valid(): # Add form validation
+            order = basket_form.save(commit=False)  
 
-        print(f" Customer details are {customer_details}")
-        print(f" Order details are {order_details}")
 
-        order_items = OrderItems(
-            order=order, 
-            product=product, 
-            quantity=item_data,
-            )
-        order_items.save()
+
+        print(f"The basket array is: {basket}")
+        total_quantity = 0
+        total_price = 0.00
+        for item in basket:
+            try:
+                product = Products.objects.get(product_id=item['product_id'])
+                print("Product found")
+                total_quantity += int(item['product_quantity'])
+                total_price += float(item['price'])
+                order_items = OrderItems(
+                    order=order,  # Now we pass the saved order
+                    product=product, 
+                    quantity=total_quantity,
+                )
+                order_items.save()
+            except Products.DoesNotExist:
+                messages.error(request, (
+                        "One of the products in your bag wasn't "
+                        "found in our database. "
+                        "Please call us for assistance!")
+                    )
+
+
+        #print(f" Customer details are {customer_details}")
+        #print(f" Order details are {order_details}")
+
+        
                
    
         create_order, created = Orders.objects.get_or_create(

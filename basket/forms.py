@@ -9,20 +9,17 @@ class BasketForm(forms.ModelForm):
         exclude = ('user',)
 
     def __init__(self, *args, **kwargs):
-        """
-        Add placeholders and classes, remove auto-generated
-        labels and set autofocus on first field
-        """
+       
         super().__init__(*args, **kwargs)
         placeholders = {
-            'full_name': 'Full Name',
-            'email': 'Email Address',
-            'phone_number': 'Phone Number',
-            'postcode': 'Postal Code',
-            'town_or_city': 'Town or City',
-            'street_address1': 'Street Address 1',
-            'street_address2': 'Street Address 2',
-            'county': 'County, State or Locality',
+            'full_name': 'Basket Full Name',
+            'email': 'Basket Email Address',
+            'phone_number': 'Basket Phone Number',
+            'postcode': 'Basket Postal Code',
+            'town_or_city': 'Basket Town or City',
+            'street_address1': 'Basket Street Address 1',
+            'street_address2': 'Basket Street Address 2',
+            'county': 'Basket County / district',
             
         }
 
