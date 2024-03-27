@@ -41,9 +41,16 @@ def process_order(request):
                     return redirect('prepacked_sandwiches')  
             
                 else:
+                    order_number =  uuid.uuid4().hex.upper()
+                    for order in order_data:
+                        order['order_number'] = order_number  # Same number for all 
+                        # To give each order a unique number, generate order_number inside the loop
+
+                                         
                     request.session['basket'] = order_data
                     basket_session = request.session['basket']
-                    print(basket_session)  
+                    print(basket_session)
+                    
 
                     profile = get_object_or_404(UserProfile, user=request.user)
 
@@ -62,7 +69,8 @@ def process_order(request):
 
                     template = 'basket/basket.html'
                     context = {
-                        'form': form,        
+                        'form': form,
+                        'basket': basket_session,        
                     }
 
                     return render(request, template, context)

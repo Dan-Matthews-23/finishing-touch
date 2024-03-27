@@ -42,20 +42,17 @@
                             <h5 class="card-title">Order Details</h5>
                         </div>
                     </div>
-                    {% for i in order_items %}
+                    {% for item in basket %}
                     <div class="row  align-center">
-                        <div class="col  col-sm-12 col-md-12 col-lg-9 col-xl-9">{{i.product_name}} (X)
-                            {{i.product_quantity}}</div>
-                        <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{i.price}}</div>
+                        <div class="col  col-sm-12 col-md-12 col-lg-9 col-xl-9">{{item.product_name}} (X)
+                            {{item.product_quantity}}</div>
+                        <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{item.price}}</div>
                     </div>
-
-                    {% endfor %}
-
-
                     <div class="row  align-center">
                         <div class="col  col-sm-12 col-md-12 col-lg-9 col-xl-9">Total Price: </div>
-                        <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{total_price}}</div>
+                        <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{item.total_price}}</div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
             <div class="col  col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xm-2 col-xxl-2" id="remove-item-div">
@@ -86,6 +83,7 @@
                                 {{ form|crispy }}
                                 <button type="submit" id="checkout" class="btn orderBtn">Go to payment</button>
                             </form>
+                            
                         </div>
                     </div>
                 </div>
