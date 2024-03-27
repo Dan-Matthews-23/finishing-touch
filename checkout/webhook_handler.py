@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
 
-from .models import Orders, OrderPlaceholder
+from .models import Orders#, OrderItems
 from products.models import Products
 #from profiles.models import UserProfile
 

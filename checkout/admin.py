@@ -1,7 +1,7 @@
 
 
 from django.contrib import admin
-from .models import Orders, OrderPlaceholder
+from .models import Orders#, OrderItems
 
 
 class OrdersAdmin(admin.ModelAdmin):
@@ -32,7 +32,7 @@ class OrdersAdmin(admin.ModelAdmin):
 
 # Register your models here.
 
-
+"""
 class OrderPlaceholderAdmin(admin.ModelAdmin):
     list_display = (
     'order_id',
@@ -53,8 +53,9 @@ class OrderPlaceholderAdmin(admin.ModelAdmin):
     'county',
     )
     ordering = ('order_id',)
+    """
 
 
 
 admin.site.register(Orders, OrdersAdmin)
-admin.site.register(OrderPlaceholder, OrderPlaceholderAdmin )
+#admin.site.register(OrderPlaceholder, OrderPlaceholderAdmin )

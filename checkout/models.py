@@ -49,23 +49,16 @@ class Orders(models.Model):
         return self.order_number
 
 
-class OrderPlaceholder(models.Model):
-    order_id = models.AutoField(primary_key=True)
-    order_number = models.CharField(max_length=32, null=False, editable=False)
-    product_id = models.IntegerField(blank=False, editable=False, default=1)
-    product_name = models.CharField(max_length=32, null=False, editable=False, default="Test")
-    quantity = models.IntegerField(blank=False, editable=False, default=1)
-    default_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
-    sub_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
-    total_price = models.DecimalField(max_digits=6, decimal_places=2, blank=False, default=0)
-    full_name = models.CharField(max_length=50,blank=False, default="Test")
-    email = models.CharField(max_length=50, blank=False, default="Test")
-    phone_number = models.CharField(max_length=50, blank=False, default="Test")
-    postcode = models.CharField(max_length=50, blank=False, default="Test")
-    town_or_city = models.CharField(max_length=50, blank=False, default="Test")
-    street_address1 = models.CharField(max_length=50, blank=False, default="Test")
-    street_address2 = models.CharField(max_length=50, blank=False, default="Test")
-    county = models.CharField(max_length=50, blank=False, default="Test")
+class OrderItems(models.Model):
+    order = models.ForeignKey(Orders, null=False, blank=False,
+                              on_delete=models.CASCADE,
+                              related_name='lineitems')
+    product = models.ForeignKey(Products, null=False, blank=False,
+                                on_delete=models.CASCADE)    
+    quantity = models.IntegerField(null=False, blank=False, default=0)
+    order_total = models.DecimalField(max_digits=6, decimal_places=2,
+                                         null=False, blank=False,
+                                         editable=False)
 
     def __str__(self):
         return self.order_number

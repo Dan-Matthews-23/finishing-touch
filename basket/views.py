@@ -49,11 +49,12 @@ def process_order(request):
                                          
                     request.session['basket'] = order_data
                     basket_session = request.session['basket']
-                    print(basket_session)
+                    #print(basket_session)
                     
 
                     profile = get_object_or_404(UserProfile, user=request.user)
 
+                  
                     if request.method == 'POST':
                         form = BasketForm(request.POST, instance=profile)
                         if form.is_valid():
@@ -65,7 +66,8 @@ def process_order(request):
                                             'the form is valid.'))
                     else:
                         form = BasketForm(instance=profile)
-                    orders = profile.orders.all()
+                    #orders = profile.orders.all()
+                    
 
                     template = 'basket/basket.html'
                     context = {
@@ -73,23 +75,14 @@ def process_order(request):
                         'basket': basket_session,        
                     }
 
-                    return render(request, template, context)
-
-
-
-
-
-
-
-
-                           
+                    return render(request, template, context)                        
                                        
 
                     
                     """
                     Code here
                     """
-                    return render(request, template, context) 
+                    #return render(request, template, context) 
                             
 
             except Exception as e:  

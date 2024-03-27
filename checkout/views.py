@@ -6,12 +6,14 @@ from checkout.contexts import bag_contents
 #from .forms import OrderForm
 import stripe
 from basket.models import Basket
-from .models import OrderPlaceholder, Orders
+from .models import OrderItems, Orders
 from products.models import Products
 from django.http import HttpResponse
 
 from accounts.models import UserProfile
-from accounts.forms import UserProfileForm
+#from accounts.forms import UserProfileForm
+
+from basket.forms import BasketForm
 
 
 
@@ -34,7 +36,7 @@ def cache_checkout_data(request):
         return HttpResponse(content=e, status=400)
 
 
-
+"""
 def create_placeholder(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -84,7 +86,7 @@ def create_placeholder(request):
 
     return render(request, template, context)
 
-
+"""
 
 
 
@@ -98,46 +100,51 @@ def create_placeholder(request):
 def process_checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-    if request.method == 'POST':
-        #bag = request.session.get('bag', {})
-        order_number = request.session['order_number']
-        get_order_placeholder = OrderPlaceholder.objects.filter(order_number=order_number)
-        get_basket_items = Basket.objects.filter(order_number=order_number)        
-        #form_data = request.session['customer_form_details']
-       # print(form_data)
-        total_price = int(float(request.session.get('total_price')))  # Convert to float, then truncate
+    if request.method == 'POST':        
 
-        if get_order_placeholder:
-            for item in get_order_placeholder:
-                defaults = {
-                'quantity': item.quantity,
-                'default_price': item.default_price,
-                'sub_price': item.sub_price,
-                'total_price':total_price,
-                'full_name': item.full_name,  # Assuming this is correct 
-                'email': item.email,
-                'phone_number': item.phone_number,
-                'postcode': item.postcode,
-                'town_or_city': item.town_or_city,
-                'street_address1': item.street_address1,
-                'street_address2': item.street_address2,
-                'county': item.county, 
-    }
-                create_order, created = Orders.objects.get_or_create(
-                order_number=order_number, 
-                product_id=item.product_id,
-                defaults=defaults 
+        order_details = request.session['basket']
+        
+
+        customer_details = {
+                
+                'full_name': request.POST['full_name'],  # Assuming this is correct 
+                'email': request.POST['email'],
+                'phone_number': request.POST['phone_number'],
+                'postcode': request.POST['postcode'],                
+                'street_address1': request.POST['street_address1'],
+                'street_address2': request.POST['street_address2'],
+                'town_or_city': request.POST['town_or_city'],                
+                'county': request.POST['county'],
+            }
+        basket_form = BasketForm(customer_details)
+        order = basket_form.save(commit=False)
+
+        print(f" Customer details are {customer_details}")
+        print(f" Order details are {order_details}")
+
+        order_items = OrderItems(
+            order=order, 
+            product=product, 
+            quantity=item_data,
             )
-                create_order.save()
-                get_order_placeholder.delete()
-                get_basket_items.delete()
-                request.session['clear_localStorage'] = True
+        order_items.save()
+               
+   
+        create_order, created = Orders.objects.get_or_create(
+            order_number=order_details[0]['order_number'],  # Use the extracted order_number
+            product_id=order_details[0]['product_id'], # Assuming this is correct
+            customer_details=customer_details 
+        )
+        create_order.save()
+        #get_order_placeholder.delete()
+        #get_basket_items.delete()
+        #request.session['clear_localStorage'] = True
                 
        
-    else:
-        print("No items found")    
+    #else:
+        #print("No items found")    
     
-    
+    """
 
    # bag = request.session.get('bag', {})
     #if not bag:
@@ -194,14 +201,14 @@ def process_checkout(request):
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
     
-    
+    """
 
     template = 'checkout/order_confirmed.html'
     context = {
         #'order_form': order_form,
         'stripe_public_key': stripe_public_key,
-        'client_secret': intent.client_secret,
-        'defaults':defaults,        
+        #'client_secret': intent.client_secret,
+        #'defaults':defaults,        
         
     }
     if 'order_number' in request.session:
