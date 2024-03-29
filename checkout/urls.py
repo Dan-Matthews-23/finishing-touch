@@ -8,6 +8,7 @@ from .webhooks import webhook
 urlpatterns = [
     #path('', views.checkout, name='checkout'),
     path('process_checkout/', views.process_checkout, name='process_checkout'),
+    path('checkout_success/', views.checkout_success, name='checkout_success'),
     #path('create_placeholder/', views.create_placeholder, name='create_placeholder'),
     path('cache_checkout_data/', views.cache_checkout_data, name='cache_checkout_data'),
     path('wh/', webhook, name='webhook'),
