@@ -22,7 +22,6 @@ def process_checkout(request):
     if request.method == 'POST':
         basket = request.session.get('basket', {})
         order_number = "TESTORDER"
-
         form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
@@ -33,28 +32,21 @@ def process_checkout(request):
             'street_address1': request.POST['street_address1'],
             'street_address2': request.POST['street_address2'],
             'county': request.POST['county'],
-            'order_number': order_number,
-            
+            'order_number': order_number,            
         }
-        
-
         profile = get_object_or_404(UserProfile, user=request.user)
         form = BasketForm(request.POST, instance=profile)
         if form.is_valid():            
-            form.save()             
-            
+            form.save()     
             pid = request.POST.get('client_secret').split('_secret')[0]
-            form.stripe_pid = pid  
-
+            form.stripe_pid = pid
             order = Orders(
             user_profile=profile, 
             full_name=form.cleaned_data['full_name'],
             email=form.cleaned_data['email'],
             # ... (assign other fields from cleaned form data) ...
             )
-            order.save()  
-            
-            
+            order.save()            
             for item in basket:                
                 try:
                     product = Products.objects.get(product_id=item['product_id'])
@@ -82,16 +74,11 @@ def process_checkout(request):
                         "Please call us for assistance!")
                     )
                     form.delete()
-                    return redirect(reverse('view_basket'))
-
-            # Save the info to the user's profile if all is well
-            request.session['save_info'] = 'save-info' in request.POST
-            #return redirect('checkout_success',args=[order.order_number])
-            template = 'checkout/order_confirmed.html'
-            context = {
-                                
-                    }
-            return render(request, template, context)  
+                    return redirect(reverse('prepacked_sandwiches'))
+                    # Save the info to the user's profile if all is well
+                    request.session['save_info'] = 'save-info' in request.POST
+                    #return redirect('checkout_success',args=[order.order_number])
+                     
             
         else:
             messages.error(request, ('There was an error with your form. '
@@ -100,21 +87,46 @@ def process_checkout(request):
         basket = request.session.get('basket', {})
         if not basket:
             messages.error(request,
-                           "There's nothing in your basket at the moment")
-            return redirect(reverse('prepacked_sandwiches'))
+                           "There's nothing in your bag at the moment")
+            return redirect(reverse('products'))
 
-        current_basket = basket_contents(request)
-        total = current_basket['grand_total']
-        stripe_total = round(total * 100)
-        stripe.api_key = stripe_secret_key
-        intent = stripe.PaymentIntent.create(
-            amount=stripe_total,
-            currency=settings.STRIPE_CURRENCY,
-        )
+    current_bag = basket
+    #total = basket['price']
+    total = 20
+    stripe_total = round(total * 100)
+    stripe.api_key = stripe_secret_key
+    intent = stripe.PaymentIntent.create(
+        amount=stripe_total,
+        currency=settings.STRIPE_CURRENCY,
+    )      
+    """
+    <--Order Form Code-->
+    """      
 
-        # Attempt to prefill the form with any info
-        # the user maintains in their profile
-        if request.user.is_authenticated:
+    if not stripe_public_key:
+        messages.warning(request, ('Stripe public key is missing. '
+                                   'Did you forget to set it in '
+                                   'your environment?'))
+
+    template = 'checkout/checkout.html'
+    context = {
+        #'order_form': order_form,
+        'stripe_public_key': stripe_public_key,
+        'client_secret': intent.client_secret,
+    }
+
+    return render(request, template, context)
+
+
+
+ 
+
+
+
+
+
+"""
+if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
                 order_form = OrderForm(initial={
@@ -131,34 +143,9 @@ def process_checkout(request):
             except UserProfile.DoesNotExist:
                 order_form = OrderForm()
         else:
-            form = UserProfileForm(instance=profile)
+            order_form = OrderForm()
 
-    if not stripe_public_key:
-        messages.warning(request, ('Stripe public key is missing. '
-                                   'Did you forget to set it in '
-                                   'your environment?'))
-
-    template = 'checkout/checkout.html'
-    context = {
-        'order_form': order_form,
-        'stripe_public_key': stripe_public_key,
-        'client_secret': intent.client_secret,
-    }
-
-    return render(request, template, context)
-
-
-
- 
-
-
-
-
-
-
-
-
-
+"""
 
 
 
@@ -215,8 +202,8 @@ def checkout_success(request, order_number):
         Your form number is {order_number}. A confirmation \
         email will be sent to {form.email}.')
 
-    if 'basket' in request.session:
-        del request.session['basket']
+    #if 'basket' in request.session:
+        #del request.session['basket']
 
     template = 'checkout/checkout_success.html'
     context = {
@@ -246,54 +233,3 @@ def cache_checkout_data(request):
         return HttpResponse(content=e, status=400)
 
 
-"""
-def create_placeholder(request):
-    stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY
-    
-    order_number = request.session['order_number']
-    basket_items = Basket.objects.filter(order_number=order_number)
-
-    total_price = int(float(request.session.get('total_price')))  # Convert to float, then truncate
-    
-    if basket_items:
-        for item in basket_items:
-            try:                
-                defaults = {
-                'quantity': item.quantity,
-                'default_price': item.default_price,
-                'sub_price': item.sub_price,
-                'total_price':total_price,
-                'full_name': request.POST['customer_name'],  # Assuming this is correct 
-                'email': request.POST['customer_email'],
-                'phone_number': request.POST['customer_tel_number'],
-                'postcode': request.POST['customer_postcode'],
-                'town_or_city': request.POST['customer_address_three'],
-                'street_address1': request.POST['customer_address_one'],
-                'street_address2': request.POST['customer_address_two'],
-                'county': request.POST['customer_address_four'],
-                'product_name': item.product_name,
-                }
-            except Products.DoesNotExist:
-                print("Product with id {} not found".format(item.product_id))
-
-            placeholder_item, created = OrderPlaceholder.objects.get_or_create(
-                order_number=order_number, 
-                product_id=item.product_id,
-                defaults=defaults 
-            )
-            placeholder_item.save()        
-    else:
-        print("No items found") 
-
-    template = 'checkout/checkout.html'
-    context = {       
-        'stripe_public_key': stripe_public_key,
-        #'defaults_display': defaults_display,
-        'defaults': defaults,
-        'order_items': basket_items,              
-    }
-
-    return render(request, template, context)
-
-"""
