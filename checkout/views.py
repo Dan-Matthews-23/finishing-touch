@@ -21,7 +21,8 @@ def process_checkout(request):
 
     if request.method == 'POST':
         basket = request.session.get('basket', {})
-        order_number = "TESTORDER"
+        order_number=""
+        total = 0.00        
         form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
@@ -32,7 +33,7 @@ def process_checkout(request):
             'street_address1': request.POST['street_address1'],
             'street_address2': request.POST['street_address2'],
             'county': request.POST['county'],
-            'order_number': order_number,            
+                        
         }
         profile = get_object_or_404(UserProfile, user=request.user)
         form = BasketForm(request.POST, instance=profile)
@@ -89,8 +90,8 @@ def process_checkout(request):
             return redirect(reverse('products'))
 
     current_bag = basket
-    #total = basket['price']
-    total = 20
+    total = sum(float(item['price']) for item in basket)
+    #total = 20
     stripe_total = round(total * 100)
     stripe.api_key = stripe_secret_key
     intent = stripe.PaymentIntent.create(
