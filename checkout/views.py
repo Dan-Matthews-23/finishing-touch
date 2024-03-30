@@ -18,7 +18,6 @@ import json
 def process_checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-
     if request.method == 'POST':
         basket = request.session.get('basket', {})
         order_number=""
@@ -32,20 +31,18 @@ def process_checkout(request):
             'town_or_city': request.POST['town_or_city'],
             'street_address1': request.POST['street_address1'],
             'street_address2': request.POST['street_address2'],
-            'county': request.POST['county'],
-                        
+            'county': request.POST['county'],                        
         }
         profile = get_object_or_404(UserProfile, user=request.user)
         form = BasketForm(request.POST, instance=profile)
         if form.is_valid():            
             form.save()     
-            pid = request.POST.get('client_secret').split('_secret')[0]
-            form.stripe_pid = pid
+            stripe_id = request.POST.get('client_secret').split('_secret')[0]
+            form.stripe_stripe_id = stripe_id
             order = Orders(
             user_profile=profile, 
             full_name=form.cleaned_data['full_name'],
-            email=form.cleaned_data['email'],
-            # ... (assign other fields from cleaned form data) ...
+            email=form.cleaned_data['email'],            
             )
             order.save()            
             for item in basket:                
@@ -73,12 +70,7 @@ def process_checkout(request):
                         "found in our database. "
                         "Please call us for assistance!")
                     )
-                    form.delete()
-                    #return redirect(reverse('prepacked_sandwiches'))
-                    # Save the info to the user's profile if all is well
-            
-                     
-            
+                    form.delete()     
         else:
             messages.error(request, ('There was an error with your form. '
                                      'Please double check your information.'))
@@ -99,10 +91,7 @@ def process_checkout(request):
         currency=settings.STRIPE_CURRENCY,
     )
     print(intent)
-    request.session['order_number'] = order.order_number
-    #if intent:
-        #request.session['save_info'] = 'save-info' in request.POST
-        #return redirect(reverse('checkout_success',args=[order.order_number]))      
+    request.session['order_number'] = order.order_number    
     """
     <--Order Form Code-->
     """      
