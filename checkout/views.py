@@ -42,17 +42,26 @@ def process_checkout(request):
             order = Orders(
             user_profile=profile, 
             full_name=form.cleaned_data['full_name'],
-            email=form.cleaned_data['email'],            
+            email=form.cleaned_data['email'],
+            phone_number = form.cleaned_data['phone_number'],
+            postcode = form.cleaned_data['postcode'],
+            town_or_city = form.cleaned_data['town_or_city'],
+            street_address1 = form.cleaned_data['street_address1'],
+            street_address2 = form.cleaned_data['street_address2'],
+            county = form.cleaned_data['county']  
             )
             order.save()            
             for item in basket:                
                 try:
                     product = Products.objects.get(product_id=item['product_id'])                                       
                     if product:
+                        line_item_total = float(item['default_price']) * int(item['product_quantity'])  # Assuming you have product.price
+                        print(line_item_total) 
                         order_line_item = OrderLineItem(
                             order=order,
                             product=product,
                             quantity=item['product_quantity'],
+                            order_total=line_item_total 
                         )
                         order_line_item.save()
                     else:

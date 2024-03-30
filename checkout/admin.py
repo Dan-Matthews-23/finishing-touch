@@ -80,7 +80,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     fields = ('order_number', 'user_profile', 'date', 'full_name',
               'email', 'phone_number', 'postcode', 'town_or_city', 'street_address1',
-              'street_address2', 'county', 'delivery_cost', 'order_total', 'stripe_id')
+              'street_address2', 'county', 'order_total', 'stripe_id')
 
     list_display = ('order_number', 'date', 'full_name','order_total',)
 
