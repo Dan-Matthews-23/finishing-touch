@@ -49,8 +49,7 @@ def process_checkout(request):
             order.save()            
             for item in basket:                
                 try:
-                    product = Products.objects.get(product_id=item['product_id'])
-                    print(f"The order_numbers are {item['order_number']}")                    
+                    product = Products.objects.get(product_id=item['product_id'])                                       
                     if product:
                         order_line_item = OrderLineItem(
                             order=order,
@@ -74,10 +73,9 @@ def process_checkout(request):
                         "Please call us for assistance!")
                     )
                     form.delete()
-                    return redirect(reverse('prepacked_sandwiches'))
+                    #return redirect(reverse('prepacked_sandwiches'))
                     # Save the info to the user's profile if all is well
-                    request.session['save_info'] = 'save-info' in request.POST
-                    #return redirect('checkout_success',args=[order.order_number])
+            
                      
             
         else:
@@ -98,7 +96,12 @@ def process_checkout(request):
     intent = stripe.PaymentIntent.create(
         amount=stripe_total,
         currency=settings.STRIPE_CURRENCY,
-    )      
+    )
+    print(intent)
+    request.session['order_number'] = order.order_number
+    #if intent:
+        #request.session['save_info'] = 'save-info' in request.POST
+        #return redirect(reverse('checkout_success',args=[order.order_number]))      
     """
     <--Order Form Code-->
     """      
@@ -170,12 +173,13 @@ if request.user.is_authenticated:
 
 
 
-def checkout_success(request, order_number):
+def checkout_success(request):
     """
     Handle successful checkouts
     """
     save_info = request.session.get('save_info')
-    form = get_object_or_404(Order, order_number=order_number)
+    order_number = request.session['order_number']
+    form = get_object_or_404(Orders, order_number=order_number)
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
@@ -205,7 +209,7 @@ def checkout_success(request, order_number):
     #if 'basket' in request.session:
         #del request.session['basket']
 
-    template = 'checkout/checkout_success.html'
+    template = 'checkout/order_confirmed.html'
     context = {
         'form': form,
     }

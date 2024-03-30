@@ -21,7 +21,7 @@
 
 -->
 <section id="payment-selection">
-    <form method="POST" action="{% url 'process_checkout' %}">
+    <form method="POST" action="{% url 'checkout_success' %}">
         {% csrf_token %}
         <div class="container-fluid align-center with-borders" id="order-details-container">
             <div class="row  product-row align-center ">
