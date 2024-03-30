@@ -15,6 +15,11 @@ from basket.forms import BasketForm
 
 import json
 
+
+
+
+
+
 def process_checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
@@ -25,8 +30,7 @@ def process_checkout(request):
         form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
-            'phone_number': request.POST['phone_number'],
-            #'country': request.POST['country'],
+            'phone_number': request.POST['phone_number'],            
             'postcode': request.POST['postcode'],
             'town_or_city': request.POST['town_or_city'],
             'street_address1': request.POST['street_address1'],
@@ -40,23 +44,22 @@ def process_checkout(request):
             stripe_id = request.POST.get('client_secret').split('_secret')[0]
             form.stripe_stripe_id = stripe_id
             order = Orders(
-            user_profile=profile, 
-            full_name=form.cleaned_data['full_name'],
-            email=form.cleaned_data['email'],
-            phone_number = form.cleaned_data['phone_number'],
-            postcode = form.cleaned_data['postcode'],
-            town_or_city = form.cleaned_data['town_or_city'],
-            street_address1 = form.cleaned_data['street_address1'],
-            street_address2 = form.cleaned_data['street_address2'],
-            county = form.cleaned_data['county']  
+                user_profile=profile, 
+                full_name=form.cleaned_data['full_name'],
+                email=form.cleaned_data['email'],
+                phone_number = form.cleaned_data['phone_number'],
+                postcode = form.cleaned_data['postcode'],
+                town_or_city = form.cleaned_data['town_or_city'],
+                street_address1 = form.cleaned_data['street_address1'],
+                street_address2 = form.cleaned_data['street_address2'],
+                county = form.cleaned_data['county']  
             )
             order.save()            
             for item in basket:                
                 try:
                     product = Products.objects.get(product_id=item['product_id'])                                       
                     if product:
-                        line_item_total = float(item['default_price']) * int(item['product_quantity'])  # Assuming you have product.price
-                        print(line_item_total) 
+                        line_item_total = float(item['default_price']) * int(item['product_quantity'])                        
                         order_line_item = OrderLineItem(
                             order=order,
                             product=product,
@@ -65,21 +68,20 @@ def process_checkout(request):
                         )
                         order_line_item.save()
                     else:
-                        for size, quantity in item_data['items_by_size'].items():
-                            order_line_item = OrderLineItem(
-                                order=order,
-                                product=product,
-                                quantity=quantity,
-                                product_size=size,
-                            )
-                            order_line_item.save()
+                        return redirect('prepacked_sandwiches')
+                        messages.error(request, (
+                        "One of the products in your basket wasn't "
+                        "found in our database. "
+                        "Please call us for assistance!")
+                    )
+                        
                 except Products.DoesNotExist:
                     messages.error(request, (
                         "One of the products in your basket wasn't "
                         "found in our database. "
                         "Please call us for assistance!")
                     )
-                    form.delete()     
+                    form.delete()
         else:
             messages.error(request, ('There was an error with your form. '
                                      'Please double check your information.'))
@@ -101,9 +103,7 @@ def process_checkout(request):
     )
     print(intent)
     request.session['order_number'] = order.order_number    
-    """
-    <--Order Form Code-->
-    """      
+       
 
     if not stripe_public_key:
         messages.warning(request, ('Stripe public key is missing. '
