@@ -55,11 +55,15 @@ def process_checkout(request):
                 county = form.cleaned_data['county']  
             )
             order.save()            
-            for item in basket:                
+            product_ids = [item['product_id'] for item in basket]
+            products = Products.objects.filter(product_id__in=product_ids)
+            product_map = {p.product_id: p for p in products}  # Create a lookup map
+
+            for item in basket:
                 try:
-                    product = Products.objects.get(product_id=item['product_id'])                                       
+                    product = product_map.get(item['product_id'])
                     if product:
-                        line_item_total = float(item['default_price']) * int(item['product_quantity'])                        
+                        line_item_total = float(item['default_price']) * int(item['product_quantity'])
                         order_line_item = OrderLineItem(
                             order=order,
                             product=product,
@@ -68,20 +72,9 @@ def process_checkout(request):
                         )
                         order_line_item.save()
                     else:
-                        return redirect('prepacked_sandwiches')
-                        messages.error(request, (
-                        "One of the products in your basket wasn't "
-                        "found in our database. "
-                        "Please call us for assistance!")
-                    )
-                        
-                except Products.DoesNotExist:
-                    messages.error(request, (
-                        "One of the products in your basket wasn't "
-                        "found in our database. "
-                        "Please call us for assistance!")
-                    )
-                    form.delete()
+                        messages.error(request, f"Product with ID {item['product_id']} was not found.")
+                except Products.DoesNotExist:  
+                    messages.error(request, f"Product with ID {item['product_id']} was not found.")
         else:
             messages.error(request, ('There was an error with your form. '
                                      'Please double check your information.'))
