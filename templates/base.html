@@ -48,13 +48,17 @@
                         <li>
                             {% if request.user.is_authenticated %}
                             {% if request.user.is_superuser %}
-                            <a href="" class="dropdown-item">Product Management</a>
+                            <!--<a href="" class="dropdown-item">Product Management</a>-->
                             {% endif %}
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
                                     <button class="btn nav-link-font  dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false">
+                                        {% if request.user.is_authenticated %}
+                                        {{user.username}}
+                                        {% else %}                                        
                                         Username
+                                        {% endif %}
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark">
                                         <li><a class="dropdown-item" href="{% url 'profile' %}">Your profile</a></li>
