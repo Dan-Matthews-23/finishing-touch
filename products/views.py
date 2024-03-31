@@ -22,9 +22,6 @@ def prepacked_sandwiches(request):
     }
     return render(request, 'products/sandwiches.html', context)
 
-
-
-
 def add_to_favourites(request):
     if request.method == 'POST':
         profile = get_object_or_404(UserProfile, user=request.user)
@@ -37,6 +34,26 @@ def add_to_favourites(request):
         except Products.DoesNotExist:
             print(f"The product_id does not exist")
         return redirect(request.META.get('HTTP_REFERER'))
+
+def delete_from_favourites(request):
+    if request.method == 'POST':
+        profile = get_object_or_404(UserProfile, user=request.user)
+        product_id = request.POST['product_id']
+
+        try:
+            # Find the Favourites object to delete
+            favourite_to_delete = Favourites.objects.get(
+                favourite_item__product_id=product_id,
+                user_profile=profile
+            )
+            favourite_to_delete.delete()  # Delete the object
+            print(f"Product ID {product_id} removed from favourites")
+
+        except Favourites.DoesNotExist:
+            print(f"Product ID {product_id} not found in favourites")
+
+        return redirect(request.META.get('HTTP_REFERER'))
+
 
 
 

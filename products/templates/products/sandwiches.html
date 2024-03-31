@@ -95,11 +95,14 @@
 
                 {% if i.is_favourite %}
                 <div class="favourite">
-                    <input type="hidden" name="product_id" value="{{ i.product_id }}">
-                    <button type="submit" class="favourite-btn" id="add_favourite">
-                        <i class="fa-solid fa-heart fa-xl favourite"></i>
-                    </button>
-                    <span class="favouritetext">Remove from favourites</span>
+                    <form method="POST" action="{% url 'delete_from_favourites' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ i.product_id }}">
+                        <button type="submit" class="favourite-btn" id="add_favourite">
+                            <i class="fa-solid fa-heart fa-xl favourite"></i>
+                        </button>
+                        <span class="favouritetext">Remove from favourites</span>
+                    </form>
                 </div>
 
                 {% else %}
