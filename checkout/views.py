@@ -52,18 +52,17 @@ def process_checkout(request):
                 town_or_city = form.cleaned_data['town_or_city'],
                 street_address1 = form.cleaned_data['street_address1'],
                 street_address2 = form.cleaned_data['street_address2'],
-                county = form.cleaned_data['county']  
+                county = form.cleaned_data['county'],
+                stripe_id =  stripe_id, 
             )
-            order.save()            
-            product_ids = [item['product_id'] for item in basket]
-            products = Products.objects.filter(product_id__in=product_ids)
-            product_map = {p.product_id: p for p in products}  # Create a lookup map
-
-            for item in basket:
+            order.save()
+            order_total = 0            
+            for item in basket:                
                 try:
-                    product = product_map.get(item['product_id'])
+                    product = Products.objects.get(product_id=item['product_id'])                                       
                     if product:
                         line_item_total = float(item['default_price']) * int(item['product_quantity'])
+                        order_total += line_item_total                        
                         order_line_item = OrderLineItem(
                             order=order,
                             product=product,
@@ -71,10 +70,23 @@ def process_checkout(request):
                             order_total=line_item_total 
                         )
                         order_line_item.save()
+                        order.order_total = order_total                        
+                        order.save()
                     else:
-                        messages.error(request, f"Product with ID {item['product_id']} was not found.")
-                except Products.DoesNotExist:  
-                    messages.error(request, f"Product with ID {item['product_id']} was not found.")
+                        return redirect('prepacked_sandwiches')
+                        messages.error(request, (
+                        "One of the products in your basket wasn't "
+                        "found in our database. "
+                        "Please call us for assistance!")
+                    )
+                        
+                except Products.DoesNotExist:
+                    messages.error(request, (
+                        "One of the products in your basket wasn't "
+                        "found in our database. "
+                        "Please call us for assistance!")
+                    )
+                    form.delete()
         else:
             messages.error(request, ('There was an error with your form. '
                                      'Please double check your information.'))
