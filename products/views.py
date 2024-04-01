@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from .models import Products, Category, Favourites
 from accounts.models import UserProfile
+from django.contrib.auth.decorators import login_required
 import json
 
 # Create your views here.
-
+@login_required
 # Display all breads
 def prepacked_sandwiches(request):   
     sandwich_items = Products.objects.all()
@@ -22,6 +23,7 @@ def prepacked_sandwiches(request):
     }
     return render(request, 'products/sandwiches.html', context)
 
+@login_required
 def add_to_favourites(request):
     if request.method == 'POST':
         profile = get_object_or_404(UserProfile, user=request.user)
@@ -35,6 +37,7 @@ def add_to_favourites(request):
             print(f"The product_id does not exist")
         return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required
 def delete_from_favourites(request):
     if request.method == 'POST':
         profile = get_object_or_404(UserProfile, user=request.user)

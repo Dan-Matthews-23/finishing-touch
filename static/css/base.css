@@ -213,6 +213,13 @@ div.sticky-element {
 
 }
 
+.product-container-index {
+    display: inline-block;
+    border-radius: 10% 10% 10% 10%;
+    padding: 15px;
+
+}
+
 .product-image {
     height: 180px;
     width: 286px;
