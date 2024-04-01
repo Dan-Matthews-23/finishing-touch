@@ -5,54 +5,57 @@
 <!--This is the product selection section-->
 <section class="product-listings">
 
-    <div
-        class="container-fluid with-borders center-align  col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10 align-center-horizontal">
-        <div class="row  card-row">
-            <div class="col  align-center">
-                {% for i in sandwich_items %}
-                {% if i.category_id == 9 %}
-                <div
-                    class="container-fluid product-container-index col-sm-3 col-md-3 col-lg-3 col-xl-3 card align-center-horizontal">
-                    <div class="row  card-row">
-                        <div class="col  align-center">
-                            <h5 class="card-title">{{i.product_name}}</h5>
-                        </div>
-                    </div>
-                    <div class="row  card-row">
-                        <div class="col  align-center">{{i.product_short_description}}</div>
-                    </div>
-                    <div class="row  card-row">
-                        <div class="col  align-center bold protein">
-                            {% if i.protein_source %}Source of protein{% endif %}
-                        </div>
-                    </div>
-                    <div class="row  card-row">
-                        <div class="col  align-center bold fibre">
-                            {% if i.protein_source %}Source of fibre{% endif %}
-                        </div>
-                    </div>
-                    <div class="row  card-row">
-                        <div class="col  align-center bold">£{{i.product_price}}</div>
-                    </div>
-                    <div class="row  card-row">
-                        <div class="col" id="open-modal-btn-div">
-                            <p class=" align-center">
-                            <form method="POST" action="{% url 'prepacked_sandwiches' %}">
-                                {% csrf_token %}
-                                <button class="btn open-modal" id="open-modal-value" value="{{i.product_id}}"
-                                    data-product-name="{{i.product_name}}"
-                                    data-product-price="{{i.product_price}}">Select
-                                    item</button>
-                            </form>
-                            <p class="item-added">Item Added</p>
-                            </p>
-                        </div>
+    <div class="container-fluid  col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10 ">
+        <div class="row card-row ">
+
+
+            {% for i in sandwich_items %}
+            {% if i.category_id == 9 %}
+
+
+            <div class="container-flex col-sm-12 col-md-6 col-lg-4 col-xl-4 xxl-4 card product-container-index ">
+                <div class="row  card-row">
+                    <div class="col  align-center">
+                        <h5 class="card-title">{{i.product_name}}</h5>
                     </div>
                 </div>
-                {% endif %}
-                {% endfor %}
+                <div class="row  card-row">
+                    <div class="col  align-center">{{i.product_short_description}}</div>
+                </div>
+                <div class="row  card-row">
+                    <div class="col  align-center bold protein">
+                        {% if i.protein_source %}Source of protein{% endif %}
+                    </div>
+                </div>
+                <div class="row  card-row">
+                    <div class="col  align-center bold fibre">
+                        {% if i.protein_source %}Source of fibre{% endif %}
+                    </div>
+                </div>
+                <div class="row  card-row">
+                    <div class="col  align-center bold">£{{i.product_price}}</div>
+                </div>
+
+                <div class="row  card-row">
+                    <div class="col" id="open-modal-btn-div">
+                        <p class=" align-center">
+                        <form method="POST" action="{% url 'prepacked_sandwiches' %}">
+                            {% csrf_token %}
+                            <button class="btn open-modal" id="open-modal-value" value="{{i.product_id}}"
+                                data-product-name="{{i.product_name}}" data-product-price="{{i.product_price}}">Select
+                                item</button>
+                        </form>
+                        <p class="item-added">Item Added</p>
+                        </p>
+                    </div>
+                </div>
             </div>
+            {% endif %}
+            {% endfor %}
         </div>
     </div>
+    </div>
+
+
 
     {% endblock %}

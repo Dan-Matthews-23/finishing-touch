@@ -216,7 +216,9 @@ div.sticky-element {
 .product-container-index {
     display: inline-block;
     border-radius: 10% 10% 10% 10%;
-    padding: 15px;
+    margin: auto;    
+    text-align: center;
+    padding: 10px;
 
 }
 
