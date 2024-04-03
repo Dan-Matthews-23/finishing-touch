@@ -55,19 +55,13 @@ def process_order(request):
                     profile = get_object_or_404(UserProfile, user=request.user)
 
                   
-                    if request.method == 'POST':
-                        form = BasketForm(request.POST, instance=profile)
-                        if form.is_valid():
-                            form.save()
-                            messages.success(request, 'Profile updated successfully')
-                        else:
-                            messages.error(request,
-                                        ('Update failed. Please ensure '
-                                            'the form is valid.'))
+                    if request.user.is_authenticated:
+                        profile = request.user.userprofile  # Access connected UserProfile
+                        form = BasketForm(instance=profile)  # Pre-populate the form
                     else:
-                        form = BasketForm(instance=profile)
-                    #orders = profile.orders.all()
-                    
+                        form = BasketForm()
+                                #orders = profile.orders.all()
+                                
 
                     template = 'basket/basket.html'
                     context = {
