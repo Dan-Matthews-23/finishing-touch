@@ -40,15 +40,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from .forms import UserProfileForm
-
-from checkout.models import Orders
+from checkout.models import Orders, Reviews
 
 
 @login_required
-def profile(request):
-    """ Display the user's profile. """
+def profile(request):  
     profile = get_object_or_404(UserProfile, user=request.user)
-
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=profile)
         if form.is_valid():
@@ -72,18 +69,21 @@ def profile(request):
     return render(request, template, context)
 
 
-def order_history(request, order_number):
-    order = get_object_or_404(Order, order_number=order_number)
+def order_history(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
+    orders = profile.orders.all()
+    
+    for order in orders:
+        order_reviews = order.reviews.all()
+        print(order.order_number) 
+        print(order.reviews.all())
+    
 
-    messages.info(request, (
-        f'This is a past confirmation for order number {order_number}. '
-        'A confirmation email was sent on the order date.'
-    ))
-
-    template = 'checkout/checkout_success.html'
+    template = 'account/order_history.html'
     context = {
-        'order': order,
-        'from_profile': True,
+        'orders': orders,
+        #'reviews': reviews,
+       
     }
 
     return render(request, template, context)
