@@ -13,11 +13,21 @@
         </div>
     </div>           
             {% for order in orders %}
+            <button type="button" class="collapsible bold btn">{{order.order_number}}</button>
+            <div class="content">
             <div class="row">
                 <div class="col-12 col-lg-6">{{order.order_number}}</div>
-                <div class="col-12 col-lg-6">{{order.order_number}}</div>
-                <div class="col-12 col-lg-6">{{order.order_number}}</div>
-                <div class="col-12 col-lg-6">{{order.order_number}}</div>
+                <div class="col-12 col-lg-6">{{order.full_name}}</div>
+                <div class="col-12 col-lg-6">{{order.email}}</div>
+                <div class="col-12 col-lg-6">{{order.phone_number}}</div>
+                <div class="col-12 col-lg-6">{{order.street_address1}}</div>
+                <div class="col-12 col-lg-6">{{order.street_address2}}</div>
+                <div class="col-12 col-lg-6">{{order.town_or_city}}</div>
+                <div class="col-12 col-lg-6">{{order.county}}</div>
+                <div class="col-12 col-lg-6">{{order.postcode}}</div>
+                <div class="col-12 col-lg-6">{{order.date}}</div>
+                <div class="col-12 col-lg-6">{{order.order_total}}</div>
+                <div class="col-12 col-lg-6">{{order.stripe_id}}</div>
             </div>
             {% for review in order.reviews.all %}
             {% endfor %}
@@ -27,3 +37,10 @@
     </div>
 </div>
 {% endblock %}
+
+THE JS CANNOT BE FOUND. NOT SURE EWHY. FIX THIS
+
+{% block postloadjs %}
+<script src="{% static '/accounts/static/js/script.js' %}"></script>
+{% endblock %}
+

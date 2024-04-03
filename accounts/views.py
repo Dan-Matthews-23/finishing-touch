@@ -75,8 +75,9 @@ def order_history(request):
     
     for order in orders:
         order_reviews = order.reviews.all()
-        print(order.order_number) 
-        print(order.reviews.all())
+        #print(order.order_number) 
+        #print(order.reviews.all())
+    print(orders)
     
 
     template = 'account/order_history.html'
