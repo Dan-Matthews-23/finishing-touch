@@ -4,6 +4,9 @@
     {% trans "Signup" %}
 {% endblock head_title %}
 {% block content %}
+<div class="container allauth-container card">
+    <div class="row allauth-row">
+        <div class="col allauth-row">
     {% element h1 %}
         {% trans "Sign Up" %}
     {% endelement %}
@@ -31,4 +34,8 @@
     {% if SOCIALACCOUNT_ENABLED %}
         {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
     {% endif %}
+    </div>
+    </div>
+    </div>
+    <br><br>
 {% endblock content %}
