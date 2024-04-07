@@ -4,6 +4,10 @@ from accounts.models import UserProfile
 from django.contrib.auth.decorators import login_required
 import json
 
+from django.conf import settings
+
+print(settings.STATICFILES_DIRS) 
+
 # Create your views here.
 @login_required
 # Display all breads
