@@ -155,20 +155,26 @@
 
 
             <!--This is the pop-up modal led by customer interaction-->
-            <div id="modal-div" class="select-sandwich ">
-                <div class="select-sandwich-modal-content">
-                    <div class="container-fluid  align-center">
-                        <div class="row card-row align-center">
-                            <div class="col  align-center">
-                                <span class="close">&times;</span>
-                                <div class="row card-row ">
+            <form method="POST" action="{% url 'add_to_order' %}">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" id="product_id" value="{{i.product_id}}">
+                <input type="hidden" name="quantity" id="quantity" value="{{i.quantity}}">
+                <div id="modal-div" class="select-sandwich ">
+                    <div class="select-sandwich-modal-content">
+                        <div class="container-fluid  align-center">
+                            <div class="row card-row align-center">
+                                <div class="col  align-center">
+                                    <span class="close">&times;</span>
+                                    <div class="row card-row ">
 
-                                </div>
-                                <div class="row card-row ">
+                                    </div>
+                                    <div class="row card-row ">
 
-                                    <div class="col modal-text-styling" id="product-price"></div>
-                                </div>
-                                <div class="row card-row align-center " id="quantity-row">
+                                        <div class="col modal-text-styling" id="product-price"></div>
+                                    </div>
+                                    <div class="row card-row align-center " id="quantity-row">
+
+                                        <!--
                                     <div class="col align-center-vertical align-center-horizontal">
                                         <button type="button" class="btn fa-solid fa-square-minus fa-2xl "
                                             id="decrease-quantity"></button>
@@ -181,21 +187,26 @@
                                             data-product-name="{{i.product_name}}"
                                             data-product-price="{{i.product_price}}"></button>
                                     </div>
-                                </div>
-                                <div class="row modal-row-padding  ">
-                                    <form method="POST" action="">
+                                -->
+                                        <select name="quantity" id="quantity">
 
-                                        {% csrf_token %}
+                                        </select>
+
+
+                                    </div>
+                                    <div class="row modal-row-padding  ">
+
                                         <div class="col  align-center-vertical align-center-horizontal">
                                             <button class="btn select-product-btn">Add to order</button>
                                         </div>
-                                    </form>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         <!--End of popup modal -->
     </div>
@@ -205,4 +216,14 @@
 <!--End of product selection section-->
 
 
+{% endblock %}
+
+
+
+{% block postloadjs %}
+
+
+
+
+<script src="{% static 'products/js/create_order.js' %}"></script>
 {% endblock %}

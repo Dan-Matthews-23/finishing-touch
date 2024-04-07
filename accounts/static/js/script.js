@@ -1,5 +1,5 @@
 
-console.log("JS WORKED");
+console.log("accounts/JS WORKED");
 
 
 let coll = document.getElementsByClassName("collapsible");

@@ -57,6 +57,21 @@ def delete_from_favourites(request):
 
         return redirect(request.META.get('HTTP_REFERER'))
 
+@login_required
+def add_to_order(request):
+    if request.method == 'POST':
+        product_id = request.POST['product_id']
+        get_product = Products.objects.get(product_id=product_id)
+        quantity = int(request.POST['quantity'])
+        product_default_price = get_product.product_price
+        cost = product_default_price * quantity
+        print(f"The product ID is {product_id}, the product_name is {get_product.product_name}, the quantity is {quantity} and the cost is {cost}")            
+        return redirect(request.META.get('HTTP_REFERER'))
+    else:
+        return redirect(request.META.get('HTTP_REFERER'))
+        
+
+
 
 
 

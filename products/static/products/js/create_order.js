@@ -1,3 +1,20 @@
+
+const quantitySelect = document.getElementById("quantity");
+
+// Set the maximum quantity you'd like to offer
+const maxQuantity = 10;
+
+for (let i = 1; i <= maxQuantity; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.text = i;
+    quantitySelect.appendChild(option);
+}
+
+
+
+/*
+
 // Variables
 let order_div = document.getElementById("display_order");
 let total_cost = document.getElementById("total_cost");
@@ -5,6 +22,8 @@ let orderArray = JSON.parse(localStorage.getItem("orderArray")) || [];
 basketTotalElement = document.getElementById("basket-total");
 const jsonData = JSON.stringify(orderArray);
 document.getElementById('orderData').value = jsonData;
+*/
+
 const selectProductBtns = document.querySelectorAll('.open-modal');
 
 // Event Listeners
@@ -12,6 +31,7 @@ selectProductBtns.forEach(btn => {
     btn.addEventListener('click', openModal);
 });
 
+/*
 // Initial call to update everything
 updateOrder();
 updateSum();
@@ -70,7 +90,7 @@ function deleteItem(index) {
     localStorage.setItem("orderArray", JSON.stringify(orderArray));
     updateOrder();
 }
-
+*/
 
 function openModal(event) {
     const modal = document.getElementById("modal-div");
@@ -92,7 +112,7 @@ function openModal(event) {
         modal.classList.add("hide");
     }
 }
-
+/*
 const openModalButtons = document.querySelectorAll('.open-modal');
 openModalButtons.forEach(modalBtn => {
     modalBtn.addEventListener('click', function (event) {
@@ -103,10 +123,10 @@ openModalButtons.forEach(modalBtn => {
         const foundProduct = orderArray.find(item => item.product_id === productIdFromBtn);
         if (foundProduct) {
             product_id = productIdFromBtn;
-            product_name = foundProduct.product_name;
-            default_price = foundProduct.default_price;
+            product_name = foundProduct.product_name;            
             const resetQuantity = orderArray.findIndex(a => a.product_id == product_id);
             orderArray[resetQuantity].product_quantity = 1
+            default_price = (foundProduct.default_price * orderArray[resetQuantity].product_quantity)
             document.getElementById('quantity-div').innerHTML = orderArray[resetQuantity].product_quantity;
             console.log(orderArray[resetQuantity].product_quantity)
             msg = "Product was found";
@@ -120,7 +140,7 @@ openModalButtons.forEach(modalBtn => {
             insertNewProduct = {
                 product_id: product_id,
                 product_name: product_name,
-                default_price: default_price,
+                default_price: (default_price * default_product_quantity),
                 product_quantity: default_product_quantity,
                 price: 0.00,
             };
@@ -196,8 +216,9 @@ function decreaseQuantity(product_id, default_price) {
     updateOrder()
 }
 
-function confirmAndClose() {
+function confirmAndClose(product_id) {
     document.getElementById("modal-div").classList.remove("show");
     document.getElementById("modal-div").classList.add("hide");
     updateOrder()
 }
+*/
