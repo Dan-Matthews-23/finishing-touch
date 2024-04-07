@@ -4,6 +4,9 @@
     {% trans "Email Addresses" %}
 {% endblock head_title %}
 {% block content %}
+<div class="container allauth-container card">
+    <div class="row allauth-row">
+        <div class="col allauth-row">
     {% element h1 %}
         {% trans "Email Addresses" %}
     {% endelement %}
@@ -72,6 +75,10 @@
             {% endslot %}
         {% endelement %}
     {% endif %}
+    </div>
+    </div>
+    </div>
+    <br><br>
 {% endblock content %}
 {% block extra_body %}
     <script type="text/javascript">
