@@ -4,9 +4,9 @@ from accounts.models import UserProfile
 from django.contrib.auth.decorators import login_required
 import json
 
-from django.conf import settings
 
-print(settings.STATICFILES_DIRS) 
+
+
 
 # Create your views here.
 @login_required
@@ -69,7 +69,16 @@ def add_to_order(request):
         quantity = int(request.POST['quantity'])
         product_default_price = get_product.product_price
         cost = product_default_price * quantity
-        print(f"The product ID is {product_id}, the product_name is {get_product.product_name}, the quantity is {quantity} and the cost is {cost}")            
+        print(f"The product ID is {product_id}, the product_name is {get_product.product_name}, the quantity is {quantity} and the cost is {cost}")
+        
+        request.session['placeholder_order'] = {
+            'product_id': product_id,
+            'quantity': str(quantity),
+            'cost': cost,
+        }
+        test = request.session['placeholder_order']
+        print(test)           
+        
         return redirect(request.META.get('HTTP_REFERER'))
     else:
         return redirect(request.META.get('HTTP_REFERER'))
