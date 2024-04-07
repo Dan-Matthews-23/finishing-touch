@@ -1,9 +1,3 @@
-//localStorage.removeItem("selectedItem");
-//localStorage.removeItem("orderArray");
-
-
-
-
 // Variables
 let order_div = document.getElementById("display_order");
 let total_cost = document.getElementById("total_cost");
@@ -12,7 +6,6 @@ basketTotalElement = document.getElementById("basket-total");
 const jsonData = JSON.stringify(orderArray);
 document.getElementById('orderData').value = jsonData;
 const selectProductBtns = document.querySelectorAll('.open-modal');
-
 
 // Event Listeners
 selectProductBtns.forEach(btn => {
@@ -34,7 +27,6 @@ function updateOrder() {
             <br><br>
         `).join('');
 
-
         const deleteButtons = order_div.querySelectorAll('#delete_item');
         deleteButtons.forEach(button => {
             button.addEventListener('click', () => deleteItem(button.dataset.index));
@@ -49,7 +41,6 @@ function updateOrder() {
 }
 
 function updateSum() {
-
     let totalSum = orderArray.reduce((accumulator, entry) => {
         const itemPrice = parseFloat(entry.price); // Convert price to number
 
@@ -57,7 +48,6 @@ function updateSum() {
             console.error("Failed to convert price to float:", entry);
             return accumulator; // Skip invalid prices
         }
-
         return accumulator + itemPrice;
     }, 0);
 
@@ -116,6 +106,7 @@ openModalButtons.forEach(modalBtn => {
             product_name = foundProduct.product_name;
             default_price = foundProduct.default_price;
             const resetQuantity = orderArray.findIndex(a => a.product_id == product_id);
+            orderArray[resetQuantity].product_quantity = 1
             document.getElementById('quantity-div').innerHTML = orderArray[resetQuantity].product_quantity;
             console.log(orderArray[resetQuantity].product_quantity)
             msg = "Product was found";
@@ -124,11 +115,13 @@ openModalButtons.forEach(modalBtn => {
             product_id = productIdFromBtn;
             product_name = productNameFromBtn;
             default_price = productPriceFromBtn
+            default_product_quantity = 1
             msg = "Product was NOT found";
             insertNewProduct = {
                 product_id: product_id,
                 product_name: product_name,
                 default_price: default_price,
+                product_quantity: default_product_quantity,
                 price: 0.00,
             };
             orderArray.push(insertNewProduct);
@@ -152,22 +145,22 @@ function increaseQuantity(product_id, default_price) {
     const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);
     if (pullOrderArrayIndex !== -1) {
         if (!isNaN(orderArray[pullOrderArrayIndex].product_quantity)) {
-            orderArray[pullOrderArrayIndex].product_quantity += 1;
-            // Prevent quantity from going below 0            
+            if ((orderArray[pullOrderArrayIndex].product_quantity) > 0) {
+                orderArray[pullOrderArrayIndex].product_quantity += 1;
+                document.getElementById('quantity-div').innerHTML = orderArray[pullOrderArrayIndex].product_quantity;
+            } else {
+                orderArray[pullOrderArrayIndex].product_quantity = 1;
+                document.getElementById('quantity-div').innerHTML = orderArray[pullOrderArrayIndex].product_quantity;
+            }                
         } else {
             orderArray[pullOrderArrayIndex].product_quantity = 1;
+            document.getElementById('quantity-div').innerHTML = orderArray[pullOrderArrayIndex].product_quantity;
         }
 
         document.getElementById('quantity-div').innerHTML = orderArray[pullOrderArrayIndex].product_quantity;
         orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].default_price * orderArray[pullOrderArrayIndex].product_quantity;
         orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].price.toFixed(2);
         localStorage.setItem("orderArray", JSON.stringify(orderArray));
-        //console.log(`The value of produdct_id is ${orderArray[pullOrderArrayIndex].product_id} and its type is ${typeof orderArray[pullOrderArrayIndex].product_id}`);
-        //console.log(`The value of product_name is ${orderArray[pullOrderArrayIndex].product_name} and its type is ${typeof orderArray[pullOrderArrayIndex].product_name}`);
-        //console.log(`The value of price is ${orderArray[pullOrderArrayIndex].price} and its type is ${typeof orderArray[pullOrderArrayIndex].price}`);
-        //console.log(`The value of price_calc is ${orderArray[pullOrderArrayIndex].price_calc} and its type is ${typeof orderArray[pullOrderArrayIndex].price_calc}`);
-        //console.log(`The value of quantity is ${orderArray[pullOrderArrayIndex].product_quantity} and its type is ${typeof orderArray[pullOrderArrayIndex].product_quantity}`);
-        //console.log(`The value of default_price is ${orderArray[pullOrderArrayIndex].default_price} and its type is ${typeof orderArray[pullOrderArrayIndex].default_price}`);
     } else {
         console.log("Product not found in the order array");
     }
@@ -184,12 +177,11 @@ function decreaseQuantity(product_id, default_price) {
     const pullOrderArrayIndex = orderArray.findIndex(a => a.product_id == product_id);
     if (pullOrderArrayIndex !== -1) {
         if (!isNaN(orderArray[pullOrderArrayIndex].product_quantity)) {
-            if (orderArray[pullOrderArrayIndex].product_quantity < 2) {
+            if (orderArray[pullOrderArrayIndex].product_quantity < 1) {
                 orderArray[pullOrderArrayIndex].product_quantity = 1
             } else {
                 orderArray[pullOrderArrayIndex].product_quantity -= 1;
             }
-            // Prevent quantity from going below 0            
         } else {
             orderArray[pullOrderArrayIndex].product_quantity = 1;
         }
@@ -198,23 +190,14 @@ function decreaseQuantity(product_id, default_price) {
         orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].default_price * orderArray[pullOrderArrayIndex].product_quantity;
         orderArray[pullOrderArrayIndex].price = orderArray[pullOrderArrayIndex].price.toFixed(2);
         localStorage.setItem("orderArray", JSON.stringify(orderArray));
-        //console.log(`The value of produdct_id is ${orderArray[pullOrderArrayIndex].product_id} and its type is ${typeof orderArray[pullOrderArrayIndex].product_id}`);
-        //console.log(`The value of product_name is ${orderArray[pullOrderArrayIndex].product_name} and its type is ${typeof orderArray[pullOrderArrayIndex].product_name}`);
-        //console.log(`The value of price is ${orderArray[pullOrderArrayIndex].price} and its type is ${typeof orderArray[pullOrderArrayIndex].price}`);
-        //console.log(`The value of price_calc is ${orderArray[pullOrderArrayIndex].price_calc} and its type is ${typeof orderArray[pullOrderArrayIndex].price_calc}`);
-        //console.log(`The value of quantity is ${orderArray[pullOrderArrayIndex].product_quantity} and its type is ${typeof orderArray[pullOrderArrayIndex].product_quantity}`);
-        //console.log(`The value of default_price is ${orderArray[pullOrderArrayIndex].default_price} and its type is ${typeof orderArray[pullOrderArrayIndex].default_price}`);
     } else {
         console.log("Product not found in the order array");
     }
     updateOrder()
 }
 
-
 function confirmAndClose() {
     document.getElementById("modal-div").classList.remove("show");
     document.getElementById("modal-div").classList.add("hide");
     updateOrder()
 }
-
-
