@@ -73,18 +73,22 @@ def add_to_order(request):
         quantity = int(request.POST['quantity'])
         product_default_price = get_product.product_price
         cost = Decimal(product_default_price) * quantity  # Use Decimal for accuracy
-        print(f" product_id is {product_id}")
+
+        
         # Check if an order already exists in the session
         if 'order_items' in request.session:
-            order_items = request.session['order_items']
+            order_items = request.session['order_items']        
+
             # Check if the product is already in the order
             if product_id in order_items:
                 # Update existing product quantity
                 order_items[product_id]['quantity'] += quantity
                 order_items[product_id]['cost'] = str(Decimal(order_items[product_id]['cost']) + cost) 
+
             else:
                 # Add as a new order item
-                order_items[product_id] = { 
+                order_items[product_id] = {
+                    'product_id': product_id,
                     'product_name': get_product.product_name,
                     'quantity': quantity,
                     'cost': str(cost),  
@@ -92,20 +96,16 @@ def add_to_order(request):
         else:
             # Create a new order if it doesn't exist
             order_items = {
-                product_id: {  # Use stringified product_id as key for easier lookup
-                    'product_name': get_product.product_name,
-                    'quantity': quantity,
-                    'cost': str(cost),  
-                }
-            }
+            #str(product_id): {  
+                'product_id': product_id,  # Add this line
+                'product_name': get_product.product_name,
+                'quantity': quantity,
+                'cost': str(cost), 
+        #}
+    }
         # Update the session 
         request.session['order_items'] = order_items
-        grand_total = Decimal(0)
-        for product_id, item in request.session['order_items'].items():
-            grand_total += Decimal(item['cost'])
-
-        # Store the grand total in the session
-        request.session['order_total'] = str(grand_total)
+        print(request.session['order_items'])
         return redirect(request.META.get('HTTP_REFERER'))
 
 

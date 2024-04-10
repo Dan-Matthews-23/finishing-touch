@@ -56,25 +56,24 @@
                 <div class="row ">
                     <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
                         {% if request.session.order_items %}
-                            {% for product_id, item in request.session.order_items.items %}                        
-                            <p>
-                                <span>{{item.product_name}}</span>
-                                <span>(x{{item.quantity}})</span>
-                            </p>     
-                            <p>{{item.cost}}</p>
-                            
-                            {% endfor %}
-                            <hr>
-                            {% if request.session.order_total %}
-                                <p><strong>Order Total: </strong>{{ request.session.order_total }}</p>
-                            {% endif %}
-                            <hr>
-                        {% else %}                
+                        {% for product_id, item in request.session.order_items.items %}
+                        <p>
+                            <span>{{ item.product_name }}</span>
+                            <span>(x{{ item.quantity }})</span>
+                        </p>
+                        <p>{{ item.cost }}</p>
+                        {% endfor %}
+                        <hr>
+                        {% if request.session.order_total %}
+                        <p><strong>Order Total: </strong>{{ request.session.order_total }}</p>
+                        {% endif %}
+                        <hr>
+                        {% else %}
                         <p>Your basket is empty</p>
-                        {%endif%}
-                        
+                        {% endif %}
                     </div>
-                </div>                
+                </div>
+               
                 <div class="row">
                     <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 align-center-horizontal align-center-vertical">
                         {% if request.session.order_items %}

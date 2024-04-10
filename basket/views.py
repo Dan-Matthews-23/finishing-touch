@@ -28,7 +28,14 @@ def process_order(request):
     logger.debug("order_data received")
     if request.method == "POST":
         try:
-            order_data = json.loads(request.POST.get("orderData"))
+            #order_data = json.loads(request.POST.get("orderData"))
+            get_order_data = request.session.get('order_items')
+            print(get_order_data)
+            order_data = {
+                'product_id': int(get_order_data.product_id),
+                'product_quantity': int(get_order_data.quantity),
+                'price': float(get_order_data.cost),                
+            }
             #print(order_data)
             logger.debug(f"Received order_data: {order_data}")  # Log the data
             # Basket handling
