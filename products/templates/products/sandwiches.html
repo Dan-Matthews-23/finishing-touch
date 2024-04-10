@@ -46,27 +46,47 @@
     <div class="container-fluid align-center card product-container" id="order-details">
         <div class="row ">
             <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
+                {% if request.session.order_items %}
                 <div class="row ">
                     <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
                         <h3 class=" modal-text-styling">Order Details</h3>
                     </div>
                 </div>
+                {%endif%}
                 <div class="row ">
-                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 " id="display_order">
+                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
+                        {% if request.session.order_items %}
+                            {% for product_id, item in request.session.order_items.items %}                        
+                            <p>
+                                <span>{{item.product_name}}</span>
+                                <span>(x{{item.quantity}})</span>
+                            </p>     
+                            <p>{{item.cost}}</p>
+                            
+                            {% endfor %}
+                            <hr>
+                            {% if request.session.order_total %}
+                                <p><strong>Order Total: </strong>{{ request.session.order_total }}</p>
+                            {% endif %}
+                            <hr>
+                        {% else %}                
+                        <p>Your basket is empty</p>
+                        {%endif%}
+                        
                     </div>
-                </div>
+                </div>                
                 <div class="row">
-                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 " id="total_cost">
-                    </div>
-                </div>
-                <div class="row">
-                    <div
-                        class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 align-center-horizontal align-center-vertical">
-                        <form method="POST" action="{% url 'process_order' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="orderData" id="orderData" value="">
-                            <button type="submit" class="btn orderBtn" id="checkout">Checkout items</button>
-                        </form>
+                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 align-center-horizontal align-center-vertical">
+                        {% if request.session.order_items %}
+                            <form method="POST" action="{% url 'process_order' %}">
+                                {% csrf_token %}                            
+                                <button type="submit" class="btn orderBtn" id="checkout">Checkout items</button>
+                            </form>
+                            <form method="POST" action="{% url 'clear_order' %}">
+                                {% csrf_token %}                            
+                                <button type="submit" class="btn delete_order" id="delete_order">Clear Order</button>
+                            </form>
+                        {%endif%}
                     </div>
                 </div>
             </div>
@@ -97,7 +117,7 @@
                 <div class="favourite">
                     <form method="POST" action="{% url 'delete_from_favourites' %}">
                         {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{ i.product_id }}">
+                        <input type="hidden" name="product_id-favourites" value="{{ i.product_id }}">
                         <button type="submit" class="favourite-btn" id="add_favourite">
                             <i class="fa-solid fa-heart fa-xl favourite"></i>
                         </button>
@@ -109,7 +129,7 @@
                 <div class="favourite">
                     <form method="POST" action="{% url 'add_to_favourites' %}">
                         {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{ i.product_id }}">
+                        <input type="hidden" name="product_id-favourites" value="{{ i.product_id }}">
                         <button type="submit" class="favourite-btn" id="add_favourite">
                             <i class="fa-regular fa-heart fa-xl favourite"></i>
                         </button>
@@ -122,7 +142,7 @@
 
             <div class="row  card-row">
                 <div class="col  align-center">
-                    <h5 class="card-title">{{i.product_name}}</h5>
+                    <h5 class="card-title">{{i.product_name}}{{i.product_id}}</h5>
                 </div>
             </div>
             <div class="row  card-row">
@@ -144,10 +164,8 @@
             <div class="row  card-row">
                 <div class="col" id="open-modal-btn-div">
                     <p class=" align-center">
-                        <button class="btn open-modal" id="open-modal-value" value="{{i.product_id}}"
-                            data-product-name="{{i.product_name}}" data-product-price="{{i.product_price}}">Select
-                            item</button>
-                    <p class="item-added">Item Added</p>
+                        <button class="btn open-modal" id="open-modal-value" value="{{i.product_id}}">
+                            Select item</button>                    
                     </p>
                 </div>
             </div>
@@ -157,8 +175,9 @@
             <!--This is the pop-up modal led by customer interaction-->
             <form method="POST" action="{% url 'add_to_order' %}">
                 {% csrf_token %}
-                <input type="hidden" name="product_id" id="product_id" value="{{i.product_id}}">
+                <!--<input type="hidden" name="product_id" id="product_id" value="{{i.product_id}}">-->
                 <input type="hidden" name="quantity" id="quantity" value="{{i.quantity}}">
+                <!--<input type="hidden" name="orderData" id="orderData" value="">-->
                 <div id="modal-div" class="select-sandwich ">
                     <div class="select-sandwich-modal-content">
                         <div class="container-fluid  align-center">
@@ -167,6 +186,9 @@
                                     <span class="close">&times;</span>
                                     <div class="row card-row ">
 
+                                    </div>
+                                    <div class="row">                                        
+                                        <input type="hidden" id="product_test" name="product_test" />
                                     </div>
                                     <div class="row card-row ">
 
@@ -207,7 +229,7 @@
                                     <div class="row modal-row-padding  ">
 
                                         <div class="col  align-center-vertical align-center-horizontal">
-                                            <button class="btn select-product-btn">Add to order</button>
+                                            <button class="btn select-product-btn">Add to order{{i.product_id}}</button>
                                         </div>
 
                                     </div>

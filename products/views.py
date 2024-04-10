@@ -14,6 +14,7 @@ import json
 def prepacked_sandwiches(request):   
     sandwich_items = Products.objects.all()
     profile = get_object_or_404(UserProfile, user=request.user)
+    order_items = request.session.get('order_items')
 
     # Enhanced favorites logic
     for item in sandwich_items:
@@ -24,6 +25,7 @@ def prepacked_sandwiches(request):
 
     context = {
         'sandwich_items': sandwich_items,
+        'order_items': 'order_items'
     }
     return render(request, 'products/sandwiches.html', context)
 
@@ -31,7 +33,7 @@ def prepacked_sandwiches(request):
 def add_to_favourites(request):
     if request.method == 'POST':
         profile = get_object_or_404(UserProfile, user=request.user)
-        product_id = request.POST['product_id']
+        product_id = request.POST['product_id-favourites']
         products = Products.objects.get(product_id=product_id)
         try:
             add_favourite = Favourites(favourite_item=products,user_profile=profile, )
@@ -45,7 +47,7 @@ def add_to_favourites(request):
 def delete_from_favourites(request):
     if request.method == 'POST':
         profile = get_object_or_404(UserProfile, user=request.user)
-        product_id = request.POST['product_id']
+        product_id = request.POST['product_id-favourites']
 
         try:
             # Find the Favourites object to delete
@@ -61,27 +63,64 @@ def delete_from_favourites(request):
 
         return redirect(request.META.get('HTTP_REFERER'))
 
+from decimal import Decimal
+
 @login_required
 def add_to_order(request):
-    if request.method == 'POST':
-        product_id = request.POST['product_id']
+    if request.method == 'POST':  
+        product_id = request.POST['product_test']
         get_product = Products.objects.get(product_id=product_id)
         quantity = int(request.POST['quantity'])
         product_default_price = get_product.product_price
-        cost = product_default_price * quantity
-        print(f"The product ID is {product_id}, the product_name is {get_product.product_name}, the quantity is {quantity} and the cost is {cost}")
-        
-        request.session['placeholder_order'] = {
-            'product_id': product_id,
-            'quantity': str(quantity),
-            'cost': cost,
-        }
-        test = request.session['placeholder_order']
-        print(test)           
-        
+        cost = Decimal(product_default_price) * quantity  # Use Decimal for accuracy
+        print(f" product_id is {product_id}")
+        # Check if an order already exists in the session
+        if 'order_items' in request.session:
+            order_items = request.session['order_items']
+            # Check if the product is already in the order
+            if product_id in order_items:
+                # Update existing product quantity
+                order_items[product_id]['quantity'] += quantity
+                order_items[product_id]['cost'] = str(Decimal(order_items[product_id]['cost']) + cost) 
+            else:
+                # Add as a new order item
+                order_items[product_id] = { 
+                    'product_name': get_product.product_name,
+                    'quantity': quantity,
+                    'cost': str(cost),  
+                } 
+        else:
+            # Create a new order if it doesn't exist
+            order_items = {
+                product_id: {  # Use stringified product_id as key for easier lookup
+                    'product_name': get_product.product_name,
+                    'quantity': quantity,
+                    'cost': str(cost),  
+                }
+            }
+        # Update the session 
+        request.session['order_items'] = order_items
+        grand_total = Decimal(0)
+        for product_id, item in request.session['order_items'].items():
+            grand_total += Decimal(item['cost'])
+
+        # Store the grand total in the session
+        request.session['order_total'] = str(grand_total)
         return redirect(request.META.get('HTTP_REFERER'))
-    else:
+
+
+
+def clear_order(request):
+    if request.method == 'POST':
+        del request.session['order_items']
         return redirect(request.META.get('HTTP_REFERER'))
+    
+
+
+
+
+
+    
         
 
 
