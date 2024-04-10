@@ -107,7 +107,9 @@ def process_checkout(request):
         currency=settings.STRIPE_CURRENCY,
     )
     print(intent)
-    request.session['order_number'] = order.order_number    
+    request.session['order_number'] = order.order_number
+    del request.session['order_items']
+    del request.session['basket']    
        
 
     if not stripe_public_key:

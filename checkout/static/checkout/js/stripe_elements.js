@@ -1,3 +1,6 @@
+console.log("WORKED")
+
+
 /*
     Core logic/payment flow for this comes from here:
     https://stripe.com/docs/payments/accept-a-payment
@@ -117,4 +120,3 @@ form.addEventListener('submit', function (ev) {
         location.reload();
     })
 });
-

@@ -21,7 +21,7 @@
 
 -->
 <section id="payment-selection">
-    <form method="POST" action="{% url 'checkout_success' %}">
+    <form method="POST" action="{% url 'checkout_success' %}" >
         {% csrf_token %}
         <div class="container-fluid align-center with-borders" id="order-details-container">
             <div class="row  product-row align-center ">
@@ -132,8 +132,16 @@
 {{ block.super }}
 {{ stripe_public_key|json_script:"id_stripe_public_key" }}
 {{ client_secret|json_script:"id_client_secret" }}
+
+
 <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
-<script src="{% static 'checkout/js/script.js' %}"></script>
-
-
+<!--
+    This will likely need to be changed to {% static 'products/js/script.js' %}  
+-->
 {% endblock %}
+
+
+
+
+
+
