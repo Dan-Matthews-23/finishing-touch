@@ -74,7 +74,6 @@ def add_to_order(request):
         product_default_price = get_product.product_price
         cost = Decimal(product_default_price) * quantity  # Use Decimal for accuracy
 
-        
         # Check if an order already exists in the session
         if 'order_items' in request.session:
             order_items = request.session['order_items']        
@@ -87,22 +86,21 @@ def add_to_order(request):
 
             else:
                 # Add as a new order item
-                order_items[product_id] = {
-                    'product_id': product_id,
+                order_items[product_id] = {  # Key change is here
                     'product_name': get_product.product_name,
                     'quantity': quantity,
-                    'cost': str(cost),  
+                    'cost': str(cost), 
                 } 
         else:
             # Create a new order if it doesn't exist
             order_items = {
-            #str(product_id): {  
-                'product_id': product_id,  # Add this line
-                'product_name': get_product.product_name,
-                'quantity': quantity,
-                'cost': str(cost), 
-        #}
-    }
+                product_id: {  # Key change is here
+                    'product_name': get_product.product_name,
+                    'quantity': quantity,
+                    'cost': str(cost), 
+                }
+            }
+
         # Update the session 
         request.session['order_items'] = order_items
         print(request.session['order_items'])

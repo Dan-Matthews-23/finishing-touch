@@ -28,54 +28,54 @@ def process_order(request):
     logger.debug("order_data received")
     if request.method == "POST":
         try:
-            #order_data = json.loads(request.POST.get("orderData"))
-            get_order_data = request.session.get('order_items')
-            print(get_order_data)
-            order_data = {
-                'product_id': int(get_order_data.product_id),
-                'product_quantity': int(get_order_data.quantity),
-                'price': float(get_order_data.cost),                
-            }
-            #print(order_data)
-            logger.debug(f"Received order_data: {order_data}")  # Log the data
+            get_order_data = request.session.get('order_items')  
+
+            if get_order_data:  # Check if order items exist
+                order_data = []  # Create a list to hold individual order items
+
+                for product_id, product_details in get_order_data.items():
+                    #print(f"The product_id is {product_id}")
+                    get_product = Products.objects.get(product_id=product_id)
+
+                    order_item = {
+                        'product_id': int(product_id),  # Use the iterated product_id
+                        'product_quantity': int(product_details['quantity']),
+                        'price': float(product_details['cost']),
+                        'product_name':  get_product.product_name,            
+                    }
+                    order_data.append(order_item)
+
+                #print(order_data)
+                logger.debug(f"Received order_data: {order_data}") 
             # Basket handling
-            try:
+           
                 if order_data is None or len(order_data) == 0:
                     logger.debug(f"Received order_data: {order_data}")
                     messages.error(request, "Your basket is empty.")
                     logger.info("Empty order data detected")
                     # ... Handle UUID if needed
-                    return redirect('prepacked_sandwiches')  
-            
+                    return redirect('prepacked_sandwiches')              
                 else:
                     order_number =  uuid.uuid4().hex.upper()
                     for order in order_data:
                         order['order_number'] = order_number  # Same number for all 
-                        # To give each order a unique number, generate order_number inside the loop
-
-                                         
+                        # To give each order a unique number, generate order_number inside the loop                                         
                     request.session['basket'] = order_data
                     basket_session = request.session['basket']
                     #print(basket_session)
-                    
-
-                    profile = get_object_or_404(UserProfile, user=request.user)
-
-                  
+                    # profile = get_object_or_404(UserProfile, user=request.user)                  
                     if request.user.is_authenticated:
                         profile = request.user.userprofile  # Access connected UserProfile
                         form = BasketForm(instance=profile)  # Pre-populate the form
                     else:
                         form = BasketForm()
                                 #orders = profile.orders.all()
-                                
-
                     template = 'basket/basket.html'
                     context = {
                         'form': form,
                         'basket': basket_session,        
                     }
-
+                   
                     return render(request, template, context)                        
                                        
 
@@ -86,20 +86,15 @@ def process_order(request):
                     #return render(request, template, context) 
                             
 
-            except Exception as e:  
-                messages.error(request, f"There was an error associating your basket: {e}")
-                return redirect('prepacked_sandwiches')     
-                      
+            else:
+                # Handle the case where there are no order items
+                logger.info("Empty order data detected")
+                messages.error(request, "Your basket is empty.")
+                return redirect('prepacked_sandwiches')
 
-        except json.JSONDecodeError:
-            messages.error(request, "Invalid order data format. Please check and try again.")
-            logger.warning("JSON decoding error") 
-            return redirect('prepacked_sandwiches')  
-
-        except ValueError:  
-            messages.error(request, "Your order data is missing. Please try again.")
-            logger.warning("Missing 'orderData'")
-            return redirect('prepacked_sandwiches')         
+        except Exception as e:  # Add appropriate exception handling
+            logger.error(f"Error processing order: {e}")
+            # Handle errors gracefully, e.g., redirect with error message        
 
     elif request.method == "GET": 
         return render(request, 'basket/basket.html') 
