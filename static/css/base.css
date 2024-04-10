@@ -9,6 +9,53 @@ body {
 }
 
 
+
+.active,
+.collapsible:hover,
+.see-reviews {
+    background-color: #555;
+}
+
+.collapsible:after {
+    content: "\002B";
+    color: black;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
+
+.previous-orders-container {
+    width: 70%;
+    padding: 5px;
+}
+
+.previous-orders-row {
+    padding: 2px;
+}
+
+.previous-orders-col {
+    padding: 2px;
+}
+
+
+
+
+
+
+
+
 #welcome-banner-container {
     width: 90%;
     padding-top: 25px;

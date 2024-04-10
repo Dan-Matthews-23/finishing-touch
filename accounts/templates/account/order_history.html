@@ -6,43 +6,52 @@
 {% endblock %}
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col">            
-            <h2 class="logo-font mb-4">My Orders</h2>         
-        </div>
-    </div>           
-            {% for order in orders %}
-            <button type="button" class="collapsible bold btn">{{order.order_number}}</button>
-            <div class="content">
-            <div class="row">
-                <div class="col-12 col-lg-6">{{order.order_number}}</div>
-                <div class="col-12 col-lg-6">{{order.full_name}}</div>
-                <div class="col-12 col-lg-6">{{order.email}}</div>
-                <div class="col-12 col-lg-6">{{order.phone_number}}</div>
-                <div class="col-12 col-lg-6">{{order.street_address1}}</div>
-                <div class="col-12 col-lg-6">{{order.street_address2}}</div>
-                <div class="col-12 col-lg-6">{{order.town_or_city}}</div>
-                <div class="col-12 col-lg-6">{{order.county}}</div>
-                <div class="col-12 col-lg-6">{{order.postcode}}</div>
-                <div class="col-12 col-lg-6">{{order.date}}</div>
-                <div class="col-12 col-lg-6">{{order.order_total}}</div>
-                <div class="col-12 col-lg-6">{{order.stripe_id}}</div>
-            </div>
-            {% for review in order.reviews.all %}
-            {% endfor %}
-            {% endfor %}
-
+<div class="container-fluid previous-orders-container">
+    <div class="row previous-orders-row">
+        <div class="col previous-orders-col">
+            <h2 class="bold">My Orders</h2>
         </div>
     </div>
-</div>
-{% endblock %}
+    <div class="row previous-orders-row">
+        <div class="col previous-orders-col col-xsm-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">Order Number</div>
+        <div class="col previous-orders-col col-xsm-12 col-sm-12 col-md-2 col-2-2 col-xl-2">Date of order</div>
+    </div>
 
-THE JS CANNOT BE FOUND. NOT SURE EWHY. FIX THIS
+    <div class="row previous-orders-row">      
+        {% for order in orders %}
+        <div class="col previous-orders-col col-xsm-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
+            <button type="button" class="collapsible bold">{{order.order_number}}</button>
+            <div class="content">
+                <div class="row">
+                    <div class="col-12 col-lg-6">{{order.order_number}}</div>
+                    <div class="col-12 col-lg-6">{{order.full_name}}</div>
+                    <div class="col-12 col-lg-6">{{order.email}}</div>
+                    <div class="col-12 col-lg-6">{{order.phone_number}}</div>
+                    <div class="col-12 col-lg-6">{{order.street_address1}}</div>
+                    <div class="col-12 col-lg-6">{{order.street_address2}}</div>
+                    <div class="col-12 col-lg-6">{{order.town_or_city}}</div>
+                    <div class="col-12 col-lg-6">{{order.county}}</div>
+                    <div class="col-12 col-lg-6">{{order.postcode}}</div>
+                    <div class="col-12 col-lg-6">{{order.date}}</div>
+                    <div class="col-12 col-lg-6">{{order.order_total}}</div>
+                    <div class="col-12 col-lg-6">{{order.stripe_id}}</div>
+                </div>
+            </div>            
+        </div>
+        {% for review in order.reviews.all %}
+        {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
 
 {% block postloadjs %}
-
-
-<script src="{% static '/accounts/static/js/script.js' %}"></script>
+<script src="{% static 'accounts/js/script.js' %}"></script>
 {% endblock %}
-

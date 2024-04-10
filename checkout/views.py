@@ -108,8 +108,7 @@ def process_checkout(request):
     )
     print(intent)
     request.session['order_number'] = order.order_number
-    del request.session['order_items']
-    del request.session['basket']    
+       
        
 
     if not stripe_public_key:
@@ -211,6 +210,8 @@ def checkout_success(request):
     messages.success(request, f'Order successfully processed! \
         Your form number is {order_number}. A confirmation \
         email will be sent to {form.email}.')
+    del request.session['order_items']
+    del request.session['basket']
 
     #if 'basket' in request.session:
         #del request.session['basket']
