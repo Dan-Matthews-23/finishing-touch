@@ -61,7 +61,7 @@ def process_checkout(request):
                 try:
                     product = Products.objects.get(product_id=item['product_id'])                                       
                     if product:
-                        line_item_total = float(item['default_price']) * int(item['product_quantity'])
+                        line_item_total = float(product.product_price) * int(item['product_quantity'])
                         order_total += line_item_total                        
                         order_line_item = OrderLineItem(
                             order=order,
