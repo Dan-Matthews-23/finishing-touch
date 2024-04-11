@@ -71,13 +71,13 @@ def profile(request):
 
 def order_history(request):
     profile = get_object_or_404(UserProfile, user=request.user)
-    orders = profile.orders.all()
+    orders = profile.orders.all().order_by('-date')
     
-    for order in orders:
-        order_reviews = order.reviews.all()
+    #for order in orders:
+        #order_reviews = order.reviews.all()
         #print(order.order_number) 
         #print(order.reviews.all())
-    print(orders)
+    #print(orders)
     
 
     template = 'account/order_history.html'
