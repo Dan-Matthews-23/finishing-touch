@@ -6,6 +6,7 @@
 {% endblock %}
 {% block content %}
 
+
 <div class="container-fluid previous-orders-container">
     <div class="row previous-orders-row">
         <div class="col previous-orders-col">
@@ -13,50 +14,72 @@
         </div>
     </div>
     <div class="row previous-orders-row">
-        <div class="col previous-orders-col col-xsm-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 align-center-horizontal md-padding"><strong>Date of order</strong></div>
-        <div class="col previous-orders-col col-xsm-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 align-center-horizontal md-padding"><strong>Order Number</strong></div>
-    </div>
+        <div class="col previous-orders-col">
+            <p>
+                <span>Date of order:</span>
+                <span>{{order.date}}</span>
+            </p>
+            <p>
+                <span>Order Number:</span>
+                <span>{{order.order_number}}</span>
+            </p>
+            
+            {% for item in order_line_items %}
+            <p>
+                <span>Product Name:</span>
+                <span>{{item.product}}</span>
+            </p>
+            <p>
+                <span>Product ID:</span>
+                <span>{{item.product.product_id}}</span>
+            </p>
+            <p>
+                <span>Quantity:</span>
+                <span>{{item.quantity}}</span>
+            </p>
+            <p>
+                <span>Total</span>
+                <span>{{item.order_total}}</span>
+            </p>
+            {% if reviews %}
+                <p>You reviewed this order on {{reviews.date}}</p>
+                <hr>
+                <p>{{reviews.review_title}}</p> 
+                <p>{{reviews.review_body}}</p>
+                <p>{{reviews.stars}}</p>
+            {% else %}
+            <p>
+                <div class="star">
+                    <form method="POST" action="{% url 'leave_review' order.order_number %}" title="{{ order.order_number }}">
+                        {% csrf_token %}
+                        <input type="hidden" id="product_id" name="product_id" value="{{ item.product.product_id }}">
 
-    <div class="row previous-orders-row">      
-        {% for order in orders %}
-        <div class="col previous-orders-col col-xsm-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">{{order.date}}</div>
-        <div class="col previous-orders-col col-xsm-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-            <button type="button" class="collapsible bold order-number-btn">{{order.order_number}}</button>
-            <div class="content">
-                <p>{{order.order_number}}</p>
-                <p>{{order.full_name}}</p>
-                <p>{{order.email}}</p>
-                <p>{{order.phone_number}}</p>
-                <p>{{order.street_address1}}</p>
-                <p>{{order.street_address2}}</p>
-                <p>{{order.town_or_city}}</p>
-                <p>{{order.county}}</p>
-                <p>{{order.postcode}}</p>
-                <p>{{order.date}}</p>
-                <p>{{order.order_total}}</p>
-                <p>Product:{{order.product}}</p>
-                <p>{{order.quantity}}</p>
+                        <button type="submit" class="star-btn" id="one_star" name="star_rating_1">
+                            <i class="fa-regular fa-star fa-2xl" ></i>
+                        </button>
+                        <button type="submit" class="star-btn" id="two_star" name="star_rating_2">
+                            <i class="fa-regular fa-star fa-2xl"></i>
+                        </button>
+                        <button type="submit" class="star-btn" id="three_star" name="star_rating_3">
+                            <i class="fa-regular fa-star fa-2xl"></i>
+                        </button>
+                        <button type="submit" class="star-btn" id="four_star" name="star_rating_4">
+                            <i class="fa-regular fa-star fa-2xl"></i>
+                        </button>
+                        <button type="submit" class="star-btn" id="five_star" name="star_rating_5">
+                            <i class="fa-regular fa-star fa-2xl"></i>
+                        </button>
 
-                <!--
-                <div class="row">
-                    <div class="col-12 col-lg-6">{{order.order_number}}</div>
-                    <div class="col-12 col-lg-6">{{order.full_name}}</div>
-                    <div class="col-12 col-lg-6">{{order.email}}</div>
-                    <div class="col-12 col-lg-6">{{order.phone_number}}</div>
-                    <div class="col-12 col-lg-6">{{order.street_address1}}</div>
-                    <div class="col-12 col-lg-6">{{order.street_address2}}</div>
-                    <div class="col-12 col-lg-6">{{order.town_or_city}}</div>
-                    <div class="col-12 col-lg-6">{{order.county}}</div>
-                    <div class="col-12 col-lg-6">{{order.postcode}}</div>
-                    <div class="col-12 col-lg-6">{{order.date}}</div>
-                    <div class="col-12 col-lg-6">{{order.order_total}}</div>
-                    <div class="col-12 col-lg-6">{{order.stripe_id}}</div>
-                </div>-->
-            </div>            
+
+                        <span class="startext">Add to favourites</span>
+                    </form>
+                </div>
+            </p>           
+
+            {% endif %}
+
+            {% endfor %}
         </div>
-        {% for review in order.reviews.all %}
-        {% endfor %}
-        {% endfor %}
     </div>
 </div>
 

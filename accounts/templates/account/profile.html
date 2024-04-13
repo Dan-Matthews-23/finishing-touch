@@ -23,4 +23,36 @@
         </div>
     </div>
 </div>
+<br><br>
+
+
+<div class="container-fluid previous-orders-container with-borders">
+    <div class="row previous-orders-row">
+        <div class="col previous-orders-col align-center-horizontal">
+            <h2 class="bold">My Orders</h2>
+        </div>
+    </div>
+    <div class="row previous-orders-row">
+        <div
+            class="col previous-orders-col col-xsm-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 align-center-horizontal md-padding">
+            <strong>Date of order</strong>
+        </div>
+        <div
+            class="col previous-orders-col col-xsm-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 align-center-horizontal md-padding">
+            <strong>Order Number</strong>
+        </div>
+    </div>
+    {% for order in orders %}
+    <div class="row previous-orders-row">
+        <div class="col previous-orders-col col-xsm-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">{{order.date}}</div>
+        <div class="col previous-orders-col col-xsm-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
+            <a href="{% url 'order_history' order.order_number %}" title="{{ order.order_number }}">
+                {{ order.order_number|truncatechars:10}}
+            </a>
+        </div>
+    </div>
+    {% for review in order.reviews.all %}
+    {% endfor %}
+    {% endfor %}
+</div>
 {% endblock %}

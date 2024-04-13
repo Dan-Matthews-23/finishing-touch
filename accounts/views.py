@@ -35,12 +35,13 @@ def showOrders(request):
     return render(request, template, context)
 """
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from .forms import UserProfileForm
 from checkout.models import Orders, Reviews
+from products.models import Products
 
 
 @login_required
@@ -57,7 +58,7 @@ def profile(request):
                             'the form is valid.'))
     else:
         form = UserProfileForm(instance=profile)
-    orders = profile.orders.all()
+    orders = profile.orders.all().order_by('-date')
 
     template = 'account/profile.html'
     context = {
@@ -69,32 +70,52 @@ def profile(request):
     return render(request, template, context)
 
 
-def order_history(request):
-    profile = get_object_or_404(UserProfile, user=request.user)
-    orders = profile.orders.all().order_by('-date')
-    
-    #for order in orders:
-        #order_reviews = order.reviews.all()
-        #print(order.order_number) 
-        #print(order.reviews.all())
-    #print(orders)
-    
+def order_history(request, order_number):
+    order = get_object_or_404(Orders, order_number=order_number)
+    try:
+        reviews = Reviews.objects.filter(order=order)
+        print("Reviews found:", reviews)  # Check what's retrieved 
+    except Reviews.DoesNotExist:
+        reviews = None  
+        #print("No reviews found.") 
 
+    # Get related order line items
+    order_line_items = order.lineitems.all() 
+
+    messages.info(request, (
+        f'This is a past confirmation for order number {order_number}. '
+        'A confirmation email was sent on the order date.'
+    ))
     template = 'account/order_history.html'
     context = {
-        'orders': orders,
-        #'reviews': reviews,
-       
+        'order': order,
+        'order_line_items': order_line_items,
+        'reviews': reviews,
+        'from_profile': True,
     }
-
     return render(request, template, context)
 
-    """
-CHANGE THIS TO MATCH THE WALKTHROUGH. 
 
-- cHANGE IT SO THAT ORDER HISTORY IS SHOWN ON PROFILE UNDER PREVIOUS ORDERS.
-tHEN MAKE EACH ORDER NUMBER HAVE A HYPERLINK
-tHIS WILL THEN TAKE YOU TO ORDER_HISTORY, WHICH RENDERS THE ORDER_HISTORY VIEW.
-DON'T KNOW WHY YOU DID IT ANY DIFFERENT!!
 
-    """
+
+
+
+@login_required
+def leave_review(request, order_number):
+    if request.method == 'POST':
+        order = get_object_or_404(Orders, order_number=order_number)
+        for i in range(1, 6):
+            if f"star_rating_{i}" in request.POST:
+                selected_rating = i
+                print(f"User selected a rating of {selected_rating} stars")                
+                break          
+        try:
+            product_id = request.POST.get('product_id') 
+            product = get_object_or_404(Products, pk=product_id)
+            add_review = Reviews(order=order, stars=selected_rating, product=product) 
+            add_review.save()  # Save the correct object 
+            print(f"Your review was created")
+        except Exception as e:  
+            print(f"There was an error while saving your review: {e}")
+
+        return redirect(request.META.get('HTTP_REFERER'))

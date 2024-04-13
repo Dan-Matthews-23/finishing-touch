@@ -63,7 +63,8 @@ class Reviews(models.Model):
     product = models.ForeignKey(Products, null=False, blank=False, on_delete=models.CASCADE)
     review_title = models.CharField(max_length=240, null=False, blank=False, default='')
     review_body = models.TextField(null=False, blank=False, default='')
-    stars = models.SmallIntegerField(null=True, blank=True)    
+    stars = models.SmallIntegerField(null=True, blank=True)
+    date = models.DateTimeField(auto_now_add=True)    
     
 
     
