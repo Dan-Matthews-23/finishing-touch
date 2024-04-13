@@ -74,7 +74,9 @@ def order_history(request, order_number):
     order = get_object_or_404(Orders, order_number=order_number)
     try:
         reviews = Reviews.objects.filter(order=order)
-        print("Reviews found:", reviews)  # Check what's retrieved 
+        print("Reviews found:", reviews)  # Print the queryset
+        for review in reviews:            # Check individual review contents
+            print(review.review_title, review.review_body, review.stars) 
     except Reviews.DoesNotExist:
         reviews = None  
         #print("No reviews found.") 

@@ -177,43 +177,66 @@ div.sticky-element {
 
 
 
-.star-btn {
-    border: none;
-    background-color: inherit;
-}
 
-.star {
+
+
+
+
+.rating-box {
     position: relative;
-    display: inline-block;
-    color: black;
-
+    background: #fff;   
+    
 }
 
-.star .startext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
+.rating-box header {
+    font-size: 22px;    
+    font-weight: 500;
+   
     text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    left: -150px
 }
 
-.star:hover .startext {
-    visibility: visible;
+.rating-box .stars {
+    display: flex;
+    align-items: center;
+    
+}
+
+.stars i {
+    font-size: 35px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    outline: none;
+    /* This removes the outline on focus */
 }
 
 
 
+.stars i:focus {
+    box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+    /* Yellow-ish glow */
+}
+
+.stars i.active {
+    color: yellow;
+    background: none;
+}
+
+.stars ::after {
+    display: none;
+}
 
 
 
+.fa-solid fa-star:focus {
+    outline: none;
+    /* Removes the focus outline */
+    background-color: transparent;
+    /* Ensures no background color */
+}
 
+.stars form {
+    background-color: transparent;
+}
 
 
 

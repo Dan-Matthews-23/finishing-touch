@@ -23,7 +23,7 @@
                 <span>Order Number:</span>
                 <span>{{order.order_number}}</span>
             </p>
-            
+
             {% for item in order_line_items %}
             <p>
                 <span>Product Name:</span>
@@ -42,46 +42,34 @@
                 <span>{{item.order_total}}</span>
             </p>
             {% if reviews %}
-                <p>You reviewed this order on {{reviews.date}}</p>
-                <hr>
-                <p>{{reviews.review_title}}</p> 
-                <p>{{reviews.review_body}}</p>
-                <p>{{reviews.stars}}</p>
+            {% for review in reviews %}
+            {{ review.review_title }} <br>
+            {{ review.review_body }} <br>
+            {{ review.stars }}
+            {% endfor %}
             {% else %}
-            <p>
-                <div class="star">
-                    <form method="POST" action="{% url 'leave_review' order.order_number %}" title="{{ order.order_number }}">
+            <div class="rating-box">
+                <header>How was your experience?</header>
+                <div class="stars">
+                    <form method="POST" action="{% url 'leave_review' order.order_number %}"
+                        title="{{ order.order_number }}">
                         {% csrf_token %}
                         <input type="hidden" id="product_id" name="product_id" value="{{ item.product.product_id }}">
-
-                        <button type="submit" class="star-btn" id="one_star" name="star_rating_1">
-                            <i class="fa-regular fa-star fa-2xl" ></i>
-                        </button>
-                        <button type="submit" class="star-btn" id="two_star" name="star_rating_2">
-                            <i class="fa-regular fa-star fa-2xl"></i>
-                        </button>
-                        <button type="submit" class="star-btn" id="three_star" name="star_rating_3">
-                            <i class="fa-regular fa-star fa-2xl"></i>
-                        </button>
-                        <button type="submit" class="star-btn" id="four_star" name="star_rating_4">
-                            <i class="fa-regular fa-star fa-2xl"></i>
-                        </button>
-                        <button type="submit" class="star-btn" id="five_star" name="star_rating_5">
-                            <i class="fa-regular fa-star fa-2xl"></i>
-                        </button>
-
-
-                        <span class="startext">Add to favourites</span>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
                     </form>
                 </div>
-            </p>           
-
-            {% endif %}
-
-            {% endfor %}
+            </div>
         </div>
+        </p>
+        {% endif %}
+        {% endfor %}
     </div>
 </div>
+
 
 
 
