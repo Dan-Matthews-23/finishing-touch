@@ -48,25 +48,44 @@
             {{ review.stars }}
             {% endfor %}
             {% else %}
-            <div class="rating-box">
-                <header>How was your experience?</header>
-                <div class="stars">
-                    <form method="POST" action="{% url 'leave_review' order.order_number %}"
-                        title="{{ order.order_number }}">
-                        {% csrf_token %}
-                        <input type="hidden" id="product_id" name="product_id" value="{{ item.product.product_id }}">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </form>
+            <form method="POST" action="{% url 'leave_review' order.order_number %}" title="{{ order.order_number }}">
+                {% csrf_token %}
+                <div class="row with-borders">
+                    <div class="col with-borders">
+                        <div class="rating-box">
+                            <header>How was your experience?</header>
+                            <div class="stars">
+                                <input type="hidden" id="product_id" name="product_id" value="{{ item.product.product_id }}">
+                                <input type="hidden" id="selected_rating" name="selected_rating"> 
+                                <i class="fa-solid fa-star" name="star_rating_1"></i>
+                                <i class="fa-solid fa-star" name="star_rating_2"></i>
+                                <i class="fa-solid fa-star" name="star_rating_3"></i>
+                                <i class="fa-solid fa-star" name="star_rating_4"></i>
+                                <i class="fa-solid fa-star" name="star_rating_5"></i>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="row with-borders">
+                    <div class="col with-borders">
+                        <input type="text" class="leave_review_input" name="review_title" id="review_title" placeholder="In a few words, how was your experience?">
+                    </div>
+                </div>
+                <div class="row with-borders">
+                    <div class="col with-borders">
+                        <input type="textarea" class="leave_review_input" name="review_body" id="review_body" placeholdeer="Tell us more">
+                    </div>
+                </div>
+                <div class="row with-borders">
+                    <div class="col with-borders">
+                        <button type="submit" class="btn" id="leave_review_btn">Submit Review</button>
+                    </div>
+                </div>                        
+            </form>
+            </p>
+            {% endif %}
+            {% endfor %}
         </div>
-        </p>
-        {% endif %}
-        {% endfor %}
     </div>
 </div>
 
@@ -77,8 +96,9 @@
 
 
 
-{% endblock %}
 
-{% block postloadjs %}
-<script src="{% static 'accounts/js/script.js' %}"></script>
-{% endblock %}
+        {% endblock %}
+
+        {% block postloadjs %}
+        <script src="{% static 'accounts/js/script.js' %}"></script>
+        {% endblock %}

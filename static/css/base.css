@@ -225,6 +225,10 @@ div.sticky-element {
     display: none;
 }
 
+.leave_review_input {
+    width: 100%;
+}
+
 
 
 .fa-solid fa-star:focus {

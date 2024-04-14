@@ -106,15 +106,23 @@ def order_history(request, order_number):
 def leave_review(request, order_number):
     if request.method == 'POST':
         order = get_object_or_404(Orders, order_number=order_number)
-        for i in range(1, 6):
-            if f"star_rating_{i}" in request.POST:
-                selected_rating = i
-                print(f"User selected a rating of {selected_rating} stars")                
-                break          
+        #for i in range(1, 6):
+            #if f"star_rating_{i}" in request.POST:
+               #selected_rating = i
+                #print(f"User selected a rating of {selected_rating} stars")                
+                #break
+        print(request.POST)  # Inspect the entire POST data
+        print(request.POST.get('selected_rating'))  # View the specific value
+   
+               
         try:
-            product_id = request.POST.get('product_id') 
+            selected_rating = int(request.POST.get('selected_rating', 0))  # Get the rating
+            product_id = request.POST.get('product_id')
+            review_title = request.POST.get('review_title')
+            review_body = request.POST.get('review_body')
+            print(f" Review title is {review_title} and review_body is {review_body} and stars is {selected_rating}")
             product = get_object_or_404(Products, pk=product_id)
-            add_review = Reviews(order=order, stars=selected_rating, product=product) 
+            add_review = Reviews(order=order, stars=selected_rating, product=product, review_title=review_title, review_body=review_body) 
             add_review.save()  # Save the correct object 
             print(f"Your review was created")
         except Exception as e:  
