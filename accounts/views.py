@@ -1,40 +1,3 @@
-"""
-
-
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .models import UserProfile
-
-
-@login_required
-def showOrders(request):
-    profile = get_object_or_404(UserProfile, user=request.user)
-    #user_details = {
-        #'user': profile.user.username,  
-        #'user' : profile.user,
-        #'username': profile.user.username,
-        #'default_phone_number': profile.default_phone_number,    
-        #'default_postcode': profile.default_postcode,
-        #'default_town_or_city': profile.default_town_or_city, 
-        #'default_street_address1': profile.default_street_address1,
-        #'default_street_address2': profile.default_street_address2,
-        #'default_county': profile.default_county,   
-        # 
-        # #}
-    orders = profile.orders.all()
-
-    template = 'account/profile.html'
-    context = { 
-        #'user_details': user_details,    
-        'orders': orders,
-        'profile': profile,              
-    }
-    print(f"The order details is {profile}")
-   
-
-    return render(request, template, context)
-"""
-
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -105,27 +68,21 @@ def order_history(request, order_number):
 @login_required
 def leave_review(request, order_number):
     if request.method == 'POST':
-        order = get_object_or_404(Orders, order_number=order_number)
-        #for i in range(1, 6):
-            #if f"star_rating_{i}" in request.POST:
-               #selected_rating = i
-                #print(f"User selected a rating of {selected_rating} stars")                
-                #break
-        print(request.POST)  # Inspect the entire POST data
-        print(request.POST.get('selected_rating'))  # View the specific value
-   
-               
+       
+        order = get_object_or_404(Orders, order_number=order_number)  
+        if not request.POST.get('review_title') or not request.POST.get('review_body') or not request.POST.get('selected_rating', 0):
+                messages.error(request,
+                           ('Please fill out all fields'))
+                return redirect(request.META.get('HTTP_REFERER'))      
         try:
             selected_rating = int(request.POST.get('selected_rating', 0))  # Get the rating
-            product_id = request.POST.get('product_id')
+            #product_id = request.POST.get('product_id')
             review_title = request.POST.get('review_title')
             review_body = request.POST.get('review_body')
-            print(f" Review title is {review_title} and review_body is {review_body} and stars is {selected_rating}")
-            product = get_object_or_404(Products, pk=product_id)
-            add_review = Reviews(order=order, stars=selected_rating, product=product, review_title=review_title, review_body=review_body) 
+            #product = get_object_or_404(Products, pk=product_id)
+            add_review = Reviews(order=order, stars=selected_rating, review_title=review_title, review_body=review_body) 
             add_review.save()  # Save the correct object 
             print(f"Your review was created")
         except Exception as e:  
             print(f"There was an error while saving your review: {e}")
-
         return redirect(request.META.get('HTTP_REFERER'))

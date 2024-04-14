@@ -15,6 +15,20 @@
     </div>
     <div class="row previous-orders-row">
         <div class="col previous-orders-col">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+    <div class="row previous-orders-row">
+        <div class="col previous-orders-col">
             <p>
                 <span>Date of order:</span>
                 <span>{{order.date}}</span>
@@ -41,13 +55,18 @@
                 <span>Total</span>
                 <span>{{item.order_total}}</span>
             </p>
-            {% if reviews %}
-            {% for review in reviews %}
-            {{ review.review_title }} <br>
-            {{ review.review_body }} <br>
-            {{ review.stars }}
             {% endfor %}
+
+
+
+            {% if reviews %}
+                {% for review in reviews %}
+                    {{ review.review_title }} <br>
+                    {{ review.review_body }} <br>
+                    {{ review.stars }}
+                {% endfor %}
             {% else %}
+
             <form method="POST" action="{% url 'leave_review' order.order_number %}" title="{{ order.order_number }}">
                 {% csrf_token %}
                 <div class="row with-borders">
@@ -55,36 +74,37 @@
                         <div class="rating-box">
                             <header>How was your experience?</header>
                             <div class="stars">
-                                <input type="hidden" id="product_id" name="product_id" value="{{ item.product.product_id }}">
-                                <input type="hidden" id="selected_rating" name="selected_rating"> 
-                                <i class="fa-solid fa-star" name="star_rating_1"></i>
-                                <i class="fa-solid fa-star" name="star_rating_2"></i>
-                                <i class="fa-solid fa-star" name="star_rating_3"></i>
-                                <i class="fa-solid fa-star" name="star_rating_4"></i>
-                                <i class="fa-solid fa-star" name="star_rating_5"></i>
+                                <input type="hidden" id="order_number" name="order_number"
+                                    value="{{ order.order_number }}">
+                                <input type="hidden" id="selected_rating" name="selected_rating">
+                                <i class="fa-solid fa-star star_rating_1" name="star_rating_1"></i>
+                                <i class="fa-solid fa-star star_rating_2" name="star_rating_2"></i>
+                                <i class="fa-solid fa-star star_rating_3" name="star_rating_3"></i>
+                                <i class="fa-solid fa-star star_rating_4" name="star_rating_4"></i>
+                                <i class="fa-solid fa-star star_rating_5" name="star_rating_5"></i>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row with-borders">
                     <div class="col with-borders">
-                        <input type="text" class="leave_review_input" name="review_title" id="review_title" placeholder="In a few words, how was your experience?">
+                        <input type="text" class="leave_review_input" name="review_title" id="review_title"
+                            placeholder="In a few words, how was your experience?" required>
                     </div>
                 </div>
                 <div class="row with-borders">
                     <div class="col with-borders">
-                        <input type="textarea" class="leave_review_input" name="review_body" id="review_body" placeholdeer="Tell us more">
+                        <input type="textarea" class="leave_review_input" name="review_body" id="review_body"
+                            placeholdeer="Tell us more" required>
                     </div>
                 </div>
                 <div class="row with-borders">
                     <div class="col with-borders">
                         <button type="submit" class="btn" id="leave_review_btn">Submit Review</button>
                     </div>
-                </div>                        
+                </div>
             </form>
-            </p>
             {% endif %}
-            {% endfor %}
         </div>
     </div>
 </div>
@@ -97,8 +117,8 @@
 
 
 
-        {% endblock %}
+{% endblock %}
 
-        {% block postloadjs %}
-        <script src="{% static 'accounts/js/script.js' %}"></script>
-        {% endblock %}
+{% block postloadjs %}
+<script src="{% static 'accounts/js/script.js' %}"></script>
+{% endblock %}

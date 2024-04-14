@@ -60,7 +60,7 @@ class OrderLineItem(models.Model):
 
 class Reviews(models.Model):
     order = models.ForeignKey(Orders, null=False, blank=False, on_delete=models.CASCADE, related_name='reviews')
-    product = models.ForeignKey(Products, null=False, blank=False, on_delete=models.CASCADE)
+    #product = models.ForeignKey(Products, null=False, blank=False, on_delete=models.CASCADE)
     review_title = models.CharField(max_length=240, null=False, blank=False, default='')
     review_body = models.TextField(null=False, blank=False, default='')
     stars = models.SmallIntegerField(null=True, blank=True)

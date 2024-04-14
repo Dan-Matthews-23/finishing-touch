@@ -24,16 +24,27 @@ const stars = document.querySelectorAll(".stars i");
 
 // Loop through the "stars" NodeList
 stars.forEach((star, index1) => {
-    // Add an event listener that runs a function when the "click" event is triggered
+    // Add the click event listener (this part stays the same)
     star.addEventListener("click", () => {
-        // Loop through the "stars" NodeList Again
         stars.forEach((star, index2) => {
-            // Add the "active" class to the clicked star and any stars with a lower index
-            // and remove the "active" class from any stars with a higher index
             index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
-            // Set the value of a hidden field with the selected rating
             document.getElementById("selected_rating").value = index1 + 1;
         });
     });
+
+    // Add the mouseover event listener for highlighting
+    star.addEventListener("mouseover", () => {
+        stars.forEach((star, index2) => {
+            index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
+        });
+    });
+
+    // Add the mouseout event listener to remove highlighting
+    star.addEventListener("mouseout", () => {
+        stars.forEach((star) => {
+            star.classList.remove("active"); // Remove 'active' from all on mouseout
+        });
+    });
 });
+
 

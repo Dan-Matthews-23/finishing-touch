@@ -30,7 +30,7 @@ class ReviewsAdmin(admin.ModelAdmin):
     model = Reviews
     list_display = (
         'order',
-        'product',
+        #'product',
         'stars',
         'review_title',
         'review_body',
