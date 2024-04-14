@@ -19,32 +19,27 @@ for (i = 0; i < coll.length; i++) {
 // This code was adapted from https://www.codingnepalweb.com/star-rating-html-css-javascript-2/ //
 
 
-// Select all elements with the "i" tag and store them in a NodeList called "stars"
-const stars = document.querySelectorAll(".stars i");
+const starRating1 = document.getElementById("star_rating_1");
+const starRating2 = document.getElementById("star_rating_2");
+const starRating3 = document.getElementById("star_rating_3");
+const starRating4 = document.getElementById("star_rating_4");
+const starRating5 = document.getElementById("star_rating_5");
 
-// Loop through the "stars" NodeList
-stars.forEach((star, index1) => {
-    // Add the click event listener (this part stays the same)
+const stars = [starRating1, starRating2, starRating3, starRating4, starRating5];
+
+stars.forEach((star, index) => {
     star.addEventListener("click", () => {
-        stars.forEach((star, index2) => {
-            index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
-            document.getElementById("selected_rating").value = index1 + 1;
-        });
-    });
+        // Reset all stars (remove active class)
+        stars.forEach(s => s.classList.remove("active"));
 
-    // Add the mouseover event listener for highlighting
-    star.addEventListener("mouseover", () => {
-        stars.forEach((star, index2) => {
-            index1 >= index2 ? star.classList.add("active") : star.classList.remove("active");
-        });
-    });
+        // Activate stars up to the clicked one
+        for (let i = 0; i <= index; i++) {
+            stars[i].classList.add("active");
+        }
 
-    // Add the mouseout event listener to remove highlighting
-    star.addEventListener("mouseout", () => {
-        stars.forEach((star) => {
-            star.classList.remove("active"); // Remove 'active' from all on mouseout
-        });
+        document.getElementById("selected_rating").value = index + 1;
     });
 });
+
 
 

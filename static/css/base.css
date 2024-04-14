@@ -211,13 +211,13 @@ div.sticky-element {
 
 
 
-
 .stars i:focus {
     box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
     /* Yellow-ish glow */
 }
 
-.stars i.active {
+.stars i.active,
+.stars i:hover {
     color: yellow;
     background: none;
 }
