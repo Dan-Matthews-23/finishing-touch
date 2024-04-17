@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile
+from accounts.models import UserProfile
 
 
 
