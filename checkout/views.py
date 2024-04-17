@@ -160,6 +160,12 @@ def process_checkout(request):
         total = sum(float(item['price']) for item in basket)
         stripe_total = round(total * 100)
         stripe.api_key = stripe_secret_key
+
+
+
+        
+
+
         
         
         # Attempt to assign final Stripe variables

@@ -9,6 +9,15 @@ body {
 }
 
 
+#profile-update-form,
+#stripe-container {
+    padding: 10px;
+    margin: auto;
+    height: fit-content;
+    width: 80%;
+}
+
+
 
 .active,
 .collapsible:hover,
