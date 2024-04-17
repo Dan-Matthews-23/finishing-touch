@@ -13,7 +13,7 @@ from products.models import Products
 from accounts.models import UserProfile
 from basket.forms import BasketForm
 
-import json
+import json, jsonify
 
 
 
@@ -99,17 +99,28 @@ def process_checkout(request):
 
     current_bag = basket
     total = sum(float(item['price']) for item in basket)
-    #total = 20
+   
     stripe_total = round(total * 100)
     stripe.api_key = stripe_secret_key
-    intent = stripe.PaymentIntent.create(
-        amount=stripe_total,
-        currency=settings.STRIPE_CURRENCY,
-    )
+    
+    try:
+        intent = stripe.PaymentIntent.create(
+            amount=total,
+            currency='gbp',           
+            automatic_payment_methods={
+                    'enabled': True,
+                },
+            )
+        return jsonify({
+            'clientSecret': intent['client_secret']
+        })
+    except Exception as e:
+        return jsonify(error=str(e)), 403
+
+    if __name__ == '__main__':
+        app.run(port=4242)  
     print(intent)
-    request.session['order_number'] = order.order_number
-       
-       
+    request.session['order_number'] = order.order_number      
 
     if not stripe_public_key:
         messages.warning(request, ('Stripe public key is missing. '
@@ -132,28 +143,6 @@ def process_checkout(request):
 
 
 
-
-"""
-if request.user.is_authenticated:
-            try:
-                profile = UserProfile.objects.get(user=request.user)
-                order_form = OrderForm(initial={
-                    'full_name': profile.user.get_full_name(),
-                    'email': profile.user.email,
-                    'phone_number': profile.default_phone_number,
-                    'country': profile.default_country,
-                    'postcode': profile.default_postcode,
-                    'town_or_city': profile.default_town_or_city,
-                    'street_address1': profile.default_street_address1,
-                    'street_address2': profile.default_street_address2,
-                    'county': profile.default_county,
-                })
-            except UserProfile.DoesNotExist:
-                order_form = OrderForm()
-        else:
-            order_form = OrderForm()
-
-"""
 
 
 

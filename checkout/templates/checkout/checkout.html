@@ -10,106 +10,30 @@
 {% block content %}
 
 
-<!--
-    THINK ABOUT USING THE PAYMENT LOADING FORM 
-    FROM HERE https://learn.codeinstitute.net/courses/course-v1:CodeInstitute+FSF_102+Q1_2020/courseware/4201818c00aa4ba3a0dae243725f6e32/90cda137ebaa461894ba8c89cd83291a/
 
-    AND HERE ARE THE DOCS
-
-    https://docs.stripe.com/connect/creating-a-payments-page?platform=web&ui=elements&locale=en-GB
-
-
--->
-<section id="payment-selection">
-    <form method="POST" action="{% url 'checkout_success' %}" >
-        {% csrf_token %}
-        <div class="container-fluid align-center with-borders" id="order-details-container">
-            <div class="row  product-row align-center ">
-                <div class="col  align-center product-col">
-                    <div class="card ">
-                        <div class="card-body ">
+<!-- Display a payment form -->
+<form id="payment-form">
+    <div id="payment-element">
+        <!--Stripe.js injects the Payment Element-->
+    </div>
+    <button id="submit">
+        <div class="spinner hidden" id="spinner"></div>
+        <span id="button-text">Pay now</span>
+    </button>
+    <div id="payment-message" class="hidden"></div>
+</form>
 
 
-                            <!--form-->
-                            <div class="row ">
-                                <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <p>Your Details</p>
-                                    <p>
-                                        <span>Name:</span>
-                                        <span>{{defaults.full_name}}</span>
 
-                                    </p>
-                                    <p>
-                                        <span>Email:</span>
-                                        <span>{{defaults.email}}</span>
 
-                                    </p>
-                                    <p>
-                                        <span>Contact Number:</span>
-                                        <span>{{defaults.phone_number}}</span>
+                           
+                            
+                            
 
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row ">
-                                <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <p>Order Details</p>
-                                    {% for i in order_items %}
-                                    <p>
-                                        <span>{{i.product_name}} (x{{i.quantity}})</span>
-                                        <span>£{{i.sub_price}}</span>
-                                    </p>
-                                    {% endfor %}
-                                    <p>
-                                        <span>Total: £{{request.session.total_price}}:</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row ">
-                                <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <p>Delivery Address</p>
-                                    <p>{{defaults.street_address1}}</p>
-                                    <p>{{defaults.street_address2}}</p>
-                                    <p>{{defaults.town_or_city}}</p>
-                                    <p>{{defaults.county}} </p>
-                                    <p>{{defaults.postcode}}</p>
-                                </div>
-                            </div>
+                       
 
-                            <br><br>
+                            
 
-                            <div class="row with-borders align-center">
-                                <div class="col with-borders align-center">
-                                    <h5 class="card-title">Payment Method</h5>
-                                </div>
-                            </div>
-                            <div class="row with-borders align-center">
-                                <div class="col with-borders col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <!--<button type="button" class="collapsible bold">Pay with card</button>-->
-                                    <fieldset class="px-3">
-                                        <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
-                                        <!-- A Stripe card element will go here -->
-                                        <div class="mb-3" id="card-element"></div>
-                                        <!-- Used to display form errors -->
-                                        <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                                        <!-- Pass the client secret to the view so we can get the payment intent id -->
-                                        <input type="hidden" value="{{ client_secret }}" name="client_secret">
-                                    </fieldset>
-                                </div>
-                            </div>
-                            <div class="row with-borders align-center">
-                                <div class="col with-borders col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <button class="btn orderBtn" id="payment">Go to payment</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</section>
 
 
 
