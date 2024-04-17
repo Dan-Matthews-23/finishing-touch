@@ -5,99 +5,19 @@
 
 
 
-<!--This is the section that holds the secondary navigation where users can navigate on the same page-->
-<section class="menu-navigation">
-    <div class="container-fluid align-center card product-container" id="menu-navigation">
-        <div class="row ">
-            <div class="col ">
-                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#specials">MegaBytes Specials</a>
-                </h3>
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col ">
-                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#sundries">Sundries</a></h3>
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col ">
-                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#extras">Extras</a></h3>
-            </div>
-        </div>
-
-    </div>
-</section>
-<!--End of secondary navigation section-->
-
-
-<form method="POST" action="{% url 'process_checkout' %}">
-    {% csrf_token %}
-    <!--This is the order sumary section that holds details of the current order-->
-    <section class="order-details">
-        <div class="container-fluid align-center card product-container" id="order-details">
-            <div class="row ">
-                <div class="col ">
-                    <div class="row  align-center">
-                        <div class="col  align-center">
-                            <h5 class="card-title">Order Details</h5>
-                        </div>
-                    </div>
-                    {% for item in basket %}
-                    <div class="row  align-center">
-                        <div class="col  col-sm-12 col-md-12 col-lg-9 col-xl-9">{{item.product_name}} (X)
-                            {{item.product_quantity}}</div>
-                        <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{item.price}}</div>
-                    </div>
-                    <div class="row  align-center">
-                        <div class="col  col-sm-12 col-md-12 col-lg-9 col-xl-9">Total Price: </div>
-                        <div class="col  col-sm-12 col-md-12 col-lg-3 col-xl-3">£{{item.total_price}}</div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="col  col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xm-2 col-xxl-2" id="remove-item-div">
-            </div>
-        </div>
-        </div>
-    </section>
-    <!--End of order summary section-->
 
 
 
 
 
-    <!--This is the product selection section-->
-    
-</form>
 
-<section class="customer-details">
-    <div class="container-fluid align-center card product-container">
-        <div class="row  product-row align-center ">
-            <div class="col  align-center product-col">
-                <div class="card ">
-                    <div class="card-body ">
-                        <div class="col-12 col-lg-6">
-                            <p class="text-muted">Default Delivery Information</p>
-                            <form class="mt-3" action="{% url 'process_checkout' %}" method="POST" id="profile-update-form">
-                                {% csrf_token %}
-                                {{ form|crispy }}
-                                <button type="submit" id="checkout" class="btn orderBtn">Go to payment</button>
-                                <input type="hidden" value="{{ client_secret }}" name="client_secret">
-                            </form>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
+
+
 
 <!--End of product selection section-->
 {% endblock %}
 
 {% block postloadjs %}
-{{ block.super }}
-{{ stripe_public_key|json_script:"id_stripe_public_key" }}
-{{ client_secret|json_script:"id_client_secret" }}
+
 {% endblock %}

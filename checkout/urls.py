@@ -6,7 +6,9 @@ from django.conf.urls.static import static
 from .webhooks import webhook
 
 urlpatterns = [
-    #path('', views.checkout, name='checkout'),
+    path('render_basket_form/', views.render_basket_form, name='render_basket_form'),
+    #path('process_order/', views.process_order, name='process_order'),
+    #path('create_payment/', views.create_payment, name='create_payment'),
     path('process_checkout/', views.process_checkout, name='process_checkout'),
     path('checkout_success/', views.checkout_success, name='checkout_success'),
     #path('create_placeholder/', views.create_placeholder, name='create_placeholder'),
