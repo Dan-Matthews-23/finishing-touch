@@ -13,7 +13,7 @@ from products.models import Products
 from accounts.models import UserProfile
 from basket.forms import BasketForm
 
-import json, jsonify
+import json
 
 
 
@@ -39,7 +39,10 @@ def process_checkout(request):
         }
         profile = get_object_or_404(UserProfile, user=request.user)
         form = BasketForm(request.POST, instance=profile)
-        if form.is_valid():            
+        if not form.is_valid():
+            messages.error(request, ('There was an error with your form. '
+                                     'Please double check your information.'))
+        else:            
             form.save()     
             stripe_id = request.POST.get('client_secret').split('_secret')[0]
             form.stripe_stripe_id = stripe_id
@@ -55,6 +58,7 @@ def process_checkout(request):
                 county = form.cleaned_data['county'],
                 stripe_id =  stripe_id, 
             )
+            
             order.save()
             order_total = 0            
             for item in basket:                
@@ -87,58 +91,66 @@ def process_checkout(request):
                         "Please call us for assistance!")
                     )
                     form.delete()
-        else:
-            messages.error(request, ('There was an error with your form. '
-                                     'Please double check your information.'))
-    else:
-        basket = request.session.get('basket', {})
-        if not basket:
-            messages.error(request,
-                           "There's nothing in your bag at the moment")
-            return redirect(reverse('products'))
+            request.session['order_number'] = order.order_number
+            total = sum(float(item['price']) for item in basket)
+            form_validated = True
+            order_created = True
+            
+            print(f"Order number is {request.session['order_number']}")
+            create_payment(request, form_validated, order_created, total)    
+        
+        if not stripe_public_key:
+            messages.warning(request, ('Stripe public key is missing. '
+                                   'Did you forget to set it in '
+                                   'your environment?'))
+    
+    template = 'checkout/checkout.html'
+    context = {
+        #'order_form': order_form,
+        'stripe_public_key': stripe_public_key,
+        #'client_secret': intent.client_secret,
+        }
+    return render(request, template, context)      
+    
 
+    
+
+    
+
+def create_payment(request, form_validated, order_created, total):
+
+    
+    
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
+
+
+    basket = request.session.get('basket', {})
+    order_number = order_number = request.session['order_number']
     current_bag = basket
     total = sum(float(item['price']) for item in basket)
-   
+    #total = 20
     stripe_total = round(total * 100)
     stripe.api_key = stripe_secret_key
     
-    try:
-        intent = stripe.PaymentIntent.create(
-            amount=total,
-            currency='gbp',           
-            automatic_payment_methods={
-                    'enabled': True,
-                },
+    intent = stripe.PaymentIntent.create(
+                amount=stripe_total,
+                currency=settings.STRIPE_CURRENCY,
             )
-        return jsonify({
-            'clientSecret': intent['client_secret']
-        })
-    except Exception as e:
-        return jsonify(error=str(e)), 403
-
-    if __name__ == '__main__':
-        app.run(port=4242)  
-    print(intent)
-    request.session['order_number'] = order.order_number      
-
-    if not stripe_public_key:
-        messages.warning(request, ('Stripe public key is missing. '
-                                   'Did you forget to set it in '
-                                   'your environment?'))
-
+            #print(intent)
     template = 'checkout/checkout.html'
     context = {
         #'order_form': order_form,
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
     }
-
     return render(request, template, context)
 
-
+    
+ 
 
  
+
 
 
 
@@ -231,5 +243,3 @@ def cache_checkout_data(request):
     except Exception as e:
         messages.error(request, 'There was an error while processing your payment. Please try again in a few minutes.')
         return HttpResponse(content=e, status=400)
-
-
