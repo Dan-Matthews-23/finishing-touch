@@ -174,6 +174,8 @@ def process_checkout(request):
             'stripe_public_key': stripe_public_key,
             'client_secret': intent.client_secret,
             }
+            print(f" Stripe Public: {stripe_public_key}")
+            print(f" Stripe Secret: {intent.client_secret}")
             return render(request, template, context)
         except MultiValueDictKeyError as e:
             # Handle the error, potentially redirect with an error message
@@ -188,66 +190,6 @@ def process_checkout(request):
     }
     return render(request, template, context)
                    
-
-
-
-
-
-
-        
-        
-        
-
-            
-                
-        
-        
-
-           
-                        
-            
-                        
-                
-            
-            
-            
-            
-            
-            
-         
-            
-            
-            
-         
-            
-        
-        
-  
-
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def checkout_success(request, order_number):
@@ -274,18 +216,30 @@ def checkout_success(request, order_number):
 
 
 
+import logging
+
 @require_POST
 def cache_checkout_data(request):
+    logger = logging.getLogger(__name__)  # Get a logger for this module
+
     try:
         pid = request.POST.get('client_secret').split('_secret')[0]
+        print(f"PID is {pid}")
         stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        logger.debug("Payment Intent ID: %s", pid)
+
         stripe.PaymentIntent.modify(pid, metadata={
             'basket': json.dumps(request.session.get('basket', {})),
             'save_info': request.POST.get('save_info'),
             'username': request.user,
         })
+
+        logger.info("Payment Intent metadata updated successfully")
         return HttpResponse(status=200)
+
     except Exception as e:
+        logger.error("Error processing payment: %s", e) 
         messages.error(request, 'Sorry, your payment cannot be \
-            processed right now. Please try again later.')
+                    processed right now. Please try again later.')
         return HttpResponse(content=e, status=400)

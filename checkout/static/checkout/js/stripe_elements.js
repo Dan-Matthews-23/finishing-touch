@@ -6,7 +6,7 @@
     https://stripe.com/docs/stripe-js
 */
 console.log("Worked")
-var stripePublicKey = 'pk_test_51OqHDoJECgN7JZCtAwNm2Vjb1Hvfn7EVKPwVFmsV7LCOJSolHJuAuYE4SfBAIoDgDkb98DVRVRm2L7dQRgpUotrR00gaa7Vnmp'//$('#id_stripe_public_key').text().slice(1, -1);
+var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
 var clientSecret = $('#id_client_secret').text().slice(1, -1);
 var stripe = Stripe(stripePublicKey);
 var elements = stripe.elements();
