@@ -5,9 +5,8 @@
     CSS from here: 
     https://stripe.com/docs/stripe-js
 */
-console.log("Worked")
+
 var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
-console.log('public', stripePublicKey)
 var clientSecret = $('#id_client_secret').text().slice(1, -1);
 var stripe = Stripe(stripePublicKey);
 var elements = stripe.elements();
@@ -63,7 +62,6 @@ form.addEventListener('submit', function (ev) {
         'client_secret': clientSecret,
         'save_info': saveInfo,
     };
-
     var url = '/checkout/cache_checkout_data/';
 
     $.post(url, postData).done(function () {
