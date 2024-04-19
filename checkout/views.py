@@ -11,6 +11,14 @@ from accounts.models import UserProfile
 from accounts.forms import UserProfileForm
 
 
+import logging
+import json
+import stripe
+from django.conf import settings
+from django.http import JsonResponse  # For more structured error responses
+
+
+
 import stripe
 import json
 
@@ -162,15 +170,8 @@ def process_checkout(request):
 
 
 
-import logging
-import json
-import stripe
-from django.conf import settings
-from django.http import HttpResponse, JsonResponse  # For more structured error responses
-from django.contrib import messages
 
 logger = logging.getLogger(__name__)  # Set up a logger for this function
-
 @require_POST
 def cache_checkout_data(request):
     try:
@@ -178,26 +179,22 @@ def cache_checkout_data(request):
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
         # Log the basket data for debugging
-        logger.debug("Basket data: %s", request.session.get('basket', {}))
+        logger.debug("Basket data: %s", request.session.get('basket', {})) 
 
         stripe.PaymentIntent.modify(pid, metadata={
             'basket': json.dumps(request.session.get('basket', {})),
             'save_info': request.POST.get('save_info'),
             'username': request.user,  # Assuming request.user is a valid string
         })
-
         return HttpResponse(status=200)
-
     except stripe.error.StripeError as e:  # Catch specific Stripe errors
         logger.error("Stripe error: %s", e)
         messages.error(request, 'There was a problem with your payment. Please check your card details or try again later.')
         return JsonResponse({'error': str(e)}, status=400)
-
     except KeyError:  # Catch potential error if 'client_secret' is not found
         logger.error("KeyError: 'client_secret' not found in POST data")
         messages.error(request, 'There was a problem processing your payment. Please refresh the page and try again.')
         return JsonResponse({'error': 'Invalid payment data'}, status=400)
-
     except Exception as e:  # Catch-all for other unexpected errors
         logger.exception("Unexpected error: %s", e)  # Log the full traceback
         messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
