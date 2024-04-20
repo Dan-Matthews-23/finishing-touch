@@ -3,7 +3,7 @@ from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
 
-from .forms import OrderForm
+from basket.forms import OrderForm
 from .models import Orders, OrderLineItem
 
 from products.models import Products
@@ -59,7 +59,7 @@ def process_checkout(request):
     stripe_secret_key = settings.STRIPE_SECRET_KEY
     print(f" Secret key is {stripe_secret_key}")
 
-    """I THINK IT'S NOT WORKING BECAUSE PROCESS_CHECKOUT IS NEVER RENDERED BEFORE CACHE. THIS IS BEACUSE I HAVE THE RENDER VIEW"""
+  
 
     if request.method == 'POST':
         print("POSTED")
@@ -69,8 +69,7 @@ def process_checkout(request):
         form_data = {
             'full_name': request.POST['full_name'],
             'email': request.POST['email'],
-            'phone_number': request.POST['phone_number'],
-            'country': request.POST['country'],
+            'phone_number': request.POST['phone_number'],            
             'postcode': request.POST['postcode'],
             'town_or_city': request.POST['town_or_city'],
             'street_address1': request.POST['street_address1'],
@@ -85,7 +84,7 @@ def process_checkout(request):
             order.stripe_pid = pid
             order.original_basket = json.dumps(basket)
             order.save()
-            for item_id, item_data in basket():
+            for item_id, item_data in basket:
                 try:
                     product = Products.objects.get(product_id=item_id)
                     if isinstance(item_data, int):

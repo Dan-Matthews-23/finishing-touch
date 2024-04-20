@@ -8,6 +8,27 @@
 
 
 
+<form action="{% url 'process_checkout' %}" method="POST" id="payment-form">
+    {% csrf_token %}
+    {{ order_form.full_name | as_crispy_field }}
+    {{ order_form.email | as_crispy_field }}
+    {{ order_form.phone_number | as_crispy_field }}
+    {{ order_form.postcode | as_crispy_field }}
+    {{ order_form.town_or_city | as_crispy_field }}
+    {{ order_form.street_address1 | as_crispy_field }}
+    {{ order_form.street_address2 | as_crispy_field }}
+    {{ order_form.county | as_crispy_field }}
+    
+    
+    <input type="hidden" value="{{ client_secret }}" name="client_secret">
+        <button id="submit-button" class="btn btn-black rounded-0">
+            <span class="font-weight-bold">Complete Order</span>
+            <span class="icon">
+                <i class="fas fa-lock"></i>
+            </span>
+        </button>
+    </form>
+
 
 
 

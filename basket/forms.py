@@ -55,7 +55,7 @@ class OrderForm(forms.ModelForm):
 
 
 from django import forms
-from .models import Orders
+from checkout.models import Orders
 
 
 class OrderForm(forms.ModelForm):
