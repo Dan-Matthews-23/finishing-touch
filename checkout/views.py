@@ -1,4 +1,6 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import (
+    render, redirect, reverse, get_object_or_404, HttpResponse
+)
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.conf import settings
@@ -11,151 +13,138 @@ from accounts.models import UserProfile
 from accounts.forms import UserProfileForm
 
 
+import stripe
+import json
 import logging
-import json
-import stripe
-from django.conf import settings
-from django.http import JsonResponse  # For more structured error responses
+import uuid
+logger = logging.getLogger(__name__)  # Uses the current module's name
 
 
 
-import stripe
-import json
-"""
-def render_basket_form(request): 
-    stripe_public_key = settings.STRIPE_PUBLIC_KEY
-    stripe_secret_key = settings.STRIPE_SECRET_KEY   
-    order_form = OrderForm()   
-    if request.user.is_authenticated:
-        try:
-            profile = UserProfile.objects.get(user=request.user)
-            order_form = OrderForm(initial={
-                'full_name': profile.full_name,
-                'email': profile.user.email,
-                'phone_number': profile.phone_number,                
-                'postcode': profile.postcode,
-                'town_or_city': profile.town_or_city,
-                'street_address1': profile.street_address1,
-                'street_address2': profile.street_address2,
-                'county': profile.county,
-                })
-        except UserProfile.DoesNotExist:
-                order_form = OrderForm()
-    else:
-            order_form = OrderForm()           
-    
-    template = 'checkout/checkout.html'
-    context = {
-            'order_form': order_form,
-            'stripe_public_key':stripe_public_key,
-            'client_secret':stripe_secret_key,               
-            }                   
-    return render(request, template, context)
-"""
+@require_POST
+def cache_checkout_data(request):
+    try:
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(pid, metadata={
+            'bag': json.dumps(request.session.get('bag', {})),
+            'save_info': request.POST.get('save_info'),
+            'username': request.user,
+        })
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, ('Sorry, your payment cannot be '
+                                 'processed right now. Please try '
+                                 'again later.'))
+        return HttpResponse(content=e, status=400)
+
 
 
 def process_checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-    print(f" Secret key is {stripe_secret_key}")
-
-  
-
+    basket_form = OrderForm()
+    
     if request.method == 'POST':
-        print("POSTED")
-        print(request.POST)  # Inspect the raw POST data
-        basket = request.session.get('basket', {})
-
+        form = OrderForm(request.POST)
         form_data = {
-            'full_name': request.POST['full_name'],
-            'email': request.POST['email'],
-            'phone_number': request.POST['phone_number'],            
-            'postcode': request.POST['postcode'],
-            'town_or_city': request.POST['town_or_city'],
-            'street_address1': request.POST['street_address1'],
-            'street_address2': request.POST['street_address2'],
-            'county': request.POST['county'],
-        }
-
-        order_form = OrderForm(form_data)
-        if order_form.is_valid():
-            order = order_form.save(commit=False)
-            pid = request.POST.get('client_secret').split('_secret')[0]
-            order.stripe_pid = pid
-            order.original_basket = json.dumps(basket)
-            order.save()
-            for item_id, item_data in basket:
-                try:
-                    product = Products.objects.get(product_id=item_id)
-                    if isinstance(item_data, int):
-                        order_line_item = OrderLineItem(
-                            order=order,
-                            product=product,
-                            quantity=item_data,
-                        )
-                        order_line_item.save()
-                    else:
-                        for size, quantity in item_data['items_by_size'].items():
-                            order_line_item = OrderLineItem(
+                'full_name': request.POST['full_name'],
+                'email': request.POST['email'],
+                'phone_number': request.POST['phone_number'],            
+                'postcode': request.POST['postcode'],
+                'town_or_city': request.POST['town_or_city'],
+                'street_address1': request.POST['street_address1'],
+                'street_address2': request.POST['street_address2'],
+                'county': request.POST['county'],                        
+                }
+        get_order_data = request.session.get('order_items')
+        if get_order_data:  
+            order_data = [] 
+            for product_id, product_details in get_order_data.items():                
+                get_product = Products.objects.get(product_id=product_id) 
+                order_item = {
+                            'product_id': int(product_id),  # Use the iterated product_id
+                            'product_quantity': int(product_details['quantity']),
+                            'price': float(product_details['cost']),
+                            'product_name':  get_product.product_name,            
+                        }
+                order_data.append(order_item)              
+            logger.debug(f"Received order_data: {order_data}")           
+            
+            if order_data is None or len(order_data) == 0:
+                logger.debug(f"Received order_data: {order_data}")
+                messages.error(request, "Your basket is empty.")
+                logger.info("Empty order data detected")                   
+                return redirect('prepacked_sandwiches')              
+            else:
+                order_number =  uuid.uuid4().hex.upper()
+                for order in order_data:
+                    order['order_number'] = order_number                                                         
+                request.session['basket'] = order_data
+                basket_session = request.session['basket']      
+        basket = request.session.get('basket', {})    
+        profile = get_object_or_404(UserProfile, user=request.user)
+        form = OrderForm(request.POST, instance=profile)
+        stripe_id = request.POST.get('client_secret').split('_secret')[0]
+        form.stripe_stripe_id = stripe_id
+        order_number=""
+        total = 0.00
+        order_total = 0 
+        order = Orders(
+                    user_profile=profile, 
+                    full_name=form_data['full_name'],
+                    email=form_data['email'],
+                    phone_number = form_data['phone_number'],
+                    postcode = form_data['postcode'],
+                    town_or_city = form_data['town_or_city'],
+                    street_address1 = form_data['street_address1'],
+                    street_address2 = form_data['street_address2'],
+                    county = form_data['county'],
+                    stripe_id =  stripe_id, 
+                )            
+        order.save()
+        request.session['order_number'] = order.order_number
+        order_number = request.session['order_number']    
+        for item in basket:
+            product = Products.objects.get(product_id=item['product_id'])
+            line_item_total = float(product.product_price) * int(item['product_quantity'])
+            order_total += line_item_total                        
+            order_line_item = OrderLineItem(
                                 order=order,
                                 product=product,
-                                quantity=quantity,
-                                product_size=size,
+                                quantity=item['product_quantity'],
+                                order_total=line_item_total 
                             )
-                            order_line_item.save()
-                except Product.DoesNotExist:
-                    messages.error(request, (
-                        "One of the products in your basket wasn't found in our database. "
-                        "Please call us for assistance!")
-                    )
-                    order.delete()
-                    return redirect(reverse('view_basket'))
-
-            # Save the info to the user's profile if all is well
-            request.session['save_info'] = 'save-info' in request.POST
-            return redirect(reverse('checkout_success', args=[order.order_number]))
-        else:
-            messages.error(request, 'There was an error with your form. \
-                Please double check your information.')
-    else:
-        basket = request.session.get('basket', {})
-        if not basket:
-            messages.error(request, "There's nothing in your basket at the moment")
-            return redirect(reverse('products'))
-
-        current_basket = basket_contents(request)
-        total = current_basket['grand_total']
-        stripe_total = round(total * 100)
-        stripe.api_key = stripe_secret_key
-        intent = stripe.PaymentIntent.create(
-            amount=stripe_total,
-            currency=settings.STRIPE_CURRENCY,
-        )
-        print(f" total is {total}")
-        print(f" stripe_total is {stripe_total}")
-        print(f" stripe.api_key is {stripe.api_key}")
-        print(f" intent is {intent}")
-
+            order_line_item.save()
+            order.order_total = order_total                        
+            order.save()
+            total = sum(float(item['price']) for item in basket)
+            stripe_total = round(total * 100)
+            stripe.api_key = stripe_secret_key
+            intent = stripe.PaymentIntent.create(
+                    amount=stripe_total,
+                    currency=settings.STRIPE_CURRENCY,
+                )
         
-
-    if not stripe_public_key:
-        messages.warning(request, 'Stripe public key is missing. \
-            Did you forget to set it in your environment?')
-    
-    print(f" order_form is {order_form}")
-    print(f" stripe_public_key is {stripe_public_key}")
-    print(f" client_secret is {client_secret}")
-    print(f" intent is {intent}")
-
-    template = 'checkout/checkout.html'
-    context = {
-        'order_form': order_form,
-        'stripe_public_key': stripe_public_key,
-        'client_secret': intent.client_secret,
-    }
-
-    return render(request, template, context)
-
+            template = 'checkout/checkout.html'
+            
+            context = {
+            'basket_form': basket_form,
+                'stripe_public_key': stripe_public_key,
+                'client_secret': intent.client_secret,    
+            }
+            #print(f" POST section client secret is {intent.stripe_secret_key}")
+            return render(request, template, context)
+    else:
+        template = 'checkout/checkout.html'
+       
+        context = {
+            'basket_form': basket_form,
+            'stripe_public_key': stripe_public_key,
+            'client_secret': intent.stripe_secret_key,    
+            }
+        print(f" GET section client secret is {intent.stripe_secret_key}")
+        return render(request, template, context)
 
 
 
@@ -187,7 +176,7 @@ def checkout_success(request, order_number):
     Handle successful checkouts
     """
     save_info = request.session.get('save_info')
-    order = get_object_or_404(Order, order_number=order_number)
+    order = get_object_or_404(Orders, order_number=order_number)
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
@@ -214,8 +203,8 @@ def checkout_success(request, order_number):
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
 
-    if 'basket' in request.session:
-        del request.session['basket']
+    if 'bag' in request.session:
+        del request.session['bag']
 
     template = 'checkout/order_confirmed.html'
     context = {
@@ -223,35 +212,3 @@ def checkout_success(request, order_number):
     }
 
     return render(request, template, context)
-
-logger = logging.getLogger(__name__)  # Set up a logger for this function
-@require_POST
-def cache_checkout_data(request):
-    try:
-        pid = request.POST.get('client_secret').split('_secret')[0]
-        print(f"pid is {pid}")
-
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        print(f"stripe.api_key is {stripe.api_key}")
-
-        # Log the basket data for debugging
-        logger.debug("Basket data: %s", request.session.get('basket', {})) 
-
-        stripe.PaymentIntent.modify(pid, metadata={
-            'basket': json.dumps(request.session.get('basket', {})),
-            'save_info': request.POST.get('save_info'),
-            'username': request.user,  # Assuming request.user is a valid string
-        })
-        return HttpResponse(status=200)
-    except stripe.error.StripeError as e:  # Catch specific Stripe errors
-        logger.error("Stripe error: %s", e)
-        messages.error(request, 'There was a problem with your payment. Please check your card details or try again later.')
-        return JsonResponse({'error': str(e)}, status=400)
-    except KeyError:  # Catch potential error if 'client_secret' is not found
-        logger.error("KeyError: 'client_secret' not found in POST data")
-        messages.error(request, 'There was a problem processing your payment. Please refresh the page and try again.')
-        return JsonResponse({'error': 'Invalid payment data'}, status=400)
-    except Exception as e:  # Catch-all for other unexpected errors
-        logger.exception("Unexpected error: %s", e)  # Log the full traceback
-        messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
-        return JsonResponse({'error': 'Internal server error'}, status=500)
