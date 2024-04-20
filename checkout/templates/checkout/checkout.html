@@ -64,26 +64,57 @@
             <form action="{% url 'process_checkout' %}" method="POST" id="payment-form">
                 {% csrf_token %}
                 <input type="hidden" value="{{ client_secret }}" name="client_secret">
-                <fieldset class="rounded px-3 mb-5">
-                    <legend class="fieldset-label small text-black px-2 w-auto">Details</legend>
-                                  
-                    
-                              
-
-
+                <p>
+                    <span>Name:</span>
+                    <span>{{ order_form.full_name | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>Email:</span>
+                    <span>{{ order_form.email | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>Contact Number:</span>
+                    <span>{{ order_form.phone_number | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>House/Apartment Number:</span>
+                    <span>{{ order_form.street_address1 | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>Street Address:</span>
+                    <span>{{ order_form.street_address2 | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>Town/City:</span>
+                    <span>{{ order_form.town_or_city | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>County:</span>
+                    <span>{{ order_form.county | as_crispy_field }}</span>
+                </p>
                 
+                <p>
+                    <span>Postcode:</span>
+                    <span>{{ order_form.postcode | as_crispy_field }}</span>
+                </p>
                 
-
                     
-                </fieldset>                
-                <fieldset class="px-3">
+                    
+                    
+                    
+                    
+                    
+                    
+                               
+                           
+                
                     <legend class="fieldset-label small text-black px-2 w-auto">Payment</legend>
                     <!-- A Stripe card element will go here -->
                     <div class="mb-3" id="card-element"></div>
 
                     <!-- Used to display form errors -->
                     <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                </fieldset>
+                
 
                 <div class="submit-button text-right mt-5 mb-2">
                     
@@ -119,4 +150,5 @@
     {{ client_secret|json_script:"id_client_secret" }}
 <script src="{% static 'checkout/js/stripe_elements.js' %}"></script>
 {% endblock %}
+
 
