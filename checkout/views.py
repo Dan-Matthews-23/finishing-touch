@@ -21,19 +21,29 @@ from django.http import JsonResponse  # For more structured error responses
 
 import stripe
 import json
-
+"""
 def render_basket_form(request): 
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY   
-    order_form = OrderForm()
-    try:
-        if request.user.is_authenticated:
-            profile = request.user.userprofile  
-            form = OrderForm(instance=profile)             
-        else:
-            form = OrderForm()            
-    except Exception as e:  
-        logger.error(f"Error processing order: {e}") 
+    order_form = OrderForm()   
+    if request.user.is_authenticated:
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+            order_form = OrderForm(initial={
+                'full_name': profile.full_name,
+                'email': profile.user.email,
+                'phone_number': profile.phone_number,                
+                'postcode': profile.postcode,
+                'town_or_city': profile.town_or_city,
+                'street_address1': profile.street_address1,
+                'street_address2': profile.street_address2,
+                'county': profile.county,
+                })
+        except UserProfile.DoesNotExist:
+                order_form = OrderForm()
+    else:
+            order_form = OrderForm()           
+    
     template = 'checkout/checkout.html'
     context = {
             'order_form': order_form,
@@ -41,14 +51,18 @@ def render_basket_form(request):
             'client_secret':stripe_secret_key,               
             }                   
     return render(request, template, context)
-
+"""
 
 
 def process_checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+    print(f" Secret key is {stripe_secret_key}")
+
+    """I THINK IT'S NOT WORKING BECAUSE PROCESS_CHECKOUT IS NEVER RENDERED BEFORE CACHE. THIS IS BEACUSE I HAVE THE RENDER VIEW"""
 
     if request.method == 'POST':
+        print("POSTED")
         print(request.POST)  # Inspect the raw POST data
         basket = request.session.get('basket', {})
 
@@ -123,25 +137,7 @@ def process_checkout(request):
         print(f" stripe.api_key is {stripe.api_key}")
         print(f" intent is {intent}")
 
-        # Attempt to prefill the form with any info the user maintains in their profile
-        if request.user.is_authenticated:
-            try:
-                profile = UserProfile.objects.get(user=request.user)
-                order_form = OrderForm(initial={
-                    'full_name': profile.user.get_full_name(),
-                    'email': profile.user.email,
-                    'phone_number': profile.default_phone_number,
-                    'country': profile.default_country,
-                    'postcode': profile.default_postcode,
-                    'town_or_city': profile.default_town_or_city,
-                    'street_address1': profile.default_street_address1,
-                    'street_address2': profile.default_street_address2,
-                    'county': profile.default_county,
-                })
-            except UserProfile.DoesNotExist:
-                order_form = OrderForm()
-        else:
-            order_form = OrderForm()
+        
 
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. \
@@ -171,34 +167,7 @@ def process_checkout(request):
 
 
 
-logger = logging.getLogger(__name__)  # Set up a logger for this function
-@require_POST
-def cache_checkout_data(request):
-    try:
-        pid = request.POST.get('client_secret').split('_secret')[0]
-        stripe.api_key = settings.STRIPE_SECRET_KEY
 
-        # Log the basket data for debugging
-        logger.debug("Basket data: %s", request.session.get('basket', {})) 
-
-        stripe.PaymentIntent.modify(pid, metadata={
-            'basket': json.dumps(request.session.get('basket', {})),
-            'save_info': request.POST.get('save_info'),
-            'username': request.user,  # Assuming request.user is a valid string
-        })
-        return HttpResponse(status=200)
-    except stripe.error.StripeError as e:  # Catch specific Stripe errors
-        logger.error("Stripe error: %s", e)
-        messages.error(request, 'There was a problem with your payment. Please check your card details or try again later.')
-        return JsonResponse({'error': str(e)}, status=400)
-    except KeyError:  # Catch potential error if 'client_secret' is not found
-        logger.error("KeyError: 'client_secret' not found in POST data")
-        messages.error(request, 'There was a problem processing your payment. Please refresh the page and try again.')
-        return JsonResponse({'error': 'Invalid payment data'}, status=400)
-    except Exception as e:  # Catch-all for other unexpected errors
-        logger.exception("Unexpected error: %s", e)  # Log the full traceback
-        messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
-        return JsonResponse({'error': 'Internal server error'}, status=500)
 
 
 
@@ -255,3 +224,35 @@ def checkout_success(request, order_number):
     }
 
     return render(request, template, context)
+
+logger = logging.getLogger(__name__)  # Set up a logger for this function
+@require_POST
+def cache_checkout_data(request):
+    try:
+        pid = request.POST.get('client_secret').split('_secret')[0]
+        print(f"pid is {pid}")
+
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        print(f"stripe.api_key is {stripe.api_key}")
+
+        # Log the basket data for debugging
+        logger.debug("Basket data: %s", request.session.get('basket', {})) 
+
+        stripe.PaymentIntent.modify(pid, metadata={
+            'basket': json.dumps(request.session.get('basket', {})),
+            'save_info': request.POST.get('save_info'),
+            'username': request.user,  # Assuming request.user is a valid string
+        })
+        return HttpResponse(status=200)
+    except stripe.error.StripeError as e:  # Catch specific Stripe errors
+        logger.error("Stripe error: %s", e)
+        messages.error(request, 'There was a problem with your payment. Please check your card details or try again later.')
+        return JsonResponse({'error': str(e)}, status=400)
+    except KeyError:  # Catch potential error if 'client_secret' is not found
+        logger.error("KeyError: 'client_secret' not found in POST data")
+        messages.error(request, 'There was a problem processing your payment. Please refresh the page and try again.')
+        return JsonResponse({'error': 'Invalid payment data'}, status=400)
+    except Exception as e:  # Catch-all for other unexpected errors
+        logger.exception("Unexpected error: %s", e)  # Log the full traceback
+        messages.error(request, 'Sorry, your payment cannot be processed right now. Please try again later.')
+        return JsonResponse({'error': 'Internal server error'}, status=500)

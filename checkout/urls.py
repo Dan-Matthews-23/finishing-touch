@@ -7,7 +7,7 @@ from .webhooks import webhook
 
 urlpatterns = [
     path('process_checkout/', views.process_checkout, name='process_checkout'),    
-    path('', views.render_basket_form, name='render_basket_form'),
+    #path('', views.render_basket_form, name='render_basket_form'),
     #path('process_order/', views.process_order, name='process_order'),
     #path('create_payment/', views.create_payment, name='create_payment'),
     #path('process_checkout/', views.process_checkout, name='process_checkout'),
