@@ -68,26 +68,36 @@
                 </div>
                 {%endif%}
                 <div class="row ">
-                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
-                        
-                        
+                    <div class="col  ">
+
+
                         {% if request.session.order_items %}
                         {% for product_id, item in request.session.order_items.items %}
-                        <p>
-                            <span>{{ item.product_name }}</span>
-                            <span>(x{{ item.quantity }})</span>
+                        <p class="product-item-paragraph ">
+                            <span class="product-item-span ">{{ item.product_name }}</span>
+                            <span class="product-item-span">(x{{ item.quantity }})</span>
                         </p>
-                        <p>{{ item.cost }}</p>
+                        <p class="product-item-paragraph ">
+                            <span class="product-item-span ">£{{ item.cost }}</span>
+                        </p>
                         {% endfor %}
                         <hr>
                         {% if request.session.order_total %}
-                        <p><strong>Order Total: </strong>{{ request.session.order_total }}</p>
+                        <p class="product-item-paragraph ">
+                            <span class="product-item-span ">
+                                Order Total:{{ request.session.order_total }}
+                            </span>
+                        </p>
                         {% endif %}
                         <hr>
                         {% else %}
-                        <p>Your basket is empty</p>
+                        <p class="product-item-paragraph ">
+                            <span class="product-item-span ">
+                                Your basket is empty
+                            </span>
+                        </p>
                         {% endif %}
-                        
+
                     </div>
                 </div>
 

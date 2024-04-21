@@ -69,14 +69,14 @@ openModalButtons.forEach(modalBtn => {
             product_id = productIdFromBtn;
             document.getElementById('product_test').value = product_id; 
 
-            console.log(product_id)
+            
             const resetQuantity = orderArray.findIndex(a => a.product_id == product_id);   
         } else {
             
             product_id = productIdFromBtn;            
             document.getElementById('product_test').value = product_id; 
 
-            console.log(product_id)
+            
             insertNewProduct = {
                 product_id: product_id,                
             };
