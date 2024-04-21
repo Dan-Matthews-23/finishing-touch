@@ -7,6 +7,21 @@
     font-family: "Nanum Pen Script", cursive;
     font-weight: 400;
     font-style: normal;
+    font-size: 32px;
+    color: black;
+    letter-spacing: 2px;
+    
+}
+
+.nanum-pen-script-heading {
+    font-family: "Nanum Pen Script", cursive;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 32px;
+        color: black;
+        text-decoration: underline;
+        text-align: justify;
+        
 }
 
 #order-details-container {
@@ -22,9 +37,11 @@
 
 
 
-#nutrition-container {
+#menu-navigation {
     width: 65%;
     border-radius: 10% 10% 10% 10%;
+    background-color: white;
+    padding: 10px;
 }
 
 
@@ -45,10 +62,12 @@
 }
 
 .collapsible {
-    background-color: #F7F9F9;
-    width: 40%;
+    background-color: white;
+    width: 60%;
     margin: auto;
 }
+
+
 
 
 
@@ -260,7 +279,7 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-    background-color: #f1f1f1;
+    background-color: white;
 }
 
 /* The Close Button */
@@ -317,3 +336,37 @@
     color: #74C0FC;
 }
 
+.align-center {
+    text-align: center;
+    margin: auto;
+}
+
+.nutritional-div {
+    margin: auto;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+table {
+    border: 1px solid;
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    padding: 5px;
+    
+}
+
+
+td {
+    border: 1px solid;    
+    text-align: center;
+    margin: auto;
+    padding: 5px;
+}
+
+th {    
+    border: 1px solid;
+    text-align: left;  
+    padding: 5px;
+}

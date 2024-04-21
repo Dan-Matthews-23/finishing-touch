@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+
+{% endblock %}
+
 {% block extra_js %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,22 +34,22 @@
 
 <!--This is the section that holds the secondary navigation where users can navigate on the same page-->
 <section class="menu-navigation">
-    <div class="container-fluid align-center card product-container" id="menu-navigation">
+    <div class="container-fluid card product-container" id="menu-navigation">
         <div class="row ">
-            <div class="col ">
-                <h3 class="menu-nav-links modal-text-styling">Chef's reccomendations</h3>
+            <div class="col align-center">
+                <h3 class="nanum-pen-script-heading ">Chef's reccomendations</h3>
             </div>
         </div>
         <div class="row ">
             <div class="col ">
-            <h3 class="nanum-pen-script-regular">
-                {% if chef_messages %}           
-                    {{ chef_messages }}                                   
-                {% endif %}
-            </h3>
+                <h3 class="nanum-pen-script-regular">
+                    {% if chef_messages %}
+                    {{ chef_messages }}
+                    {% endif %}
+                </h3>
             </div>
         </div>
-        
+
 
     </div>
 </section>
@@ -58,12 +63,14 @@
                 {% if request.session.order_items %}
                 <div class="row ">
                     <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
-                        <h3 class=" modal-text-styling">Order Details</h3>
+                        <h5 class="card-title">Order Details</h5>
                     </div>
                 </div>
                 {%endif%}
                 <div class="row ">
                     <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
+                        
+                        
                         {% if request.session.order_items %}
                         {% for product_id, item in request.session.order_items.items %}
                         <p>
@@ -80,6 +87,7 @@
                         {% else %}
                         <p>Your basket is empty</p>
                         {% endif %}
+                        
                     </div>
                 </div>
 
@@ -178,121 +186,105 @@
                     </p>
                 </div>
             </div>
-            <button type="button" class="collapsible">See nutritional information</button>
+            <button type="button" class="btn collapsible">See nutritional information</button>
             <div class="content">
-                <div class="row  card-row">
-                    <div class="col  align-center">
-                        <span>Calories</span>
-                        <span>{{i.calorie_content}}</span>
-                    </div>
+                <div class="col nutritional-div">
+                    <table>
+                        <tr>
+                            <th>Calories</th>
+                            <td>{{i.calorie_content}}</td>
+                        </tr>
+                        <tr>
+                            <th>Protein</th>
+                            <td>{{i.protein_content}}g</td>
+                        </tr>
+                        <tr>
+                            <th>Fibre</th>
+                            <td>{{i.fibre_content}}g</td>
+                        </tr>
+                        <tr>
+                            <th>Fat</th>
+                            <td>{{i.fat_content}}g</td>
+                        </tr>
+                        <tr>
+                            <th>Saturated Fat</th>
+                            <td>{{i.saturated_fat_content}}g</td>
+                        </tr>
+                        <tr>
+                            <th>Carbohydrates</th>
+                            <td>{{i.carbohydrate_content}}g</td>
+                        </tr>
+                        <tr>
+                            <th>Of which sugars</th>
+                            <td>{{i.carbohydrate_sugar_content}}g</td>
+                        </tr>
+                        <tr>
+                            <th>Salt</th>
+                            <td>{{i.salt_content}}g</td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="row  card-row">
-                    <div class="col  align-center">
-                        <span>Protein</span>
-                        <span>{{i.protein_content}}</span>
-                    </div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center">
-                        <span>Fibre</span>
-                        <span>{{i.fibre_content}}</span>
-                    </div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center">
-                        <span>Fat</span>
-                        <span>{{i.fat_content}}</span>
-                    </div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center">
-                        <span>Saturated Fat</span>
-                        <span>{{i.saturated_fat_content}}</span>
-                    </div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center">
-                        <span>Carbohydrates</span>
-                        <span>{{i.carbohydrate_content}}</span>
-                    </div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center">
-                        <span>Of which sugars</span>
-                        <span>{{i.carbohydrate_sugar_content}}</span>
-                    </div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center">
-                        <span>Salt</span>
-                        <span>{{i.salt_content}}</span>
-                    </div>
-                </div>               
-                
             </div>
+            <!--This is the pop-up modal led by customer interaction-->
+            <form method="POST" action="{% url 'add_to_order' %}">
+                {% csrf_token %}
+                <!--<input type="hidden" name="product_id" id="product_id" value="{{i.product_id}}">-->
+                <input type="hidden" name="quantity" id="quantity" value="{{i.quantity}}">
+                <!--<input type="hidden" name="orderData" id="orderData" value="">-->
+                <div id="modal-div" class="select-sandwich ">
+                    <div class="select-sandwich-modal-content">
+                        <div class="container-fluid  align-center">
+                            <div class="row card-row align-center">
+                                <div class="col  align-center">
+                                    <span class="close">&times;</span>
+                                    <div class="row card-row ">
+
+                                    </div>
+                                    <div class="row">
+                                        <input type="hidden" id="product_test" name="product_test" />
+                                    </div>
+                                    <div class="row card-row ">
+
+                                        <div class="col modal-text-styling" id="product-price"></div>
+                                    </div>
+                                    <div class="row card-row align-center " id="quantity-row">
 
 
+                                        <select name="quantity" id="quantity">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
 
-                <!--This is the pop-up modal led by customer interaction-->
-                <form method="POST" action="{% url 'add_to_order' %}">
-                    {% csrf_token %}
-                    <!--<input type="hidden" name="product_id" id="product_id" value="{{i.product_id}}">-->
-                    <input type="hidden" name="quantity" id="quantity" value="{{i.quantity}}">
-                    <!--<input type="hidden" name="orderData" id="orderData" value="">-->
-                    <div id="modal-div" class="select-sandwich ">
-                        <div class="select-sandwich-modal-content">
-                            <div class="container-fluid  align-center">
-                                <div class="row card-row align-center">
-                                    <div class="col  align-center">
-                                        <span class="close">&times;</span>
-                                        <div class="row card-row ">
+                                        </select>
 
+
+                                    </div>
+                                    <div class="row modal-row-padding  ">
+
+                                        <div class="col  align-center-vertical align-center-horizontal">
+                                            <button class="btn select-product-btn">Add to
+                                                order</button>
                                         </div>
-                                        <div class="row">
-                                            <input type="hidden" id="product_test" name="product_test" />
-                                        </div>
-                                        <div class="row card-row ">
 
-                                            <div class="col modal-text-styling" id="product-price"></div>
-                                        </div>
-                                        <div class="row card-row align-center " id="quantity-row">
-
-                                            
-                                            <select name="quantity" id="quantity">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-
-                                            </select>
-
-
-                                        </div>
-                                        <div class="row modal-row-padding  ">
-
-                                            <div class="col  align-center-vertical align-center-horizontal">
-                                                <button class="btn select-product-btn">Add to
-                                                    order</button>
-                                            </div>
-
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            <!--End of popup modal -->
+                </div>
+            </form>
         </div>
-        {% endif %}
-        {% endfor %}
+        <!--End of popup modal -->
+    </div>
+    {% endif %}
+    {% endfor %}
 </section>
 <!--End of product selection section-->
 
