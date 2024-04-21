@@ -1,41 +1,69 @@
-.nutritional-information {
-    border: none;
-    background-color: inherit;
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+
+
+
+.nanum-pen-script-regular {
+    font-family: "Nanum Pen Script", cursive;
+    font-weight: 400;
+    font-style: normal;
 }
 
-.nutritional-information {
-    position: relative;
-    display: inline-block;
-    color: black;
+#order-details-container {
+    width: 35%;
+}
+
+#product-container {
+    width: 100%;
+    border-radius: 10% 10% 10% 10%;
+}
+
+
+
+
+
+#nutrition-container {
+    width: 65%;
+    border-radius: 10% 10% 10% 10%;
+}
+
+
+#order-details-container-parent-col {
+    border-style: solid;
+    border-color: black;
 
 }
 
-.nutritional-information .nutritional-informationtext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    left: -550px
+#product-container-parent-col {
+    border-style: solid;
+    border-color: black;
 }
 
-.nutritional-information:hover .nutritional-informationtext {
-    visibility: visible;
+#nutrition-container-parent-col {
+    border-style: solid;
+    border-color: black;
 }
 
-#order-details {
-    width: 25%;
-    position: absolute;
-    right: 75px;
-    padding-top: 25px;
-
+.collapsible {
+    background-color: #F7F9F9;
+    width: 40%;
+    margin: auto;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #display_order {
     padding: 30px;
@@ -98,11 +126,7 @@
     margin: auto;
 }
 
-.product-container {
-    width: 25%;
-    border-radius: 10% 10% 10% 10%;
 
-}
 
 .product-container-index {
     display: inline-block;
@@ -213,7 +237,31 @@
 
 }
 
+.active,
+.collapsible:hover,
+.see-reviews {
+    background-color: #555;
+}
 
+.collapsible:after {
+    content: "\002B";
+    color: black;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
 
 /* The Close Button */
 .close {
@@ -268,3 +316,4 @@
     font-size: 36px;
     color: #74C0FC;
 }
+

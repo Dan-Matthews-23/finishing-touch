@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
-from .models import Products, Category, Favourites
+from .models import Products, Category, Favourites, ChefMessages
 from accounts.models import UserProfile
 from django.contrib.auth.decorators import login_required
 import json
@@ -13,6 +13,11 @@ import json
 # Display all breads
 def prepacked_sandwiches(request):   
     sandwich_items = Products.objects.all()
+    get_chef_message = ChefMessages.objects.first()
+    chef_messages = get_chef_message.chef_message
+    
+    
+
     profile = get_object_or_404(UserProfile, user=request.user)
     order_items = request.session.get('order_items')
 
@@ -25,7 +30,8 @@ def prepacked_sandwiches(request):
 
     context = {
         'sandwich_items': sandwich_items,
-        'order_items': 'order_items'
+        'order_items': 'order_items',
+        'chef_messages': chef_messages,
     }
     return render(request, 'products/sandwiches.html', context)
 
