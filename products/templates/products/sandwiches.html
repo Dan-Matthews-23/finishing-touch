@@ -67,34 +67,45 @@
                     </div>
                 </div>
                 {%endif%}
-                <div class="row ">
-                    <div class="col  ">
+                <div class="row">
+                    <div class="col">
+
 
 
                         {% if request.session.order_items %}
                         {% for product_id, item in request.session.order_items.items %}
-                        <p class="product-item-paragraph ">
-                            <span class="product-item-span ">{{ item.product_name }}</span>
-                            <span class="product-item-span">(x{{ item.quantity }})</span>
-                        </p>
-                        <p class="product-item-paragraph ">
-                            <span class="product-item-span ">£{{ item.cost }}</span>
-                        </p>
+                        <form method="POST" action="{% url 'remove_item' %}">
+                            {% csrf_token %}
+                            <p class="product-item-paragraph">
+                                <input type="hidden" name="remove-item-product-id" id="remove-item-product-id" value="{{ product_id }}"
+                                    class="align-left">
+                                <button type="submit" class="align-left" id="remove-item">
+                                    <i class="fa-solid fa-trash fa-xl align-left"></i>
+                                </button>
+                            </p>
+                            <p class="product-item-paragraph">
+                                {{ item.product_name }}
+                                (x{{ item.quantity }})
+                                <br>
+                                <strong>£{{ item.cost }}</strong>
+                            </p>
+
+
+
+                        </form>
                         {% endfor %}
                         <hr>
                         {% if request.session.order_total %}
-                        <p class="product-item-paragraph ">
-                            <span class="product-item-span ">
-                                Order Total:{{ request.session.order_total }}
-                            </span>
+                        <p class="product-item-paragraph-center ">
+
+                            <strong>Total: £{{ request.session.order_total }}</strong>
+
                         </p>
                         {% endif %}
                         <hr>
                         {% else %}
-                        <p class="product-item-paragraph ">
-                            <span class="product-item-span ">
-                                Your basket is empty
-                            </span>
+                        <p class="product-item-paragraph-center ">
+                            Your basket is empty
                         </p>
                         {% endif %}
 
