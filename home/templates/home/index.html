@@ -1,61 +1,126 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+
+{% endblock %}
+
 {% block content %}
-<!--This is the product selection section-->
-<section class="product-listings">
 
-    <div class="container-fluid  col-sm-10 col-md-10 col-lg-10 col-xl-10 col-xxl-10 ">
-        <div class="row card-row ">
-
-
-            {% for i in sandwich_items %}
-            {% if i.category_id == 9 %}
-
-
-            <div class="container-flex col-sm-12 col-md-6 col-lg-4 col-xl-4 xxl-4 card product-container-index ">
-                <div class="row  card-row">
-                    <div class="col  align-center">
-                        <h5 class="card-title">{{i.product_name}}</h5>
-                    </div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center">{{i.product_short_description}}</div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center bold protein">
-                        {% if i.protein_source %}Source of protein{% endif %}
-                    </div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center bold fibre">
-                        {% if i.protein_source %}Source of fibre{% endif %}
-                    </div>
-                </div>
-                <div class="row  card-row">
-                    <div class="col  align-center bold">£{{i.product_price}}</div>
-                </div>
-
-                <div class="row  card-row">
-                    <div class="col" id="open-modal-btn-div">
-                        <p class=" align-center">
-                        <form method="POST" action="{% url 'prepacked_sandwiches' %}">
-                            {% csrf_token %}
-                            <button class="btn open-modal" id="open-modal-value" value="{{i.product_id}}"
-                                data-product-name="{{i.product_name}}" data-product-price="{{i.product_price}}">Select
-                                item</button>
-                        </form>
-                        <p class="item-added">Item Added</p>
-                        </p>
+<div class="container-fluid" id="parent-container">
+    <div class="row lg-padding">
+        <div class="col ">
+            <!--This is the introduction paragraph-->
+            <div class="container-fluid" id="introduction-container">
+                <div class="row heading-row">
+                    <div class="col ">
+                        <h1 class="bold">Welcome to Mega Bytes</h1>
                     </div>
                 </div>
             </div>
-            {% endif %}
-            {% endfor %}
         </div>
     </div>
+    <div class="row lg-padding">
+        <div class="col parent-col  ">
+            
+            <!--Who We are-->
+            <div class="container-fluid  with-border" id="who-we-are">
+                <div class="row heading-row">
+                    <div class="col ">
+                        <h2 class="bold">Who we are</h2>
+                    </div>
+                </div>
+                <div class="row heading-row">
+                    <div class="col ">
+                        <h3>
+                            <ul>
+                                <li>Established in 2024, we are the first restaurant in Sunderland specifically set up
+                                    to offer you the highest quality foods without
+                                    compromising on quality and sustainability</li>
+                                <li>We expect the best from our suppliers so that you can expect the best from us</li>
+                            </ul>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col  ">
+            <div class="container-fluid  " id="our-promise">
+                <div class="row heading-row">
+                    <div class="col ">
+                        <h2 class="bold">Our promise</h2>
+                    </div>
+                </div>
+                <div class="row heading-row">
+                    <div class="col ">
+                        <h3>
+                            <ul>
+                                <li>We promise to use only the freshest highest-quality ingredients</li>
+                                <li>We promise that we source only sustainable, ethically-sourced ingredients to do our
+                                    part
+                                </li>
+                                <li>We promise that we will never compromise on quality</li>
+                            </ul>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="row lg-padding">
+        <div class="col parent-col ">
+            <!--Who We are-->
+            <div class="container-fluid  with-border" id="how-we-do-it">
+                <div class="row heading-row">
+                    <div class="col ">
+                        <h2 class="bold">How we do it</h2>
+                    </div>
+                </div>
+                <div class="row heading-row">
+                    <div class="col">
+                        <h3>
+                            <ul>
+                                <li>We carefully select suppliers that meet our high standards</li>
+                                <li>We work closely with our partners to ensure the products you receive are fresh on
+                                    the day of purchase
+                                </li>
+                                <li>We keep our prices affordable</li>
+                            </ul>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col ">
+            <div class="container-fluid  " id="how-it-works">
+                <div class="row heading-row">
+                    <div class="col ">
+                        <h2 class="bold">How it works</h2>
+                    </div>
+                </div>
+                <div class="row heading-row">
+                    <div class="col ">
+                        <h3>
+                            <ul>
+                                <li><a class="index" href="{% url 'account_signup' %}">Register</a> or 
+                                    <a class="index" href="{% url 'account_login' %}">log in</a></li>
+                                <li>Head over to our <a class="index" href="{% url 'prepacked_sandwiches' %}">menu</a></li>
+                                <li>Make your selection</li>
+                                <li>Check it out</li>
+                                <li>Enjoy</li>
+                            </ul>
+                            It really is that simple!
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
-    {% endblock %}
+{% endblock %}
