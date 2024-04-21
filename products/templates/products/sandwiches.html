@@ -3,43 +3,10 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col col-sm-12 col-lg-12">
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-    </div>
-</div>
 
-<!--This is the section that holds the secondary navigation where users can navigate on the same page-->
-<section class="menu-navigation">
-    <div class="container-fluid align-center card product-container" id="menu-navigation">
-        <div class="row ">
-            <div class="col ">
-                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#specials">MegaBytes Specials</a>
-                </h3>
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col ">
-                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#sundries">Sundries</a></h3>
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col ">
-                <h3 class="menu-nav-links modal-text-styling"><a class="btn" href="#extras">Extras</a></h3>
-            </div>
-        </div>
 
-    </div>
-</section>
-<!--End of secondary navigation section-->
+
+
 
 <!--This is the order sumary section that holds details of the current order-->
 <section class="order-details">
