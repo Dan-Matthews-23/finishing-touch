@@ -15,37 +15,6 @@
 {% block content %}
 
 
-
-
-
-
-
-MAKE IT SO THAT THE CHEF MESSAGES ONLY DISPLAYS ON LARGE SCREENS
-DO A MEDIA QUERY 
-HAVE TWO CHEF MESSAGAES
-ONE UNDER TITLE BAR
-KEEP OTHER WHERE IT IS 
-
-ON LARGE SCREENS DISPLAY THE LEFT, SET DISPLAY TO NONE ON TOP
-REVERSE THIS ON SMALLER SCREENS
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="container">
     <div class="row">
         <div class="col col-sm-12 col-lg-12">
@@ -59,10 +28,9 @@ REVERSE THIS ON SMALLER SCREENS
         </div>
     </div>
 </div>
+<br>
 
-<!--This is the section that holds the secondary navigation where users can navigate on the same page-->
-<section class="menu-navigation">
-    <div class="container-fluid card product-container" id="menu-navigation">
+    <div class="container-fluid card product-container" id="chef-message-top">
         <div class="row ">
             <div class="col align-center">
                 <h3 class="nanum-pen-script-heading ">Chef's reccomendations</h3>
@@ -77,8 +45,28 @@ REVERSE THIS ON SMALLER SCREENS
                 </h3>
             </div>
         </div>
+    </div>
+
+<br>
 
 
+<!--This is the section that holds the secondary navigation where users can navigate on the same page-->
+<section class="chef-message-left">
+    <div class="container-fluid card product-container" id="chef-message-left">
+        <div class="row ">
+            <div class="col align-center">
+                <h3 class="nanum-pen-script-heading ">Chef's reccomendations</h3>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col ">
+                <h3 class="nanum-pen-script-regular">
+                    {% if chef_messages %}
+                    {{ chef_messages }}
+                    {% endif %}
+                </h3>
+            </div>
+        </div>    
     </div>
 </section>
 <!--End of secondary navigation section-->
@@ -172,7 +160,7 @@ REVERSE THIS ON SMALLER SCREENS
 <section class="product-listings">
     {% for i in sandwich_items %}
     {% if i.category_id == 9 %}
-    <div class="container-fluid align-center card product-container">
+    <div class="container-fluid align-center card " id="product-container">
 
         <div class="row  card-row">
             <div class="col col-sm-2 col-md-2 col-lg-2 col-xl-2">
