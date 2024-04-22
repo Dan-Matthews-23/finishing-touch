@@ -71,18 +71,17 @@ def delete_from_favourites(request):
 
 from decimal import Decimal
 
+
+
+
 @login_required
 def add_to_order(request):
   if request.method == 'POST':
-    del request.session['order_total']  # Clear previous total
     product_id = request.POST['product_test']
     get_product = Products.objects.get(product_id=product_id)
     quantity = int(request.POST['quantity'])
     product_default_price = get_product.product_price
     cost = Decimal(product_default_price) * quantity  # Use Decimal for accuracy
-
-    # Initialize total cost outside if statements
-    total_cost = 0
 
     # Check if an order already exists in the session
     if 'order_items' in request.session:
@@ -93,10 +92,8 @@ def add_to_order(request):
         # Update existing product quantity
         order_items[product_id]['quantity'] = quantity
 
-        # Calculate total cost for this product
-        total_cost = Decimal(product_default_price) * quantity
-        order_items[product_id]['cost'] = str(total_cost)
-
+        # Calculate total cost for this product (update cost if needed)
+        order_items[product_id]['cost'] = str(Decimal(product_default_price) * quantity)
       else:
         # Add as a new order item with total cost
         order_items[product_id] = {
@@ -104,7 +101,6 @@ def add_to_order(request):
           'quantity': quantity,
           'cost': str(Decimal(product_default_price) * quantity),
         }
-
     else:
       # Create a new order if it doesn't exist
       order_items = {
@@ -115,17 +111,55 @@ def add_to_order(request):
         }
       }
 
-    # Update the session and calculate total cost for all items
+    # Update the session (order items already updated)
     request.session['order_items'] = order_items
 
-    # Loop through order items to calculate total cost
+    # Calculate total cost for all items (moved outside loops)
+    total_cost = 0
     for item_id, item_data in order_items.items():
-      item_cost = Decimal(item_data['cost'])  # Convert cost string to Decimal
+      item_cost = Decimal(item_data['cost'])
       total_cost += item_cost
 
     # Now you have the total cost for all items
     request.session['order_total'] = str(total_cost)
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
