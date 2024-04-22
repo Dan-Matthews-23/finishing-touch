@@ -1,42 +1,59 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'basket/css/basket.css' %}">
+{% endblock %}
 {% block content %}
+<form action="{% url 'process_checkout' %}" method="POST">
+    <div class="container-fluid" id="form-container">
+        <div class="row">
+            <div class="col">
+                {% csrf_token %}
+                <p>
+                    <span>Name:</span>
+                    <span>{{ order_form.full_name | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>Email:</span>
+                    <span>{{ order_form.email | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>Contact Number:</span>
+                    <span>{{ order_form.phone_number | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>House/Apartment Number:</span>
+                    <span>{{ order_form.street_address1 | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>Street Address:</span>
+                    <span>{{ order_form.street_address2 | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>Town/City:</span>
+                    <span>{{ order_form.town_or_city | as_crispy_field }}</span>
+                </p>
+                <p>
+                    <span>County:</span>
+                    <span>{{ order_form.county | as_crispy_field }}</span>
+                </p>
+                
+                <p>
+                    <span>Postcode:</span>
+                    <span>{{ order_form.postcode | as_crispy_field }}</span>
+                </p>
+                <input type="hidden" value="{{ client_secret }}" name="client_secret">
+            </div>
+            <div class="row">
+                <div class="col btn-div">
+                    <button type="submit" class="btn orderBtn" id="checkout">Confirm details</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+</form>
 
-
-
-
-
-
-<form action="{% url 'process_checkout' %}" method="POST" id="payment-form">
-    {% csrf_token %}
-    {{ order_form.full_name | as_crispy_field }}
-    {{ order_form.email | as_crispy_field }}
-    {{ order_form.phone_number | as_crispy_field }}
-    {{ order_form.postcode | as_crispy_field }}
-    {{ order_form.town_or_city | as_crispy_field }}
-    {{ order_form.street_address1 | as_crispy_field }}
-    {{ order_form.street_address2 | as_crispy_field }}
-    {{ order_form.county | as_crispy_field }}
-    
-    
-    <input type="hidden" value="{{ client_secret }}" name="client_secret">
-        <button id="submit-button" class="btn btn-black rounded-0">
-            <span class="font-weight-bold">Complete Order</span>
-            <span class="icon">
-                <i class="fas fa-lock"></i>
-            </span>
-        </button>
-    </form>
-
-
-
-
-
-
-
-
-<!--End of product selection section-->
 {% endblock %}
 
 {% block postloadjs %}
