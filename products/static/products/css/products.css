@@ -591,4 +591,18 @@ th {
 }
 
 
+#add_product,
+#modify_product {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
 
+.table-div {
+    margin: auto;
+    text-align: center;
+}
+
+.modify-heading {
+    text-align: center;
+}

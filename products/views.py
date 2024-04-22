@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from .models import Products, Category, Favourites, ChefMessages
+from .forms import ProductManagementForm
 from accounts.models import UserProfile
 from django.contrib.auth.decorators import login_required
 import json
+from django.contrib import messages
 
 
 
@@ -123,6 +125,58 @@ def add_to_order(request):
     # Now you have the total cost for all items
     request.session['order_total'] = str(total_cost)
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+@login_required 
+def manage_products(request):
+    if request.user.is_superuser:
+        get_products = Products.objects.all()
+        product_form = ProductManagementForm()
+        if request.method == 'POST':
+            if request.POST['protein_source'] == "Yes":
+                protein_source = True
+            else:
+                protein_source = False
+            
+            if request.POST['fibre_source'] == "Yes":
+                fibre_source = True
+            else:
+                fibre_source = False
+            try:
+                add_item = Products(                
+                product_placeholder_name = request.POST['product_placeholder_name'],
+                product_name = request.POST['product_name'],
+                product_price = Decimal(request.POST['product_price']),
+                product_short_description = request.POST['product_short_description'],
+                protein_source = protein_source,
+                fibre_source = fibre_source,
+                product_image_url =  request.POST['product_image_url'],
+                category_id = 9,
+                calorie_content = int(request.POST['calorie_content']),
+                protein_content = Decimal(request.POST['protein_content']),
+                fibre_content = Decimal(request.POST['fibre_content']),
+                fat_content = Decimal(request.POST['fat_content']),
+                saturated_fat_content = Decimal(request.POST['saturated_fat_content']),
+                carbohydrate_content = Decimal(request.POST['carbohydrate_content']),
+                carbohydrate_sugar_content = Decimal(request.POST['carbohydrate_sugar_content']),
+                salt_content = Decimal(request.POST['salt_content']),
+                )                            
+                add_item.save()
+                messages.success(request, 'Product created successfully!')
+                return redirect(request.META.get('HTTP_REFERER'))
+            except (ValueError, TypeError) as e:
+                error_message = f'Error converting data: {str(e)}'
+                return redirect(request.META.get('HTTP_REFERER'))    
+        else:
+            template = 'products/manage_products.html'
+            context = {
+                'get_products': get_products,                
+                'product_form' : product_form,
+            }
+            return render(request, template, context)
+    else:
+        print("You do not have authoriation to access that page")
+        return redirect(request.META.get('HTTP_REFERER'))
 
 
 

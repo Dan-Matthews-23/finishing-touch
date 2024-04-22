@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'products/css/products.css' %}">
+{% endblock %}
+{% block content %}
+<form action="{% url 'manage_products' %}" method="POST">
+    {% csrf_token %}
+    <div class="container-fluid" id="add_product">
+        <div class="row">
+            <div class="col header-div">
+                <h3 class="header">
+                    Product Management
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn collapsible">Add Product</button>
+                <div class="content">
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ product_form.product_placeholder_name | as_crispy_field }}</p>
+                            <p>{{ product_form.product_short_description | as_crispy_field }}</p>
+                            <p>{{ product_form.product_name | as_crispy_field }}</p>
+                            <p>{{ product_form.product_price | as_crispy_field }}</p>
+                            <p>{{ product_form.protein_source | as_crispy_field }}</p>
+                            <p>{{ product_form.fibre_source | as_crispy_field }}</p>
+                            <p>{{ product_form.product_image_url | as_crispy_field }}</p>
+                            <p>{{ product_form.category_id | as_crispy_field }}</p>
+                            <p>{{ product_form.calorie_content | as_crispy_field }}</p>
+                            <p>{{ product_form.protein_content | as_crispy_field }}</p>
+                            <p>{{ product_form.fibre_content | as_crispy_field }}</p>
+                            <p>{{ product_form.fat_content | as_crispy_field }}</p>
+                            <p>{{ product_form.saturated_fat_content | as_crispy_field }}</p>
+                            <p>{{ product_form.carbohydrate_content | as_crispy_field }}</p>
+                            <p>{{ product_form.carbohydrate_sugar_content | as_crispy_field }}</p>
+                            <p>{{ product_form.salt_content | as_crispy_field }}</p>
+                        </div>
+                        <div class="row">
+                            <div class="col btn-div">
+                                <button type="submit" class="btn orderBtn" id="checkout">Add Product </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="container-fluid" id="modify_product">
+        <div class="row">
+            <div class="col header-div">
+            </div>
+        </div>
+        <button type="button" class="btn collapsible">Modify Product</button>
+        <div class="content">
+            <div class="row">
+                <div class="col table-div">
+                    <table>
+                        <th class="modify-heading">Product ID</th>
+                        <th class="modify-heading">Product Name</th>
+                        {% for product in get_products %}
+                        <tr>
+                            <td>{{ product.product_id }}</td>
+                            <td>{{ product.product_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+{% endblock %}
+
+{% block postloadjs %}
+<script src="{% static 'products/js/script.js' %}"></script>
+<!--
+    This will likely need to be changed to {% static 'products/js/script.js' %}  
+-->
+{% endblock %}
