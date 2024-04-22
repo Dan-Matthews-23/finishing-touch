@@ -63,7 +63,7 @@
                         <th class="modify-heading">Product Name</th>
                         {% for product in get_products %}
                         <tr>
-                            <td><a href="{% url 'modify_product' product.product_id %}" title="{{ product.product_id }}">{{ product.product_id }}</a></td>
+                            <td><a href="{% url 'render_modification_form' product.product_id %}" title="{{ product.product_id }}">{{ product.product_id }}</a></td>
                             <td>{{ product.product_name }}</td>
                         </tr>
                         {% endfor %}
