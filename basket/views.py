@@ -12,6 +12,14 @@ import stripe
 import json
 
 from accounts.models import UserProfile
+from accounts.forms import UserProfileForm
+
+from accounts.models import UserProfile
+
+
+from django.shortcuts import render, redirect
+
+
 
 def view_basket(request):
     order_form = OrderForm()
@@ -28,7 +36,7 @@ def view_basket(request):
                 'street_address1': profile.street_address1,
                 'street_address2': profile.street_address2,
                 'county': profile.county,
-                })
+                })            
         except UserProfile.DoesNotExist:
                 order_form = OrderForm()
     else:
@@ -41,5 +49,24 @@ def view_basket(request):
     return render(request, template, context)  # Return the rendered response
 
 
+"""
+@require_POST
+def update_details(request):
+    if request.method == 'POST':        
+        profile = get_object_or_404(UserProfile, user=request.user)
+        if request.method == 'POST':
+            form = UserProfileForm(request.POST, instance=profile)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Profile updated successfully')
+                return redirect('process_checkout')  
+            else:
+                messages.error(request,
+                            ('Update failed. Please ensure '
+                                    'the form is valid.'))
+        else:
+                form = UserProfileForm(instance=profile)
+        
 
-
+"""
+    

@@ -49,14 +49,14 @@ def process_checkout(request):
         try:
             profile = UserProfile.objects.get(user=request.user)
             order_form = OrderForm(initial={
-                'full_name': profile.full_name,
-                'email': profile.user.email,
-                'phone_number': profile.phone_number,                
-                'postcode': profile.postcode,
-                'town_or_city': profile.town_or_city,
-                'street_address1': profile.street_address1,
-                'street_address2': profile.street_address2,
-                'county': profile.county,
+                'full_name': request.POST['full_name'],
+                'email': request.POST['email'],
+                'phone_number': request.POST['phone_number'],                
+                'postcode': request.POST['postcode'],
+                'town_or_city': request.POST['town_or_city'],
+                'street_address1': request.POST['street_address1'],
+                'street_address2': request.POST['street_address2'],
+                'county': request.POST['county'],
                 })
         except UserProfile.DoesNotExist:
                 order_form = OrderForm()
@@ -146,7 +146,7 @@ def process_checkout(request):
             
             context = {
                 'form_data': form_data,
-            'order_form': order_form,
+                'order_form': order_form,
                 'stripe_public_key': stripe_public_key,
                 'client_secret': intent.client_secret,   
             }
@@ -160,8 +160,7 @@ def process_checkout(request):
             'order_form': order_form,
             'stripe_public_key': stripe_public_key,
             'client_secret': intent.stripe_secret_key,    
-            }
-        print(f" GET section client secret is {intent.stripe_secret_key}")
+            }        
         return render(request, template, context)
 
 
