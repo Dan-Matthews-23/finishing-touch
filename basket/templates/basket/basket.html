@@ -8,6 +8,13 @@
 <form action="{% url 'process_checkout' %}" method="POST">
     <div class="container-fluid" id="form-container">
         <div class="row">
+            <div class="col header-div">
+                <h3 class="header">
+                    Your details
+                </h3>
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 {% csrf_token %}
                 <p>

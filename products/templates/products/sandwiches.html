@@ -85,9 +85,6 @@
                 {%endif%}
                 <div class="row">
                     <div class="col">
-
-
-
                         {% if request.session.order_items %}
                         {% for product_id, item in request.session.order_items.items %}
                         <form method="POST" action="{% url 'remove_item' %}">
@@ -105,17 +102,12 @@
                                 <br>
                                 <strong>£{{ item.cost }}</strong>
                             </p>
-
-
-
                         </form>
                         {% endfor %}
                         <hr>
                         {% if request.session.order_total %}
                         <p class="product-item-paragraph-center ">
-
                             <strong>Total: £{{ request.session.order_total }}</strong>
-
                         </p>
                         {% endif %}
                         <hr>
@@ -124,7 +116,6 @@
                             Your basket is empty
                         </p>
                         {% endif %}
-
                     </div>
                 </div>
 
