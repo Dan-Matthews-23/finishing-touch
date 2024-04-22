@@ -239,7 +239,8 @@ def render_modification_form(request, product_id):
 
 
 
-
+MOFIDY IS NOT WORKING
+FIX IT
 
 
 def modify_product(request):
