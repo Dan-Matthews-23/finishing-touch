@@ -12,5 +12,6 @@ urlpatterns = [
     path('delete_from_favourites/', views.delete_from_favourites, name='delete_from_favourites'),
     path('add_to_order/', views.add_to_order, name='add_to_order'),
     path('clear_order/', views.clear_order, name='clear_order'),
-    path('manage_products/', views.manage_products, name='manage_products'),     
+    path('manage_products/', views.manage_products, name='manage_products'),
+    path('modify_product/<product_id>', views.modify_product, name='modify_product'),    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

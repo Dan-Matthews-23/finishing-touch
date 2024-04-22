@@ -195,6 +195,43 @@ def manage_products(request):
 
 
 
+def modify_product(request, product_id):
+    if request.user.is_superuser:
+        print(product_id)
+        get_product = Products.objects.filter(product_id=product_id).first()
+
+        if get_product:  # Check if a product was found
+            product_form = ProductManagementForm(get_product)
+            template = 'products/modify_products.html'
+            context = {
+                'get_product': get_product,
+                'product_form': product_form,
+            }
+            return render(request, template, context)
+        else:
+            print("Product not found")
+            # Handle the case where no product is found with the given ID (e.g., redirect to a different page)
+            return redirect('some_error_page')  # Replace with appropriate redirect
+
+    else:
+        print("You do not have authorization to access that page")
+        return redirect(request.META.get('HTTP_REFERER'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
