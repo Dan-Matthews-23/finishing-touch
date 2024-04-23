@@ -123,24 +123,10 @@ I have used tutorials given by the Code Institude to set up this project. Specif
 
 MegaBytes is a fully responsive ecommerce web application designed for local residents of Sunderland as a takeaway-ordering platform. The order will be fully customizable, will allow users to chose a payment method, create an account, browse a menu, update details such as address and delete orders or accounts. 
 
-The main product available at MegaBytes is sandwitches, although other products are available to add. 
+The product available at MegaBytes is sandwitches 
 
 ***
 
-## Methodology
-
-I will be using agile development for this project. Typically, [Agile Methodology](https://www.wrike.com/project-management-guide/faq/what-is-agile-methodology-in-project-management/) is broken down into the following stages:
-
-- Concept: Define the project scope and priorities
-- Inception: Build the Agile team according to project requirements 
-- Iteration: Create code factoring in customer feedback 
-- Release: Test the code and troubleshoot any issues
-- Maintenance: Provide ongoing tech support to ensure the product remains serviceable
-- Retirement: The end of the product lifespan, which often coincides with the beginning of a new one
-
-I will document each stage of development.
-
-***
 
 ## Concept
 
@@ -173,9 +159,6 @@ This project has been designed with two end users in mind:
 #### User Goals
 
 ![Local Legends Index Desktop](/media/images/concept/user-stories.png)
-
-
-
 
 
 ### Wireframes
@@ -220,7 +203,7 @@ I plan to have two additional models that are fully customized: favourites and r
 
 #### Favourites
 
-The user will be able to browse products and then add one as a favourite. This will add that product to the user's favourites section so it can be accessed easily if they should wish to buy that product. This will be a one-to-one relationship, so a user can only have one favourites list, and each seperate favourites list belongs to only one user. 
+The user will be able to browse products and then add one as a favourite. 
 
 #### Ratings
 
@@ -276,15 +259,14 @@ I have chosen the following colour scheme for MegaBytes. The template can be fou
 
 The font I have chosen to use for this project is one called Poppins, which is part of the Sans Sarif family. It can be found [here](https://fonts.google.com/specimen/Poppins). I chose the 'Light 300' weighting as I felt that it would stand out a little more than the 'thin' preset. I have used this font in my other projects and feel it's just right on the eye.
 
-#### Images
-
-
 
 ### Webpage layout
 
 #### Master Template
 
 The Master Template, called base.html, will be used as a template for all pages in this project. It will hold the header, footer and nav bar.
+
+![Coolers Palatte](/media/images/concept/base.png)
 
 ##### Header
 
@@ -311,11 +293,6 @@ At this stage, the footer holds external links so that the user can find the pro
 ![Footer](/media/images/concept/concept-footer.png)
 
 
-
-### Implementing a Skeleton layout
-
-Next will be to setup all other pages of this project using a skeleton layout with placeholder text. These are only designs and accept they may change in the final version. 
-
 #### Index
 
 The homepage will consist of a selection of the top four most popular products. In the concept stage I will create a skeleton layout of the page and fill it with placeholder images and text. 
@@ -325,237 +302,20 @@ Homepage Design: ![Homepage Design](/media/images/concept/concept-index.png)
 
 #### Register and Login
 
+I have used Django Allauth to provide functionality for Megabytes. I have adapted the templates for customised experience
 
 
 Homepage Design: ![Homepage Design]()
 
 #### Profile
 
-
-
-Homepage Design: ![Homepage Design]()
-
-#### Restaurants
-
+The user will have one profile page where they can view previous orders and update their personal information
 
 Homepage Design: ![Homepage Design]()
 
+#### Order History
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Stage Five: Create and Read (CRUD)
-
-#### Register account
-
-This stage will focus on using SQL Alchemy to insert placeholder data into the local_legends database with Python to ensure that everything works as expected. For this stage I have set the main route as Register, which means every time I make the python server live, I will be testing with Register.html.
-
-The first 15 tests all failed (see tests 004 to 009 in testing readme). I had to request support from Tutor Support having exhausted the documentation and attempts to use AI. However, the connection is now working:
-
-![Adding values to database](/local_legends/static/images/design-stages/stage-five-design-g.png)
-
-#### Create a review
-
-This section will focus on leaving only one review for only one restaurant. But to do that I first need to create a record in the Restaurants table so I can build the visual aspects of restaurants.html around that. I will document this as I go. For ease, I am going to use command line controls to populate the restaurants table with one row:
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-five-design-h.png)
-
-The restaurants page is now complete, and I can see a list of everything in the Restaurants database.
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-five-design-i.png)
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-five-design-j.png)
-
-The Creating and Reading of CRUD is now complete.
-
-
-
-
-
-
-
-
-
-
-
-### Stage Six - Update (CRUD)
-
-There will be two ways to update details in this project; user details and review edits.
-
-I did start this stage by creating routes for user details but realised that I would first need to create the session. To update user details, it's essential the user is able to log in. However, it's not essential for the user to be logged in to leave a review, at least not in this stage (it will be at a later stage). For now, I need to do the minimum to ensure this project meets CRUD design.
-
-#### Reviews
-
-At this stage I will allow a 'guest' to leave a review just so we can pass the Update aspect of CRUD. This is possible with the new Restaurants page. I will add a button to each restaurant section and attempt to pass the restaurant ID through the URL, then display the reviews for that particular restaurant. I will then allow a guest to edit any review they see for CRUD purposes (a login system will be created at a later date and will allow only the author to edit their own reviews).
-
-This script is now operational. Observe the first review available:
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-six-a.png)
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-six-b.png)
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-six-c.png)
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-six-d.png)
-
-### Stage Seven - Delete (CRUD)
-
-Stage Seven will focus on the last aspect of CRUD design and will allow a guest to delete from the database. In this example I will be using edit_review.html so that the user can delete a review. At this stage I have not yet created a login system, so I will need to allow anyone to delete a review. The function will not check requests against a user ID at this stage.
-
-#### Delete Review
-
-In this example I will delete the first review in the table assigned to Monster Munch.
-
-Here, we can see the review in the list.
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-seven-a.png)
-
-We click 'Edit Review' to enter the edit screen.
-
-Then we click 'Delete Review'.
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-seven-b.png)
-
-Now we can see the review is no longer displayed. The record has been deleted from the database.
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-seven-a.png)
-
-Stage Seven is now complete. My next stage will focus on creating the login system so that I can add some validation to stop guests editing and deleting reviews.
-
-### Stage Eight - Creating the login system
-
-For design purposes I will be using the following login details:
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-a.png)
-
-This stage has been very difficult to create. I tested a few different methods, but in the end, I had to settle for a step-by-step approach that forced the user to redirect to certain pages at each stage, just so I could see where it was working and where it was going wrong. I will document these stages as I go.
-
-At this stage, the form only redirects when it detects a form submission. This redirect means that the form is working, and so is the syntax of the function so far.
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-b.png)
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-c.png)
-
-Now I've added a section to redirect if the email is matched and the query works, which it does. Next is the password check.
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-d.png)
-
-The structure of the function works when hard-coded.
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-e.png)
-
-Now it works when form submitted.
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-f.png)
-
-To test the sessions were working correctly, I updated the Welcome Banner to show the username when logged in, and amended the nav bar to incorporate a check to see if the is_logged_in session was set, then display Sign In / Sign Out
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-g.png)
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-h.png)
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-i.png)
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-eight-design-j.png)
-
-This now completes Stage Eight.
-
-### Stage Nine - Defensive Programming
-
-#### Is Logged In
-
-The permissions for this project will follow CRUD design and will be set out as follows:
-
-| CRUD   | Guests | Registered Accounts |
-| --- | --- | ---  |
-| Create | No*   | Yes                 |
-| Read   | Yes    | Yes                 |
-| Update | No     | Yes                 |
-| Delete | No     | Yes                 |
-
-* Except to create account
-
-While Registered Accounts will have permission to create, update and delete their own reviews, they will not have the permission to alter other user's reviews.
-
-The next stage will centre around defensive programming.
-
-Is Logged In is one of the sessions that is created when the user logs in. I will amend each function to check for this being set before the function executes, else the user is directed back to the sign in page.
-
-![Adding a row to restaurants using command line](/local_legends/static/images/design-stages/stage-nine-design-a.png)
-
-I've added this code to every function with update and delete design aspects.
-
-I want to add another failsafe to my project, so I will amend the templates to only show the parts I need it to
-
-#### Leave Review
-
-
-
-
-
-
-
-#### Password Hashing
-
-
-
-#### Administrator Privileges
-
-
-
-
-
-#### Login
-
-
-***
-
-## Features in Final Version
-
-
-### Base Template
-
-
-### Profile
-
-### Contact Us
-
-
-### Restaurants
-
-### Restaurant Profile / Leave Review
-
-
-### Home
-
-
-
-### Register
-
-
-
-### Sign In
-
-
-
-### 404 page
-
+The user will be able to view all of their previous orders
 
 
 ***
