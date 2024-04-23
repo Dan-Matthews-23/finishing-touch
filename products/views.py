@@ -256,12 +256,27 @@ def render_modification_form(request, product_id):
 def modify_product(request):
   if request.user.is_superuser:
     try:
+       
+        
         product_id = request.POST['selected_pid']
         get_product = Products.objects.filter(product_id=product_id).first()
 
         if get_product:
-            protein_source = request.POST['protein_source'] == "Yes"
-            fibre_source = request.POST['fibre_source'] == "Yes"
+
+            posted_protein_source = request.POST.get('protein_source')
+            posted_fibre_source = request.POST.get('fibre_source')
+
+            if posted_protein_source == "true":
+                protein_source = True
+            else:
+                protein_source = False
+            
+            if posted_fibre_source == "true":
+                fibre_source = True
+            else:
+                fibre_source = False            
+
+            print(f" Protein source is {protein_source} and Fibre source is {fibre_source}")
             # Assuming Products is a model manager, fetch the instance first
             product_to_update = get_product
             product_price = Decimal(request.POST['product_price'])
