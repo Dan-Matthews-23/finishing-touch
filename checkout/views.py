@@ -246,7 +246,8 @@ def process_checkout(request):
                                                                                  
                         request.session['basket'] = order_data
                         basket_session = request.session['basket']      
-                basket = request.session.get('basket', {})    
+                basket = request.session.get('basket', {})
+                print(f"Basket contents is {basket}")    
                 profile = get_object_or_404(UserProfile, user=request.user)
                 form = OrderForm(request.POST, instance=profile)
                 stripe_id = request.POST.get('client_secret').split('_secret')[0]
@@ -255,51 +256,57 @@ def process_checkout(request):
                 total = 0.00
                 order_total = 0 
                 order = Orders(
-                            user_profile=profile, 
-                            full_name=form_data['full_name'],
-                            email=form_data['email'],
-                            phone_number = form_data['phone_number'],
-                            postcode = form_data['postcode'],
-                            town_or_city = form_data['town_or_city'],
-                            street_address1 = form_data['street_address1'],
-                            street_address2 = form_data['street_address2'],
-                            county = form_data['county'],
-                            stripe_id =  stripe_id, 
-                        )            
+                    user_profile=profile, 
+                    full_name=form_data['full_name'],
+                    email=form_data['email'],
+                    phone_number = form_data['phone_number'],
+                    postcode = form_data['postcode'],
+                    town_or_city = form_data['town_or_city'],
+                    street_address1 = form_data['street_address1'],
+                    street_address2 = form_data['street_address2'],
+                    county = form_data['county'],
+                    stripe_id =  stripe_id, 
+                )             
                 order.save()
+                print(f"Basket after creating orders is {basket}") 
                 request.session['order_number'] = order.order_number
-                order_number = request.session['order_number']    
+                order_number = request.session['order_number']   
+
+
                 for item in basket:
                     product = Products.objects.get(product_id=item['product_id'])
                     line_item_total = float(product.product_price) * int(item['product_quantity'])
-                    order_total += line_item_total                        
+                    order_total += line_item_total 
+                    
                     order_line_item = OrderLineItem(
-                                        order=order,
-                                        product=product,
-                                        quantity=item['product_quantity'],
-                                        order_total=line_item_total 
-                                    )
+                        order=order,
+                        product=product,
+                        quantity=item['product_quantity'],
+                        lineitem_total=line_item_total, 
+                    )
                     order_line_item.save()
-                    order.order_total = order_total                        
-                    order.save()
-                    total = sum(float(item['price']) for item in basket)
-                    stripe_total = round(total * 100)
-                    stripe.api_key = stripe_secret_key
-                    intent = stripe.PaymentIntent.create(
+
+                order.order_total = order_total        
+                order.save()
+                print(f"Basket after creating order line items is {basket}") 
+                total = sum(float(item['price']) for item in basket)
+                stripe_total = round(total * 100)
+                stripe.api_key = stripe_secret_key
+                intent = stripe.PaymentIntent.create(
                             amount=stripe_total,
                             currency=settings.STRIPE_CURRENCY,
                         )
                 
-                    template = 'checkout/checkout.html'
+                template = 'checkout/checkout.html'
                     
-                    context = {
+                context = {
                         'form_data': form_data,
                         'order_form': order_form,
                         'stripe_public_key': stripe_public_key,
                         'client_secret': intent.client_secret,   
                     }
                     
-                    return render(request, template, context)
+                return render(request, template, context)
             
             template = 'checkout/checkout.html'
             
@@ -345,21 +352,13 @@ def process_checkout(request):
 
 
 def checkout_success(request, order_number):
-    """
-    Handle successful checkouts
-    """
-    save_info = request.session.get('save_info')
+    profile = UserProfile.objects.get(user=request.user)
     order = get_object_or_404(Orders, order_number=order_number)
-
-    if request.user.is_authenticated:
-        profile = UserProfile.objects.get(user=request.user)
-        # Attach the user's profile to the order
-        order.user_profile = profile
-        order.save()
-
-        # Save the user's info
-        if save_info:
-            profile_data = {
+    
+    order.user_profile = profile
+    order.save()
+    
+    profile_data = {
                 'phone_number': order.phone_number,               
                 'postcode': order.postcode,
                 'town_or_city': order.town_or_city,
@@ -367,9 +366,26 @@ def checkout_success(request, order_number):
                 'street_address2': order.street_address2,
                 'county': order.county,
             }
-            user_profile_form = UserProfileForm(profile_data, instance=profile)
-            if user_profile_form.is_valid():
-                user_profile_form.save()
+   
+    user_profile_form = UserProfileForm(profile_data, instance=profile)
+    if user_profile_form.is_valid():
+        user_profile_form.save()
+    order_details = []  # Use a list to store details of multiple products if needed
+    order_line_items = order.lineitems.all()  # Get related OrderLineItem objects
+
+    for item in order_line_items:
+        order_details.append({
+            'product_name': item.product.product_name,  
+            'quantity': item.quantity,
+            'lineitem_total': item.lineitem_total,  # Use the correct field name
+            'phone_number': item.order.phone_number,  
+        })
+    order = order_line_items.first().order  # Get the associated order
+    order.update_total()  # Recalculate the order total
+       
+
+        # Save the user's info
+        
 
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
@@ -388,6 +404,8 @@ def checkout_success(request, order_number):
     template = 'checkout/order_confirmed.html'
     context = {
         'order': order,
+        'profile_data': profile_data,
+        'order_details': order_details,
     }
 
     return render(request, template, context)

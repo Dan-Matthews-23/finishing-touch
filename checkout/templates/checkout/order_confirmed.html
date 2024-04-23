@@ -11,24 +11,50 @@
 
 
 
-<div class="container-fluid align-center with-borders" id="order-details-container">
-    <div class="row  product-row align-center ">
-        <div class="col  align-center product-col">
-            <div class="card ">
-                <div class="card-body ">
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders align-center">
-                            <h5 class="card-title">Order confirmed</h5>
-                        </div>
-                    </div>
-                    <div class="row with-borders align-center">
-                        <div class="col with-borders col-sm-12 col-md-12 col-lg-8 col-xl-8">Order confirmed!</div>
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid card" id="order-confirmation-container">
+    <div class="row  ">
+        <div class="col ">
+            <h2 class="card-title">Order confirmed</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3 class="header">Order Details</h3>
+            <hr>
+            {% for i in order_details %}
+            {{ i.product_name }}
+            (x{{ i.quantity }})
+            <br>
+            <strong>£{{i.lineitem_total}}</strong>
+            <br>
+            <br>
+            {% endfor %}
+            <br>
+            <strong>Total: £{{ order.order_total }}</strong> <br> <br>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3 class="header">Delivery Details</h3>
+            <hr>
+            <br>
+            {{profile_data.street_address1}}
+            <br>
+            {{profile_data.street_address2}}
+            <br>
+            {{profile_data.town_or_city}}
+            <br>
+            {{profile_data.county}}
+            <br>
+            {{profile_data.postcode}}
+            <hr>
+            <br>          
         </div>
     </div>
 </div>
+
+
 {% endblock %}
 
 

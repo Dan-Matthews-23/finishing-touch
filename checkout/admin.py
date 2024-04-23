@@ -9,7 +9,7 @@ from .models import Orders, OrderLineItem, Reviews
 
 class OrderLineItemAdminInline(admin.TabularInline):
     model = OrderLineItem
-    readonly_fields = ('order_total',)
+    readonly_fields = ('lineitem_total',)
 
 
 class OrderAdmin(admin.ModelAdmin):
