@@ -108,16 +108,8 @@
                                     </ul>
                                 </li>
                             </ul>
-                            {% endif %}
-                        <li id="basket-icon">
-                            <i class=" fa-solid fa-cart-shopping fa-2xl"></i>
-                            </a>
-                        </li>
-                        {% if 'total_price' in request.session %}
-                        <li id="basket-total">£{{request.session.total_price}}</li>
-                        {% else %}
-                        <li id="basket-total">£0.00</li>
-                        {% endif %}
+                            {% endif %}                     
+                        
                     </ul>
                 </div>
             </div>
@@ -137,11 +129,7 @@
                     <div class="row row-index-right g-0">
                         <div class="col-index-background-right g-0">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-6 g-0 align-center ">
-                                <h2 class="index-header">Free delivery all summer!</h2>                               
-                               
-                                <p class="index-header lg-padding-not-left">
-                                    <button type="button" class="btn btn-light">Shop Now</button>
-                                </p>
+                                <h2 class="index-header"><strong>Free delivery all summer!</strong></h2>                        
                             </div>
                         </div>
                     </div>
@@ -150,18 +138,7 @@
         </div>
     </section>
     <!--End of banner section-->
-
-    <div class="container" id="message-container">
-        <div class="row">
-            <div class="col col-sm-12 col-lg-12">
-                {% if messages %}                
-                    {% for message in messages %}
-                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                    {% endfor %}               
-                {% endif %}
-            </div>
-        </div>
-    </div>
+    
 
     
 
