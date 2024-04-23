@@ -239,50 +239,65 @@ def render_modification_form(request, product_id):
 
 
 
-MOFIDY IS NOT WORKING
-FIX IT
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def modify_product(request):
-    if request.user.is_superuser:
-        try:
-            product_id = request.POST['selected_pid']          
-            if request.POST['protein_source'] == "Yes":
-                protein_source = True
-            else:
-                protein_source = False
-            
-            if request.POST['fibre_source'] == "Yes":
-                fibre_source = True
-            else:
-                fibre_source = False            
-            get_product = Products.objects.filter(product_id=product_id).first() 
-            print(f"Type of price is {type(get_product['product_price'])}")       
-            get_product.product_placeholder_name = request.POST['product_placeholder_name'],
-            get_product.product_name = request.POST['product_name'],
-            get_product.product_price = Decimal(request.POST['product_price']),
-            get_product.product_short_description = request.POST['product_short_description'],
-            get_product.protein_source = protein_source,
-            get_product.fibre_source = fibre_source,
-            get_product.product_image_url =  request.POST['product_image_url'],
-            get_product.category_id = request.POST['category_id'],
-            get_product.calorie_content = int(request.POST['calorie_content']),
-            get_product.protein_content = Decimal(request.POST['protein_content']),
-            get_product.fibre_content = Decimal(request.POST['fibre_content']),
-            get_product.fat_content = Decimal(request.POST['fat_content']),
-            get_product.saturated_fat_content = Decimal(request.POST['saturated_fat_content']),
-            get_product.carbohydrate_content = Decimal(request.POST['carbohydrate_content']),
-            get_product.carbohydrate_sugar_content = Decimal(request.POST['carbohydrate_sugar_content']),
-            get_product.salt_content = Decimal(request.POST['salt_content']), 
-            get_product.save()
+  if request.user.is_superuser:
+    try:
+        product_id = request.POST['selected_pid']
+        get_product = Products.objects.filter(product_id=product_id).first()
+
+        if get_product:
+            protein_source = request.POST['protein_source'] == "Yes"
+            fibre_source = request.POST['fibre_source'] == "Yes"
+            # Assuming Products is a model manager, fetch the instance first
+            product_to_update = get_product
+            product_price = Decimal(request.POST['product_price'])
+            product_to_update.product_placeholder_name = request.POST['product_placeholder_name']
+            product_to_update.product_name = request.POST['product_name']
+            product_to_update.product_price = Decimal(request.POST['product_price'])
+            product_to_update.product_short_description = request.POST['product_short_description']
+            product_to_update.protein_source = protein_source
+            product_to_update.fibre_source = fibre_source
+            product_to_update.product_image_url =  request.POST['product_image_url']
+            product_to_update.category_id = 9
+            product_to_update.calorie_content = int(request.POST['calorie_content'])
+            product_to_update.protein_content = Decimal(request.POST['protein_content'])
+            product_to_update.fibre_content = Decimal(request.POST['fibre_content'])
+            product_to_update.fat_content = Decimal(request.POST['fat_content'])
+            product_to_update.saturated_fat_content = Decimal(request.POST['saturated_fat_content'])
+            product_to_update.carbohydrate_content = Decimal(request.POST['carbohydrate_content'])
+            product_to_update.carbohydrate_sugar_content = Decimal(request.POST['carbohydrate_sugar_content'])
+            product_to_update.salt_content = Decimal(request.POST['salt_content'])
+            product_to_update.save()  # Save the updated product instance
             messages.success(request, 'Product modified successfully!')
             return redirect(request.META.get('HTTP_REFERER'))
-        except (ValueError, TypeError) as e:
-                error_message = f'Error converting data: {str(e)}'
-                return redirect(request.META.get('HTTP_REFERER'))
-    else:
-        print("You do not have authorization to access that page")
-        return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            print("Product not found")
+            # Handle product not found scenario (optional)
+            return redirect(request.META.get('HTTP_REFERER'))
+
+    except (ValueError, TypeError) as e:
+      error_message = f'Error converting data: {str(e)}'
+      return redirect(request.META.get('HTTP_REFERER'))
+  else:
+    print("You do not have authorization to access that page")
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+
 
 
 
