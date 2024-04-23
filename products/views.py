@@ -325,6 +325,48 @@ def modify_product(request):
 
 
 
+def delete_product(request):
+    if request.user.is_superuser:
+        try:
+            product_id = request.POST['id_to_delete']
+            confirm = request.POST.get('confirm')
+
+            if not confirm:
+                messages.error(request, 'You must tick the confirmation box!')
+                return redirect(request.META.get('HTTP_REFERER'))
+
+            else:
+                get_product = Products.objects.filter(product_id=product_id).first()
+
+                if get_product:
+                    get_product.delete()  # Delete the product instance
+                    messages.success(request, 'Product deleted successfully!')
+                    return redirect('manage_products')
+                else:
+                    messages.error(request, 'There was an error while deleting this product. Please try again!')
+                    return redirect(request.META.get('HTTP_REFERER'))
+
+        except (ValueError, TypeError) as e:
+            error_message = f'Error converting data: {str(e)}'
+            return redirect(request.META.get('HTTP_REFERER'))
+    else:
+        print("You do not have authorization to access that page")
+        return redirect(request.META.get('HTTP_REFERER'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

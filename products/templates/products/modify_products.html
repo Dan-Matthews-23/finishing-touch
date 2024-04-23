@@ -5,20 +5,20 @@
 <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
 {% block content %}
-<form action="{% url 'modify_product' %}" method="POST">
-    <input type="hidden" name="selected_pid" id="selected_pid" value="{{selected_pid}}">
 
-    {% csrf_token %}
-    <div class="container-fluid" id="add_product">
-        <div class="row">
-            <div class="col header-div">
-                <h3 class="header">
-                    Modify Product
-                </h3>
-            </div>
+<div class="container-fluid" id="add_product">
+    <div class="row">
+        <div class="col header-div">
+            <h3 class="header">
+                Modify Product
+            </h3>
         </div>
-        <div class="row">
-            <div class="col">
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="{% url 'modify_product' %}" method="POST">
+                <input type="hidden" name="selected_pid" id="selected_pid" value="{{selected_pid}}">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col">
                         <p>{{ product_form.product_placeholder_name | as_crispy_field }}</p>
@@ -28,7 +28,6 @@
                         <p>{{ product_form.protein_source | as_crispy_field }}</p>
                         <p>{{ product_form.fibre_source | as_crispy_field }}</p>
                         <p>{{ product_form.product_image_url | as_crispy_field }}</p>
-                        
                         <p>{{ product_form.calorie_content | as_crispy_field }}</p>
                         <p>{{ product_form.protein_content | as_crispy_field }}</p>
                         <p>{{ product_form.fibre_content | as_crispy_field }}</p>
@@ -38,18 +37,35 @@
                         <p>{{ product_form.carbohydrate_sugar_content | as_crispy_field }}</p>
                         <p>{{ product_form.salt_content | as_crispy_field }}</p>
                     </div>
-                    <div class="row">
-                        <div class="col btn-div">
-                            
-                            <button type="submit" class="btn orderBtn" id="checkout">Modify Product </button>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col btn-div">
+                        <button type="submit" class="btn orderBtn" id="checkout">Modify Product </button>
                     </div>
                 </div>
-            </div>
+            </form>
+            <br><br>
+            <form action="{% url 'delete_product' %}" method="POST">
+                <input type="hidden" name="id_to_delete" id="id_to_delete" value="{{selected_pid}}">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col btn-div">
+                        <button type="submit" class="btn orderBtn" id="checkout">Delete Product </button>
+                        <br>
+                        
+                        <input type="checkbox" id="confirm" name="confirm" value="I understand that deleting a product is not reversible">
+                        <label for="vehicle1">I understand that deleting a product is not reversible</label><br>
+                        
+                        
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    
-    <br><br>
+</div>
+</div>
+
+<br><br>
 
 
 </form>
