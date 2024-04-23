@@ -107,6 +107,7 @@ form.addEventListener('submit', function (ev) {
                 $('#submit-button').attr('disabled', false);
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
+                    window.location.href = "{% url 'checkout_success' order.order_number %}";
                     form.submit();                    
                     
                 }

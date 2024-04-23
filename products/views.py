@@ -74,57 +74,79 @@ def delete_from_favourites(request):
 from decimal import Decimal
 
 
+                    
+import uuid
 
+
+
+
+from decimal import Decimal
 
 @login_required
 def add_to_order(request):
-  if request.method == 'POST':
-    product_id = request.POST['product_test']
-    get_product = Products.objects.get(product_id=product_id)
-    quantity = int(request.POST['quantity'])
-    product_default_price = get_product.product_price
-    cost = Decimal(product_default_price) * quantity  # Use Decimal for accuracy
+    if request.method == 'POST':
+        get_order_items = request.session.get('order_items')
+        print(f" Order Items: {get_order_items}")
 
-    # Check if an order already exists in the session
-    if 'order_items' in request.session:
-      order_items = request.session['order_items']
+        current_order_number = request.session.get('order_number')
+        print(f"Order Number is {current_order_number}")
 
-      # Check if the product is already in the order
-      if product_id in order_items:
-        # Update existing product quantity
-        order_items[product_id]['quantity'] = quantity
+        product_id = int(request.POST['product_test'])
+        quantity = int(request.POST['quantity'])
+        get_product = Products.objects.get(product_id=product_id)
+        product_default_price = get_product.product_price
 
-        # Calculate total cost for this product (update cost if needed)
-        order_items[product_id]['cost'] = str(Decimal(product_default_price) * quantity)
-      else:
-        # Add as a new order item with total cost
-        order_items[product_id] = {
-          'product_name': get_product.product_name,
-          'quantity': quantity,
-          'cost': str(Decimal(product_default_price) * quantity),
-        }
-    else:
-      # Create a new order if it doesn't exist
-      order_items = {
-        product_id: {
-          'product_name': get_product.product_name,
-          'quantity': quantity,
-          'cost': str(Decimal(product_default_price) * quantity),
-        }
-      }
+        # Check if an order already exists in the session
+        if 'order_items' in request.session:
+            order_items = request.session['order_items']
+        else:
+            order_items = {}
+            request.session['order_number'] = create_order_number()  # New order
 
-    # Update the session (order items already updated)
-    request.session['order_items'] = order_items
+        # Generate order number if doesn't exist
+        if 'order_number' not in request.session:
+            request.session['order_number'] = create_order_number()
 
-    # Calculate total cost for all items (moved outside loops)
-    total_cost = 0
-    for item_id, item_data in order_items.items():
-      item_cost = Decimal(item_data['cost'])
-      total_cost += item_cost
+        # Check if the product is already in the order
+        if product_id in order_items:
+            # Update existing product quantity and cost
+            order_items[product_id]['quantity'] += quantity  # Increment
+            order_items[product_id]['cost'] = str(Decimal(product_default_price) * order_items[product_id]['quantity'])
+        else:
+            # Add as a new order item with total cost
+            order_items[product_id] = {
+                'product_name': get_product.product_name,
+                'quantity': quantity,
+                'cost': str(Decimal(product_default_price) * quantity),
+            }
 
-    # Now you have the total cost for all items
-    request.session['order_total'] = str(total_cost)
-    return redirect(request.META.get('HTTP_REFERER'))
+        # Recalculate total after changes
+        total_cost = sum(Decimal(item_data['cost']) for item_data in order_items.values())
+
+        # Update the session 
+        request.session['order_items'] = order_items
+        request.session['order_total'] = str(total_cost)
+
+        return redirect(request.META.get('HTTP_REFERER'))
+
+
+def create_order_number():
+    """Generates a unique order number."""
+    return uuid.uuid4().hex.upper()  # Or customize the format
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @login_required 

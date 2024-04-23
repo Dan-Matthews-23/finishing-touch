@@ -118,7 +118,7 @@ class StripeWH_Handler:
         else:
             order = None
             try:
-                order = Order.objects.create(
+                order = Orders.objects.create(
                     full_name=shipping_details.name,
                     user_profile=profile,
                     email=billing_details.email,
@@ -129,7 +129,7 @@ class StripeWH_Handler:
                     street_address2=shipping_details.address.line2,
                     county=shipping_details.address.state,
                     #original_bag=bag,
-                    stripe_pid=pid,
+                    stripe_id=pid,
                 )
                 for item in basket:
                     product = Products.objects.get(product_id=item['product_id'])

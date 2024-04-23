@@ -18,7 +18,7 @@ urlpatterns = [
     path('cache_checkout_data/', views.cache_checkout_data, name='cache_checkout_data'),
     path('wh/', webhook, name='webhook'),
     path('order_confirmed/', views.checkout_success, name='checkout_success'),
-    path('render_checkout_form/', views.render_checkout_form, name='render_checkout_form'),
+    #path('render_checkout_form/', views.render_checkout_form, name='render_checkout_form'),
 
     
     

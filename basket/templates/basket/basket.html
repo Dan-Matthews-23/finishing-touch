@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{% static 'basket/css/basket.css' %}">
 {% endblock %}
 {% block content %}
-<form action="{% url 'render_checkout_form' %}" method="POST">
+<form action="{% url 'process_checkout' %}" method="POST">
     <div class="container-fluid" id="form-container">
         <div class="row">
             <div class="col header-div">
