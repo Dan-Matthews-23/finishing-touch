@@ -5,6 +5,7 @@ from accounts.models import UserProfile
 from django.contrib.auth.decorators import login_required
 import json
 from django.contrib import messages
+import logging
 
 
 
@@ -190,10 +191,13 @@ def manage_products(request):
                 error_message = f'Error converting data: {str(e)}'
                 return redirect(request.META.get('HTTP_REFERER'))    
         else:
+            get_chef_message = ChefMessages.objects.first()
+            chef_messages = get_chef_message.chef_message
             template = 'products/manage_products.html'
             context = {
                 'get_products': get_products,                
                 'product_form' : product_form,
+                'chef_messages': chef_messages,
             }
             return render(request, template, context)
     else:
@@ -204,6 +208,43 @@ def manage_products(request):
 
 
 
+
+logger = logging.getLogger(__name__)  # Set up basic logging
+
+@login_required 
+def change_chef_message(request):
+    if request.user.is_superuser: 
+        if request.method == 'POST':
+            get_chef_message = ChefMessages.objects.first()
+            new_message = request.POST['change-chef-message']
+
+            try:
+                if not new_message or len(new_message) < 200:
+                    raise ValueError("Chef message must have at least 200 characters")
+
+                message_to_update = get_chef_message
+                logger.debug("Old message: %s", message_to_update.chef_message)
+                message_to_update.chef_message = new_message
+                message_to_update.save()
+                logger.debug("New message: %s", message_to_update.chef_message)
+
+                messages.success(request, 'Chef message modified!')
+                return redirect(request.META.get('HTTP_REFERER'))
+
+            except ValueError as e:
+                logger.error("Error updating chef message: %s", e) 
+                messages.error(request, str(e))
+                return redirect(request.META.get('HTTP_REFERER'))
+
+            except ChefMessages.DoesNotExist:  # Specific for not finding the message
+                logger.error("Chef message not found.")
+                messages.error(request, "Chef message could not be found for editing.")
+                return redirect(request.META.get('HTTP_REFERER'))
+
+        else:
+            logger.warning("Non-superuser attempted to access change_chef_message: %s", request.user)
+            print("You do not have authorization to access that page")
+            return redirect(request.META.get('HTTP_REFERER'))
 
 
 
@@ -277,8 +318,7 @@ def render_modification_form(request, product_id):
 
 def modify_product(request):
   if request.user.is_superuser:
-    try:
-       
+    try:      
         
         product_id = request.POST['selected_pid']
         get_product = Products.objects.filter(product_id=product_id).first()

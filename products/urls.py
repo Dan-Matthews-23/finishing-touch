@@ -15,6 +15,7 @@ urlpatterns = [
     path('manage_products/', views.manage_products, name='manage_products'),
     path('render_modification_form/<product_id>/', views.render_modification_form, name='render_modification_form'),
     path('modify_product/', views.modify_product, name='modify_product'),
-     path('delete_product/', views.delete_product, name='delete_product'),
+    path('delete_product/', views.delete_product, name='delete_product'),
+    path('change_chef_message/', views.change_chef_message, name='change_chef_message'),   
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
