@@ -8,6 +8,14 @@ body {
     background-color: #F7F9F9;
 }
 
+.message-container {
+    width: 80%;
+    padding: 10px;
+    margin: auto;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
 
 #profile-update-form,
 #stripe-container {

@@ -5,8 +5,9 @@ from .models import UserProfile
 from .forms import UserProfileForm
 from checkout.models import Orders, Reviews
 from products.models import Products
+from django.views.decorators.http import require_POST
 
-
+@require_POST
 @login_required
 def profile(request):  
     profile = get_object_or_404(UserProfile, user=request.user)
