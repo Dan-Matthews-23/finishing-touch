@@ -134,4 +134,29 @@ font-weight: bold;
     width: 20%;
 }
 
+#parent-container {
+    width: 90%;
+}
+
+#profile-container {
+    width: 75%;
+    margin: auto;
+    text-align: center;
+}
+
+#previous-orders-preview-container {
+    width: 75%;
+    margin: auto;
+    text-align: center;
+}
+
+@media screen and (max-width: 1200px) {
+    
+   
+    
+
+    
+
+    
+}
 
