@@ -137,8 +137,18 @@
             </div>
         </div>
     </form>
+    <form method="POST" action="{% url 'render_profile'%}">
+        {% csrf_token %}
+        <div class="row ">
+            <div class="col align-center">
+                <button type="submit" class="btn orderBtn">Back to orders</button>
+            </div>
+        </div>
+    </form>
 </div>
 {% endif %}
+
+
 
 
 

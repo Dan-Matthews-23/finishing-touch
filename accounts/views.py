@@ -53,8 +53,7 @@ def order_history(request, order_number):
     order = get_object_or_404(Orders, order_number=order_number)
     try:
         reviews = Reviews.objects.filter(order=order)
-        if reviews:
-            print("Reviews found:", reviews)  
+        if reviews:            
             for review in reviews:            
                 print(review.review_title, review.review_body, review.stars) 
             star_range = range(review.stars) 
@@ -91,6 +90,6 @@ def leave_review(request, order_number):
             review_body = request.POST.get('review_body')           
             add_review = Reviews(order=order, stars=selected_rating, review_title=review_title, review_body=review_body) 
             add_review.save()  # Save the correct object             
-        except Exception as e:  
-            print(f"There was an error while saving your review: {e}")
+        except:  
+             messages.error(request,('There was an error prcocessing your review. Please try again in a few minutes'))
         return redirect(request.META.get('HTTP_REFERER'))
