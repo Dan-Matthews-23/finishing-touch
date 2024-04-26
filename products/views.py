@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 import json
 from django.contrib import messages
 import logging
+from decimal import Decimal                    
+import uuid
+
 
 
 
@@ -72,16 +75,10 @@ def delete_from_favourites(request):
 
         return redirect(request.META.get('HTTP_REFERER'))
 
-from decimal import Decimal
-
-
-                    
-import uuid
 
 
 
 
-from decimal import Decimal
 
 @login_required
 def add_to_order(request):

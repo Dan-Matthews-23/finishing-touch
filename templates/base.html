@@ -85,7 +85,7 @@
                                         {% endif %}
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-dark">
-                                        <li><a class="dropdown-item" href="{% url 'profile' %}">Your profile</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'render_profile' %}">Your profile</a></li>
                                         {% if request.user.is_superuser %}
                                         <li><a href="{% url 'manage_products' %}" class="dropdown-item">Add/Remove
                                                 items</a></li>

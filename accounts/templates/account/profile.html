@@ -19,7 +19,7 @@
             <div class="container card " id="profile-container">
                 <div class="row">
                     <div class="col">                        
-                        <form class="mt-3" action="{% url 'profile' %}" method="POST" id="profile-update-form">
+                        <form class="mt-3" action="{% url 'update_profile' %}" method="POST" id="profile-update-form">
                             {% csrf_token %}
                             {{ form|crispy }}                            
                             <button type="submit" class="btn orderBtn">Update Profile</button>

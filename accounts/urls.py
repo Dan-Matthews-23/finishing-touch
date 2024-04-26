@@ -8,7 +8,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     #path('', views.showOrders, name='showOrders'),
-    path('', views.profile, name='profile'),
+    path('render_profile', views.render_profile, name='render_profile'),
+    path('update_profile', views.update_profile, name='update_profile'),
     path('order_history/<order_number>',
          views.order_history,
          name='order_history'),

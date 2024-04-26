@@ -9,7 +9,7 @@ from django.views.decorators.http import require_POST
 
 
 @login_required
-def profile(request):  
+def update_profile(request):  
     profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=profile)
@@ -22,6 +22,21 @@ def profile(request):
                             'the form is valid.'))
     else:
         form = UserProfileForm(instance=profile)
+    orders = profile.orders.all().order_by('-date')
+
+    template = 'account/profile.html'
+    context = {
+        'form': form,
+        'orders': orders,
+        'on_profile_page': True
+    }
+
+    return render(request, template, context)
+
+@login_required
+def render_profile(request):  
+    profile = get_object_or_404(UserProfile, user=request.user)    
+    form = UserProfileForm(instance=profile)
     orders = profile.orders.all().order_by('-date')
 
     template = 'account/profile.html'
