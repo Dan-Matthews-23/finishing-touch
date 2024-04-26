@@ -279,7 +279,10 @@
 }
 
 #remove-item {
-    color: red;
+    color: black;
+    border: none;
+    background-color: inherit;
+    
 
 }
 
@@ -441,10 +444,7 @@ th {
     border-bottom-style: solid;
 }
 
-#remove-item {
-    color: red;
 
-}
 
 #remove-item-div {
     padding-top: 15px;

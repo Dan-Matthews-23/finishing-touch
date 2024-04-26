@@ -15,20 +15,7 @@
 {% block content %}
 
 
-<div class="container">
-    <div class="row">
-        <div class="col col-sm-12 col-lg-12">
-            {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-    </div>
-</div>
-<br>
+
 
     <div class="container-fluid card product-container" id="chef-message-top">
         <div class="row ">
@@ -93,7 +80,7 @@
                                 <input type="hidden" name="remove-item-product-id" id="remove-item-product-id" value="{{ product_id }}"
                                     class="align-left">
                                 <button type="submit" class="align-left" id="remove-item">
-                                    <i class="fa-solid fa-trash fa-xl align-left"></i>
+                                    <i class="fa-solid fa-trash fa-xl align-left" ></i>
                                 </button>
                             </p>
                             <p class="product-item-paragraph">
