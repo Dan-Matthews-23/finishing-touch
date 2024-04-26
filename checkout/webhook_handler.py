@@ -88,6 +88,14 @@ class StripeWH_Handler:
                 profile.save()
 
         order_exists = False
+
+        """
+        IS THIS PART BELOW REALLY NECESSARY? DELETE AND TEST AGAIN. 
+        """
+        
+       
+        
+        
         attempt = 1
         while attempt <= 5:
             try:
