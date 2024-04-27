@@ -4,6 +4,7 @@ dj-database-url==2.1.0
 Django==5.0.2
 django-allauth==0.60.1
 django-crispy-forms==2.1
+gunicorn==22.0.0
 jsonify==0.5
 oauthlib==3.2.2
 pillow==10.2.0
