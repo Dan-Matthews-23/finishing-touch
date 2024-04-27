@@ -8,6 +8,7 @@
 
 var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
 var clientSecret = $('#id_client_secret').text().slice(1, -1);
+
 var stripe = Stripe(stripePublicKey);
 var elements = stripe.elements();
 var style = {
@@ -75,8 +76,7 @@ form.addEventListener('submit', function (ev) {
                     address: {
                         line1: $.trim(form.street_address1.value),
                         line2: $.trim(form.street_address2.value),
-                        city: $.trim(form.town_or_city.value),
-                        country: $.trim(form.country.value),
+                        city: $.trim(form.town_or_city.value),                      
                         state: $.trim(form.county.value),
                     }
                 }
@@ -87,8 +87,7 @@ form.addEventListener('submit', function (ev) {
                 address: {
                     line1: $.trim(form.street_address1.value),
                     line2: $.trim(form.street_address2.value),
-                    city: $.trim(form.town_or_city.value),
-                    country: $.trim(form.country.value),
+                    city: $.trim(form.town_or_city.value),                    
                     postal_code: $.trim(form.postcode.value),
                     state: $.trim(form.county.value),
                 }
@@ -108,7 +107,9 @@ form.addEventListener('submit', function (ev) {
                 $('#submit-button').attr('disabled', false);
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
-                    form.submit();
+                    window.location.href = "{% url 'checkout_success' order.order_number %}";
+                    form.submit();                    
+                    
                 }
             }
         });
@@ -117,4 +118,3 @@ form.addEventListener('submit', function (ev) {
         location.reload();
     })
 });
-

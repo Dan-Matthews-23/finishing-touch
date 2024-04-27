@@ -1,28 +1,31 @@
-.StripeElement,
-.stripe-style-input {
-    box-sizing: border-box;
+.stripe-element {
     height: 40px;
-    padding: 10px 12px;
-    border: 1px solid transparent;
+}
+.stripe-style-input {
+    
+    height: 20px;    
+    border: none;
     border-radius: 0px;
     background-color: white;
-    box-shadow: 0 1px 3px 0 #e6ebf1;
-    -webkit-transition: box-shadow 150ms ease;
-    transition: box-shadow 150ms ease;
+    
 }
 
 .StripeElement--focus,
 .stripe-style-input:focus,
 .stripe-style-input:active {
-    box-shadow: 0 1px 3px 0 #cfd7df;
+    box-shadow: 0 1px 3px 0 white;
 }
 
+
+/*
 .StripeElement--webkit-autofill {
     background-color: #fefde5 !important;
 }
+*/
+
 
 .stripe-style-input::placeholder {
-    color: #aab7c4;
+    color: white;
 }
 
 .fieldset-label {
@@ -30,20 +33,32 @@
     right: .5rem;
 }
 
-#payment-form .form-control,
+
+#payment-form ,
 #card-element {
     color: #000;
-    border: 1px solid #000;
+    
 }
 
-select,
-select option {
-    color: #000000;
+#card-element {
+    background-color: white;
+    border-style: solid;
+    border-color: black;
+    height: 40px;
+    padding: 10px;
+      
+    
 }
 
-select:invalid,
-select option[value=""] {
-    color: #aab7c4 !important;
+#stripe-container {
+    
+    width: 100%;
+    
+}
+
+.form-control {
+    color: black;
+    border: none;
 }
 
 #loading-overlay {
@@ -64,3 +79,63 @@ select option[value=""] {
     margin: 0;
     height: 100%;
 }
+
+.black-background {
+    background-color: black;
+}
+
+#parent-container {
+    width: 100%;
+}
+
+#order-summary-container {
+    width: 40%;
+}
+
+#delivery-information-container {
+    width: 40%;
+}
+
+
+.warning {
+    font-size: 14px;
+    color: red;
+    text-align: center;
+}
+
+.header-div {
+    padding: 10px;
+}
+
+.header {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.md-padding {
+    padding: 15px;
+}
+
+#order-confirmation-container {
+    width: 30%;
+}
+
+
+@media screen and (max-width: 800px) {
+    #order-summary-container,
+    #delivery-information-container {
+        width: 100%;
+    }
+    .hide-on-small {
+        display: none;
+    }
+}
+
+#return-button-container {
+    width: 20%;
+    text-align: center;
+    margin: auto;
+    
+}
+
