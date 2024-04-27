@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .webhooks import webhook
 
-urlpatterns = [
+urlpatterns = [    
     path('process_checkout/', views.process_checkout, name='process_checkout'),
     path('checkout_success/<order_number>',
          views.checkout_success,

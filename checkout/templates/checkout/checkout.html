@@ -16,7 +16,6 @@
     <form action="{% url 'process_checkout' %}" method="POST" id="payment-form">
         {% csrf_token %}
         <input type="hidden" value="{{ client_secret }}" name="client_secret">
-        <input type="hidden" value="posted_order" name="posted_order" id="posted_order">
         
         <!--<div class="container-fluid" id="parent-container">
             <div class="row ">

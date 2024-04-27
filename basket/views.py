@@ -20,10 +20,9 @@ from django.shortcuts import render, redirect
 def view_basket(request):
     order_form = OrderForm()
     basket = request.session.get('basket', {})
-    if request.user.is_authenticated:
-        try:
-            profile = UserProfile.objects.get(user=request.user)
-            order_form = OrderForm(initial={
+    try:
+        profile = UserProfile.objects.get(user=request.user)
+        order_form = OrderForm(initial={
                 'full_name': profile.full_name,
                 'email': profile.user.email,
                 'phone_number': profile.phone_number,
@@ -33,13 +32,12 @@ def view_basket(request):
                 'street_address2': profile.street_address2,
                 'county': profile.county,
                 })
-        except UserProfile.DoesNotExist:
-            order_form = OrderForm()
-    else:
+    except UserProfile.DoesNotExist:
         order_form = OrderForm()
-        template = 'basket/basket.html'
-        context = {
+    order_form = order_form
+    template = 'basket/basket.html'
+    context = {
             'basket': basket,
             'order_form': order_form,
-        }
+    }
     return render(request, template, context)
