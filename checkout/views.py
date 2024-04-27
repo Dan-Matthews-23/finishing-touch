@@ -17,7 +17,7 @@ import stripe
 import json
 import logging
 
-logger = logging.getLogger(__name__)  # Uses the current module's name
+logger = logging.getLogger(__name__)  
 
 
 
@@ -28,10 +28,10 @@ def cache_checkout_data(request):
         stripe.api_key = settings.STRIPE_SECRET_KEY
 
         basket = request.session.get('basket', {})        
-        print(f" Basket is {basket}")
-        new_basket = []  # Create an empty list to hold multiple new basket items
+       
+        new_basket = []  
 
-        if basket:  # Check if basket is not empty
+        if basket:  
             for item in basket:
                 new_item = {
                     'product_id': item['product_id'],
@@ -44,7 +44,7 @@ def cache_checkout_data(request):
         
         stripe.PaymentIntent.modify(pid, metadata={
             'basket': json.dumps(new_basket),
-            #'save_info': request.POST.get('save_info'),
+           
             'username': request.user,
         })
         
@@ -79,22 +79,20 @@ def cache_checkout_data(request):
 
 
 
-"""
-THIS IS THE ORIGINAL
-"""
+
 def process_checkout(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-    if request.method == 'POST':
-            current_order_number = request.session.get('order_number')
-            check_for_orders = Orders.objects.filter(order_number=current_order_number).first()
-            if check_for_orders:
-                return redirect(reverse('checkout_success',
+    if request.method == 'POST':        
+        current_order_number = request.session.get('order_number')
+        check_for_orders = Orders.objects.filter(order_number=current_order_number).first()
+        if check_for_orders:
+            return redirect(reverse('checkout_success',
                                     args=[current_order_number]))
-            else:
-                try:
-                    profile = UserProfile.objects.get(user=request.user)
-                    order_form = OrderForm(initial={
+        else:
+            try:
+                profile = UserProfile.objects.get(user=request.user)
+                order_form = OrderForm(initial={
                         'full_name': request.POST['full_name'],
                         'email': request.POST['email'],
                         'phone_number': request.POST['phone_number'],                
@@ -103,13 +101,11 @@ def process_checkout(request):
                         'street_address1': request.POST['street_address1'],
                         'street_address2': request.POST['street_address2'],
                         'county': request.POST['county'],
-                        })
-                except UserProfile.DoesNotExist:
-                        order_form = OrderForm()
-            
-            
-                form = OrderForm(request.POST)
-                form_data = {
+                    })
+            except UserProfile.DoesNotExist:
+                    order_form = OrderForm()            
+            form = OrderForm(request.POST)
+            form_data = {
                         'full_name': request.POST['full_name'],
                         'email': request.POST['email'],
                         'phone_number': request.POST['phone_number'],            
@@ -119,38 +115,37 @@ def process_checkout(request):
                         'street_address2': request.POST['street_address2'],
                         'county': request.POST['county'],                        
                         }
-                get_order_data = request.session.get('order_items')
-                if get_order_data:  
-                    order_data = [] 
-                    for product_id, product_details in get_order_data.items():                
-                        get_product = Products.objects.get(product_id=product_id) 
-                        order_item = {
-                                    'product_id': int(product_id),  # Use the iterated product_id
+            get_order_data = request.session.get('order_items')
+            if get_order_data:  
+                order_data = [] 
+                for product_id, product_details in get_order_data.items():                
+                    get_product = Products.objects.get(product_id=product_id) 
+                    order_item = {
+                                    'product_id': int(product_id), 
                                     'product_quantity': int(product_details['quantity']),
                                     'price': float(product_details['cost']),
                                     'product_name':  get_product.product_name,            
                                 }
-                        order_data.append(order_item)              
-                    logger.debug(f"Received order_data: {order_data}")           
+                    order_data.append(order_item)              
+                logger.debug(f"Received order_data: {order_data}")           
                     
-                    if order_data is None or len(order_data) == 0:
-                        logger.debug(f"Received order_data: {order_data}")
-                        messages.error(request, "Your basket is empty.")
-                        logger.info("Empty order data detected")                   
-                        return redirect('prepacked_sandwiches')              
-                    else:
-                                                                                 
-                        request.session['basket'] = order_data
-                        basket_session = request.session['basket']      
-                basket = request.session.get('basket', {})                  
-                profile = get_object_or_404(UserProfile, user=request.user)
-                form = OrderForm(request.POST, instance=profile)
-                stripe_id = request.POST.get('client_secret').split('_secret')[0]
-                form.stripe_stripe_id = stripe_id
-                order_number=""
-                total = 0.00
-                order_total = 0 
-                order = Orders(
+                if order_data is None or len(order_data) == 0:
+                    logger.debug(f"Received order_data: {order_data}")
+                    messages.error(request, "Your basket is empty.")
+                    logger.info("Empty order data detected")                   
+                    return redirect('prepacked_sandwiches')              
+                else:                                                                                 
+                    request.session['basket'] = order_data
+                    basket_session = request.session['basket']      
+            basket = request.session.get('basket', {})                  
+            profile = get_object_or_404(UserProfile, user=request.user)
+            form = OrderForm(request.POST, instance=profile)
+            stripe_id = request.POST.get('client_secret').split('_secret')[0]
+            form.stripe_stripe_id = stripe_id
+            order_number=""
+            total = 0.00
+            order_total = 0 
+            order = Orders(
                     user_profile=profile, 
                     full_name=form_data['full_name'],
                     email=form_data['email'],
@@ -162,58 +157,56 @@ def process_checkout(request):
                     county = form_data['county'],
                     stripe_id =  stripe_id, 
                 )             
-                order.save()
-               
-                request.session['order_number'] = order.order_number
-                order_number = request.session['order_number']   
+            order.save()               
+            request.session['order_number'] = order.order_number
+            order_number = request.session['order_number']
 
-
-                for item in basket:
-                    product = Products.objects.get(product_id=item['product_id'])
-                    line_item_total = float(product.product_price) * int(item['product_quantity'])
-                    order_total += line_item_total 
+            for item in basket:
+                product = Products.objects.get(product_id=item['product_id'])
+                line_item_total = float(product.product_price) * int(item['product_quantity'])
+                order_total += line_item_total 
                     
-                    order_line_item = OrderLineItem(
+                order_line_item = OrderLineItem(
                         order=order,
                         product=product,
                         quantity=item['product_quantity'],
                         lineitem_total=line_item_total, 
                     )
-                    order_line_item.save()
+                order_line_item.save()
 
-                order.order_total = order_total        
-                order.save()
+            order.order_total = order_total        
+            order.save()
                 
-                total = sum(float(item['price']) for item in basket)
-                stripe_total = round(total * 100)
-                stripe.api_key = stripe_secret_key
-                intent = stripe.PaymentIntent.create(
+            total = sum(float(item['price']) for item in basket)
+            stripe_total = round(total * 100)
+            stripe.api_key = stripe_secret_key
+            intent = stripe.PaymentIntent.create(
                             amount=stripe_total,
                             currency=settings.STRIPE_CURRENCY,
                         )
                 
-                template = 'checkout/checkout.html'
+            template = 'checkout/checkout.html'
                     
-                context = {
+            context = {
                         'form_data': form_data,
                         'order_form': order_form,
                         'stripe_public_key': stripe_public_key,
                         'client_secret': intent.client_secret,   
                     }
                     
-                return render(request, template, context)
+            return render(request, template, context)
             
-            template = 'checkout/checkout.html'
+        template = 'checkout/checkout.html'
             
-            context = {
+        context = {
                     'form_data': form_data,
                     'order_form': order_form,
                     'stripe_public_key': stripe_public_key,
                     'client_secret': intent.stripe_secret_key,    
                     } 
-            return render(request, template, context)
+        return render(request, template, context)
     else:
-        print("You do not have authorization to access that page")
+        messages.error(request, "You do not have authorization to access that page")        
         return redirect('account_login')
 
    
@@ -265,21 +258,21 @@ def checkout_success(request, order_number):
     user_profile_form = UserProfileForm(profile_data, instance=profile)
     if user_profile_form.is_valid():
         user_profile_form.save()
-    order_details = []  # Use a list to store details of multiple products if needed
-    order_line_items = order.lineitems.all()  # Get related OrderLineItem objects
+    order_details = []  
+    order_line_items = order.lineitems.all()  
 
     for item in order_line_items:
         order_details.append({
             'product_name': item.product.product_name,  
             'quantity': item.quantity,
-            'lineitem_total': item.lineitem_total,  # Use the correct field name
+            'lineitem_total': item.lineitem_total,  
             'phone_number': item.order.phone_number,  
         })
-    order = order_line_items.first().order  # Get the associated order
-    order.update_total()  # Recalculate the order total
+    order = order_line_items.first().order  
+    order.update_total()  
        
 
-        # Save the user's info
+       
         
 
     messages.success(request, f'Order successfully processed! \
