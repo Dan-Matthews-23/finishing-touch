@@ -56,7 +56,7 @@ class StripeWH_Handler:
         intent = event.data.object
         pid = intent.id
         basket = intent.metadata.basket
-        save_info = intent.metadata.save_info
+        #save_info = intent.metadata.save_info
         #basket = intent.metadata.request.session.get('basket', {})
 
         # Get the Charge object
@@ -77,16 +77,14 @@ class StripeWH_Handler:
         profile = None
         username = intent.metadata.username
         if username != 'AnonymousUser':
-            profile = UserProfile.objects.get(user__username=username)
-            if save_info:
-                profile.phone_number = shipping_details.phone                
-                profile.postcode = shipping_details.address.postal_code
-                profile.town_or_city = shipping_details.address.city
-                profile.street_address1 = shipping_details.address.line1
-                profile.street_address2 = shipping_details.address.line2
-                profile.county = shipping_details.address.state
-                profile.save()
-
+            profile = UserProfile.objects.get(user__username=username)           
+            profile.phone_number = shipping_details.phone                
+            profile.postcode = shipping_details.address.postal_code
+            profile.town_or_city = shipping_details.address.city
+            profile.street_address1 = shipping_details.address.line1
+            profile.street_address2 = shipping_details.address.line2
+            profile.county = shipping_details.address.state
+            profile.save()
         order_exists = False
 
         """
