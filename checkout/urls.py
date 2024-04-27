@@ -14,4 +14,3 @@ urlpatterns = [
     path('wh/', webhook, name='webhook'),
     path('order_confirmed/', views.checkout_success, name='checkout_success'),
     ]
-    
