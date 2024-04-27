@@ -138,20 +138,8 @@ class StripeWH_Handler:
                     county=shipping_details.address.state,
                     #original_bag=bag,
                     stripe_id=pid,
-                )
-                for item in basket:
-                    product = Products.objects.get(product_id=item['product_id'])
-                    line_item_total = float(product.product_price) * int(item['product_quantity'])
-                    order_total += line_item_total                        
-                    order_line_item = OrderLineItem(
-                                        order=order,
-                                        product=product,
-                                        quantity=item['product_quantity'],
-                                        order_total=line_item_total 
-                                    )
-                    order_line_item.save()
-                    order.order_total = order_total                        
-                    order.save()
+                )                                       
+                order.save()
             except Exception as e:
                 if order:
                     order.delete()
