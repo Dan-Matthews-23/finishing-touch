@@ -9,10 +9,4 @@ class Migration(migrations.Migration):
         ('checkout', '0019_remove_reviews_product'),
     ]
 
-    operations = [
-        migrations.RenameField(
-            model_name='orderlineitem',
-            old_name='order_total',
-            new_name='lineitem_total',
-        ),
-    ]
+    
