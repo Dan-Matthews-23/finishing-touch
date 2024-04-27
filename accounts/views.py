@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import (render, redirect,
+                              reverse, get_object_or_404, HttpResponse)
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
@@ -9,7 +10,7 @@ from django.views.decorators.http import require_POST
 
 
 @login_required
-def update_profile(request):  
+def update_profile(request):
     profile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=profile)
@@ -33,9 +34,10 @@ def update_profile(request):
 
     return render(request, template, context)
 
+
 @login_required
-def render_profile(request):  
-    profile = get_object_or_404(UserProfile, user=request.user)    
+def render_profile(request):
+    profile = get_object_or_404(UserProfile, user=request.user)
     form = UserProfileForm(instance=profile)
     orders = profile.orders.all().order_by('-date')
 
@@ -53,15 +55,15 @@ def order_history(request, order_number):
     order = get_object_or_404(Orders, order_number=order_number)
     try:
         reviews = Reviews.objects.filter(order=order)
-        if reviews:            
-            for review in reviews:            
-                print(review.review_title, review.review_body, review.stars) 
-            star_range = range(review.stars) 
-        else: 
+        if reviews:
+            for review in reviews:
+                print(review.review_title, review.review_body, review.stars)
+            star_range = range(review.stars)
+        else:
             star_range = range(1)  # Create a range even if no stars
     except Reviews.DoesNotExist:
-        reviews = None 
-    order_line_items = order.lineitems.all()     
+        reviews = None
+    order_line_items = order.lineitems.all()
     template = 'account/order_history.html'
     context = {
         'order': order,
@@ -73,23 +75,23 @@ def order_history(request, order_number):
     return render(request, template, context)
 
 
-
-
-
-
 @login_required
 def leave_review(request, order_number):
-    if request.method == 'POST':       
-        order = get_object_or_404(Orders, order_number=order_number)  
-        if not request.POST.get('review_title') or not request.POST.get('review_body') or not request.POST.get('selected_rating', 0):           
-            messages.error(request,('Please fill out all fields'))
-            return redirect(request.META.get('HTTP_REFERER'))      
+    if request.method == 'POST':
+        order = get_object_or_404(Orders, order_number=order_number)
+        if not request.POST.get('review_title') or not request.POST.get(
+                'review_body') or not request.POST.get('selected_rating', 0):
+            messages.error(request, ('Please fill out all fields'))
+            return redirect(request.META.get('HTTP_REFERER'))
         try:
-            selected_rating = int(request.POST.get('selected_rating', 0))            
+            selected_rating = int(request.POST.get('selected_rating', 0))
             review_title = request.POST.get('review_title')
-            review_body = request.POST.get('review_body')           
-            add_review = Reviews(order=order, stars=selected_rating, review_title=review_title, review_body=review_body) 
-            add_review.save()  # Save the correct object             
-        except:  
-             messages.error(request,('There was an error prcocessing your review. Please try again in a few minutes'))
+            review_body = request.POST.get('review_body')
+            add_review = Reviews(order=order, stars=selected_rating,
+                                 review_title=review_title,
+                                 review_body=review_body)
+            add_review.save()
+        except Exception as e:
+            messages.error(request, ('There was an\
+            error prcocessing your review. Please try again in a few minutes'))
         return redirect(request.META.get('HTTP_REFERER'))
