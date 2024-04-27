@@ -9,10 +9,10 @@ if os.path.exists("env.py"):
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-z6=tya0-8l-&!w4wgc&pp_shtbwe1%xq-y=32d2w+xdf34%b@-'
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'DEVELOPMENT' in os.environ
 
 ALLOWED_HOSTS = ['8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io', 'megabytes-bfd0afc9e4a4.herokuapp.com']
 CSRF_TRUSTED_ORIGINS = ['https://8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io']
