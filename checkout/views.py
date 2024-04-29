@@ -148,14 +148,14 @@ def process_checkout(request):
                                 amount=stripe_total,
                                 currency=settings.STRIPE_CURRENCY,
                             )
-                template = 'checkout/checkout.html'
-                context = {
+            template = 'checkout/checkout.html'
+            context = {
                             'form_data': form_data,
                             'order_form': order_form,
                             'stripe_public_key': stripe_public_key,
-                            'client_secret': intent.client_secret,
+                            'client_secret': intent.stripe_id,
                         }
-                return render(request, template, context)
+            return render(request, template, context)
             
         
 
