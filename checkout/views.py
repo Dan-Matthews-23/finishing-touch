@@ -148,12 +148,59 @@ def process_checkout(request):
                                 amount=stripe_total,
                                 currency=settings.STRIPE_CURRENCY,
                             )
+        else:
+            try:
+                profile = UserProfile.objects.get(user=request.user)
+                order_form = OrderForm(initial={
+                            'full_name': request.POST['full_name'],
+                            'email': request.POST['email'],
+                            'phone_number': request.POST['phone_number'],
+                            'postcode': request.POST['postcode'],
+                            'town_or_city': request.POST['town_or_city'],
+                            'street_address1': request.POST['street_address1'],
+                            'street_address2': request.POST['street_address2'],
+                            'county': request.POST['county'],
+                        })
+            except UserProfile.DoesNotExist:
+                order_form = OrderForm()
+            basket = request.session.get('basket', {})
+            for item in basket:
+                    product = Products.objects.get(product_id=item['product_id'])
+                    line_item_total = float(product.product_price) * int(
+                        item['product_quantity'])
+                    order_total += line_item_total                  
+            
+            total = sum(float(item['price']) for item in basket)
+            #stripe_total = round(total * 100)
+            stripe_total = 100
+            stripe.api_key = stripe_secret_key
+            intent = stripe.PaymentIntent.create(
+                                amount=stripe_total,
+                                currency=settings.STRIPE_CURRENCY,
+                            )            
+            form = OrderForm(request.POST)
+            form_data = {
+                            'full_name': request.POST['full_name'],
+                            'email': request.POST['email'],
+                            'phone_number': request.POST['phone_number'],
+                            'postcode': request.POST['postcode'],
+                            'town_or_city': request.POST['town_or_city'],
+                            'street_address1': request.POST['street_address1'],
+                            'street_address2': request.POST['street_address2'],
+                            'county': request.POST['county'],
+                            }
+            
+
+
+
+
+
             template = 'checkout/checkout.html'
             context = {
                             'form_data': form_data,
                             'order_form': order_form,
                             'stripe_public_key': stripe_public_key,
-                            'client_secret': intent.stripe_id,
+                            'client_secret': intent.client_secret,
                         }
             return render(request, template, context)
             
