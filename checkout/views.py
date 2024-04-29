@@ -156,18 +156,8 @@ def process_checkout(request):
                             'client_secret': intent.client_secret,
                         }
                 return render(request, template, context)
-            template = 'checkout/checkout.html'
-            context = {
-                        'form_data': form_data,
-                        'order_form': order_form,
-                        'stripe_public_key': stripe_public_key,
-                        'client_secret': intent.stripe_secret_key,
-                        }
-            return render(request, template, context)
-        else:
-            messages.error(request, "You do not have\
-                authorization to access that page")
-            return redirect('account_login')
+            
+        
 
 
 def checkout_success(request, order_number):
