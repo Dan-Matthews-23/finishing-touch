@@ -118,3 +118,13 @@ form.addEventListener('submit', function (ev) {
         location.reload();
     })
 });
+
+
+const toggleOrderValue = document.getElementById("toggle_order");
+const toggleOrderBtn = document.getElementById("submit-button");
+
+// Assuming you want the button to trigger the change:
+toggleOrderBtn.addEventListener("click", function (event) {
+    toggleOrderValue.innerHTML = "True";
+}); 
+    
