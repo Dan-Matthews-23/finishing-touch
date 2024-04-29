@@ -51,7 +51,7 @@ var form = document.getElementById('payment-form');
 form.addEventListener('submit', function (ev) {
     ev.preventDefault();
     card.update({ 'disabled': true });
-    $('#submit-button').attr('disabled', true);
+    $('#checkoutBtn').attr('disabled', true);
     $('#payment-form').fadeToggle(100);
     $('#loading-overlay').fadeToggle(100);
 
@@ -76,7 +76,7 @@ form.addEventListener('submit', function (ev) {
                     address: {
                         line1: $.trim(form.street_address1.value),
                         line2: $.trim(form.street_address2.value),
-                        city: $.trim(form.town_or_city.value),                      
+                        city: $.trim(form.town_or_city.value),
                         state: $.trim(form.county.value),
                     }
                 }
@@ -87,7 +87,7 @@ form.addEventListener('submit', function (ev) {
                 address: {
                     line1: $.trim(form.street_address1.value),
                     line2: $.trim(form.street_address2.value),
-                    city: $.trim(form.town_or_city.value),                    
+                    city: $.trim(form.town_or_city.value),
                     postal_code: $.trim(form.postcode.value),
                     state: $.trim(form.county.value),
                 }
@@ -104,12 +104,12 @@ form.addEventListener('submit', function (ev) {
                 $('#payment-form').fadeToggle(100);
                 $('#loading-overlay').fadeToggle(100);
                 card.update({ 'disabled': false });
-                $('#submit-button').attr('disabled', false);
+                $('#checkoutBtn').attr('disabled', false);
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
                     window.location.href = "{% url 'checkout_success' order.order_number %}";
-                    form.submit();                    
-                    
+                    form.submit();
+
                 }
             }
         });
@@ -120,11 +120,10 @@ form.addEventListener('submit', function (ev) {
 });
 
 
-const toggleOrderValue = document.getElementById("toggle_order");
-const toggleOrderBtn = document.getElementById("submit-button");
+const toggleOrderValue = document.getElementById("toggle_order").value;
+const toggleOrderBtn = document.getElementById("checkoutBtn");
 
 // Assuming you want the button to trigger the change:
 toggleOrderBtn.addEventListener("click", function (event) {
-    toggleOrderValue.innerHTML = "True";
-}); 
-    
+    document.getElementById("toggle_order").value = "True";
+});
