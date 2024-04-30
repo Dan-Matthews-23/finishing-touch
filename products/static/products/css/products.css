@@ -236,15 +236,7 @@
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.select-sandwich-modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    height: 30%;
-    width: 30%;
-    border-radius: 10% 10% 10% 10%;
-}
+
 
 #chef-message-left {
     width: 25%;
@@ -321,7 +313,7 @@
 }
 
 #quantity-row {
-    width: 50%;
+    width: 100%;
     text-align: center;
     margin: auto;
 }
@@ -350,14 +342,14 @@
 }
 
 .select-quantity {
-    width: 120px !important;
+    width: 100% !important;
 }
 
 
-.decrease-quantity,
-.increase-quantity {
-    font-size: 36px;
-    color: #74C0FC;
+
+
+.select-product-btn {
+    width: 100%;
 }
 
 .align-center {
@@ -412,11 +404,13 @@ th {
 .select-sandwich-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 5px;
-    border: 1px solid #888;
-    height: 45%;
-    width: 45%;
+    padding: 5px;   
+    height: 40%;
+    width: 40%;
     border-radius: 10% 10% 10% 10%;
+    border-style: solid;
+    border-width: 5px;
+    border-color: black;
 }
 
 #menu-navigation {
@@ -466,11 +460,7 @@ th {
     padding: 20px;
 }
 
-#quantity-row {
-    
-    text-align: center;
-    margin: auto;
-}
+
 
 #quantity-container {
     width: 50%;
@@ -623,7 +613,7 @@ th {
 @media screen and (max-width: 500px) {
     .select-sandwich-modal-content
      {
-       height: 50%;
+       
        width: 50%;
     }
 }

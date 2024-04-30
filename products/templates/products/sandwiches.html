@@ -219,16 +219,16 @@
             <form method="POST" action="{% url 'add_to_order' %}">
                 {% csrf_token %}
                 <input type="hidden" name="quantity" id="quantity" value="{{i.quantity}}">
+                <input type="hidden" id="product_test" name="product_test">
                 <div id="modal-div" class="select-sandwich ">
                     <div class="select-sandwich-modal-content">
-                        <div class="container-fluid  align-center">
-                            <div class="row card-row align-center">
+                        <div class="container-fluid  align-center ">
+                            <div class="row align-center">
                                 <div class="col  align-center">
                                     <span class="close">&times;</span>
                                 </div>
                             </div>
-                            <input type="hidden" id="product_test" name="product_test">
-                            <div class="row card-row align-center " id="quantity-row">
+                            <div class="row  align-center" id="quantity-row" >
                                 <select class="select-quantity" name="quantity" id="quantity">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -242,9 +242,9 @@
                                     <option value="10">10</option>
                                 </select>
                             </div>
-                            <div class="row modal-row-padding  ">
-                                <div class="col  align-center-vertical align-center-horizontal">
-                                    <button class="btn select-product-btn">Add to
+                            <div class="row ">
+                                <div class="col  select-quantity ">
+                                    <button class="btn btn orderBtn select-product-btn">Add to
                                         order</button>
                                 </div>
                             </div>
