@@ -11,21 +11,21 @@
     <input type="hidden" name="toggle_order" id="toggle_order" value="">
     <div class="container-fluid card" id="delivery-information-container">
         <div class="col-12 col-lg-6">
-            <p>{{ order_form.full_name | as_crispy_field }}</p>
-            <p>{{ order_form.email | as_crispy_field }}</p>
-            <p>{{ order_form.phone_number | as_crispy_field }}</p>
-            <p>{{ order_form.street_address1 | as_crispy_field }}</p>
-            <p>{{ order_form.street_address2 | as_crispy_field }}</p>
-            <p>{{ order_form.town_or_city | as_crispy_field }}</p>
-            <p>{{ order_form.county | as_crispy_field }}</p>
-            <p>{{ order_form.postcode | as_crispy_field }}</p>
+            {{ order_form.full_name | as_crispy_field }}
+            {{ order_form.email | as_crispy_field }}
+            {{ order_form.phone_number | as_crispy_field }}
+            {{ order_form.street_address1 | as_crispy_field }}
+            {{ order_form.street_address2 | as_crispy_field }}
+            {{ order_form.town_or_city | as_crispy_field }}
+            {{ order_form.county | as_crispy_field }}
+            {{ order_form.postcode | as_crispy_field }}
         </div>
     </div>
     <div class="container-fluid card" id="order-summary-container">
         <div class="row">
             <div class="col header-div">
                 <h2 class="header">
-                    Order Summary</h3>
+                    Order Summary</h2>
             </div>
         </div>
         <div class="row">
@@ -69,10 +69,10 @@
     </div>
 </form>
 <div id="loading-overlay">
-    <h1 class="text-light logo-font loading-spinner">
+    <p class="text-light logo-font loading-spinner">
         <span class="icon">
             <i class="fas fa-3x fa-sync-alt fa-spin"></i>
-    </h1>
+    </p>
 </div>
 {% endblock %}
 {% block postloadjs %}
