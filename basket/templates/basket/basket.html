@@ -5,6 +5,7 @@
 {% endblock %}
 {% block content %}
 <form action="{% url 'process_checkout' %}" method="POST">
+    {% csrf_token %}
     <div class="container-fluid" id="form-container">
         <div class="row">
             <div class="col header-div">
@@ -15,7 +16,7 @@
         </div>
         <div class="row">
             <div class="col">
-                {% csrf_token %}
+                <!--Rebder Basket Form-->
                 {{ order_form.full_name | as_crispy_field }}
                 {{ order_form.email | as_crispy_field }}
                 {{ order_form.phone_number | as_crispy_field }}

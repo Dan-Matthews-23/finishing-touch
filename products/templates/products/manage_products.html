@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
 {% block content %}
+{% if request.user.is_superuser %}
 <form action="{% url 'manage_products' %}" method="POST">
     {% csrf_token %}
     <div class="container-fluid" id="add_product">
@@ -97,10 +98,18 @@
         </div>
     </div>
 </form>
+{% else %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col header-div">
+            <h3 class="header">
+                You do not have permission to view this page
+            </h3>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
 {% block postloadjs %}
 <script src="{% static 'products/js/script.js' %}"></script>
-<!--
-   This will likely need to be changed to {% static 'products/js/script.js' %}  
-   -->
 {% endblock %}

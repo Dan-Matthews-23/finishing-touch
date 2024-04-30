@@ -7,10 +7,13 @@
 <div class="overlay"></div>
 <form action="{% url 'process_checkout' %}" method="POST" id="payment-form">
     {% csrf_token %}
+    <!--Client Secret-->
     <input type="hidden" value="{{ client_secret }}" name="client_secret">
+    <!--Toggle JavaScript and process_order-->
     <input type="hidden" name="toggle_order" id="toggle_order" value="">
     <div class="container-fluid card" id="delivery-information-container">
         <div class="col-12 col-lg-6">
+            <!--Render Order Form-->
             {{ order_form.full_name | as_crispy_field }}
             {{ order_form.email | as_crispy_field }}
             {{ order_form.phone_number | as_crispy_field }}
@@ -31,6 +34,7 @@
         </div>
         <div class="row">
             <div class="col md-padding">
+                <!--Display order details-->
                 {% if request.session.order_items %}
                 {% for product_id, item in request.session.order_items.items %}
                 <p class="product-item-paragraph">
