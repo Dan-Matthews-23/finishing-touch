@@ -38,14 +38,10 @@ def add_to_favourites(request):
         profile = get_object_or_404(UserProfile, user=request.user)
         product_id = request.POST['product_id-favourites']
         products = Products.objects.get(product_id=product_id)
-        try:
-            add_favourite = Favourites(
+        add_favourite = Favourites(
                 favourite_item=products,
                 user_profile=profile,)
-            add_favourite.save()
-            print(f"The product ID is {product_id}")
-        except Products.DoesNotExist:
-            print(f"The product_id does not exist")
+        add_favourite.save()
         return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -54,16 +50,11 @@ def delete_from_favourites(request):
     if request.method == 'POST':
         profile = get_object_or_404(UserProfile, user=request.user)
         product_id = request.POST['product_id-favourites']
-        try:
-            # Find the Favourites object to delete
-            favourite_to_delete = Favourites.objects.get(
+        favourite_to_delete = Favourites.objects.get(
                 favourite_item__product_id=product_id,
                 user_profile=profile
             )
-            favourite_to_delete.delete()  # Delete the object
-            print(f"Product ID {product_id} removed from favourites")
-        except Favourites.DoesNotExist:
-            print(f"Product ID {product_id} not found in favourites")
+        favourite_to_delete.delete()
         return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -71,10 +62,7 @@ def delete_from_favourites(request):
 def add_to_order(request):
     if request.method == 'POST':
         get_order_items = request.session.get('order_items')
-        print(f" Order Items: {get_order_items}")
         current_order_number = request.session.get('order_number')
-        print(f"Order Number is {current_order_number}")
-
         product_id = int(request.POST['product_test'])
         quantity = int(request.POST['quantity'])
         get_product = Products.objects.get(product_id=product_id)
@@ -162,11 +150,11 @@ def manage_products(request):
             }
             return render(request, template, context)
     else:
-        print("You do not have authoriation to access that page")
+        messages.error("You do not have authorisation to do that")
         return redirect(request.META.get('HTTP_REFERER'))
 
 
-logger = logging.getLogger(__name__)  # Set up basic logging
+logger = logging.getLogger(__name__)
 
 
 @login_required
@@ -204,7 +192,7 @@ def change_chef_message(request):
         else:
             logger.warning("You are not authorised for that: % s ",
                            request.user)
-            print("You do not have authorization to access that page")
+            messages.error("You do not have authorisation for that")
             return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -243,10 +231,10 @@ def render_modification_form(request, product_id):
                 }
             return render(request, template, context)
         else:
-            print("No products found")
+            messages.error(request, 'No products found')
             return redirect(request.META.get('HTTP_REFERER'))
     else:
-        print("You do not have authorization to access that page")
+        messages.error(request, 'You do not have authorisation to do that')
         return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -267,8 +255,6 @@ def modify_product(request):
                     fibre_source = True
                 else:
                     fibre_source = False
-                print(f" Protein source is {protein_source} and \
-                    Fibre source is {fibre_source}")
                 product_to_update = get_product
                 product_price = Decimal(request.POST['product_price'])
                 product_to_update.product_placeholder_name = request.POST[
@@ -304,13 +290,13 @@ def modify_product(request):
                 messages.success(request, 'Product modified successfully!')
                 return redirect(request.META.get('HTTP_REFERER'))
             else:
-                print("Product not found")
+                messages.error(request, 'Product not found')
                 return redirect(request.META.get('HTTP_REFERER'))
         except (ValueError, TypeError) as e:
             error_message = f'Error converting data: {str(e)}'
             return redirect(request.META.get('HTTP_REFERER'))
     else:
-        print("You do not have authorization to access that page")
+        messages.error(request, 'You do not have authorisation to do that')
         return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -343,7 +329,10 @@ def delete_product(request):
             error_message = f'Error converting data: {str(e)}'
             return redirect(request.META.get('HTTP_REFERER'))
     else:
-        print("You do not have authorization to access that page")
+        messages.error(
+                        request, (
+                            "You don't have authorization to do that")
+                            )
         return redirect(request.META.get('HTTP_REFERER'))
 
 
@@ -366,12 +355,9 @@ def remove_item(request):
                 for item_id, item_data in order_items.items():
                     item_cost = Decimal(item_data['cost'])
                     total_cost += item_cost
-                request.session['order_items'] = order_items
+                request.session['order_items'] = order_item
                 request.session['order_total'] = str(total_cost)
-
-        print(f"The product_id selected is {product_id}")
         return redirect(request.META.get('HTTP_REFERER'))
-
     return redirect(request.META.get('HTTP_REFERER'))
 
 
