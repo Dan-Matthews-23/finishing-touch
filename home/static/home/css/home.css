@@ -9,7 +9,7 @@ body {
     text-align: center;
 }
 
-#parent-container{
+#parent-container {
     width: 95%;
 }
 
@@ -18,18 +18,17 @@ body {
 }
 
 
-
 #who-we-are,
 #our-promise,
 #how-we-do-it,
 #how-it-works {
-    background-color: white; 
+    background-color: white;
     width: 50%;
-    padding: 50px;           
-    border-style:solid;
+    padding: 50px;
+    border-style: solid;
     border-width: thin;
     border-color: black;
-    border-radius: 50%;    
+    border-radius: 50%;
 }
 
 .intoduction-row {
@@ -38,7 +37,7 @@ body {
 
 h1 {
     font-size: 24px;
-    
+
 }
 
 h2 {
@@ -50,7 +49,7 @@ h3 {
 }
 
 h4 {
-    font-size:14px;
+    font-size: 14px;
 }
 
 
@@ -89,21 +88,22 @@ li {
 
 ul,
 ol {
-padding: 5px;
+    padding: 5px;
 }
 
 @media screen and (max-width: 1900px) {
+
     #who-we-are,
     #our-promise,
     #how-we-do-it,
-    #how-it-works
-     {
+    #how-it-works {
         border-radius: 0%;
         border-style: none;
-    }    
+    }
 }
 
 @media screen and (max-width: 1800px) {
+
     #who-we-are,
     #our-promise,
     #how-we-do-it,
@@ -114,6 +114,7 @@ padding: 5px;
 }
 
 @media screen and (max-width: 1700px) {
+
     #who-we-are,
     #our-promise,
     #how-we-do-it,
@@ -124,6 +125,7 @@ padding: 5px;
 }
 
 @media screen and (max-width: 1600px) {
+
     #who-we-are,
     #our-promise,
     #how-we-do-it,
@@ -134,6 +136,7 @@ padding: 5px;
 }
 
 @media screen and (max-width: 1500px) {
+
     #who-we-are,
     #our-promise,
     #how-we-do-it,
@@ -144,6 +147,7 @@ padding: 5px;
 }
 
 @media screen and (max-width: 1400px) {
+
     #who-we-are,
     #our-promise,
     #how-we-do-it,
@@ -154,6 +158,7 @@ padding: 5px;
 }
 
 @media screen and (max-width: 1300px) {
+
     #who-we-are,
     #our-promise,
     #how-we-do-it,
@@ -164,6 +169,7 @@ padding: 5px;
 }
 
 @media screen and (max-width: 1200px) {
+
     #who-we-are,
     #our-promise,
     #how-we-do-it,
@@ -174,6 +180,7 @@ padding: 5px;
 }
 
 @media screen and (max-width: 1100px) {
+
     #who-we-are,
     #our-promise,
     #how-we-do-it,
@@ -185,11 +192,13 @@ padding: 5px;
 
 @media screen and (max-width: 1000px) {
     #parent-container {
-        width: 100%;        
+        width: 100%;
     }
+
     h2 {
         font-size: 15px;
     }
+
     h3 {
         font-size: 13px;
     }
@@ -208,6 +217,3 @@ padding: 5px;
         font-size: 10px;
     }
 }
-
-
-

@@ -1,7 +1,7 @@
 #previous-orders-container,
 #leave-review-container {
     width: 30%;
-    
+
 }
 
 .heading {
@@ -10,22 +10,21 @@
 }
 
 .sub-heading {
-font-size: 16px;
-font-weight: bold;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .heading-div {
     text-align: center;
 }
 
-.top-padding{
+.top-padding {
     padding-top: 5px;
 }
 
-.bottom-padding{
+.bottom-padding {
     padding-bottom: 50px;
 }
-
 
 
 .leave-review-body {
@@ -45,14 +44,12 @@ font-weight: bold;
 }
 
 
-
 .rating-box {
     position: relative;
     background: #fff;
     text-align: center;
     margin: auto;
-    
-    
+
 
 }
 
@@ -69,7 +66,7 @@ font-weight: bold;
 }
 
 .rating-box .stars {
-    
+
     align-items: center;
     text-align: center;
     padding: 5px;
@@ -83,9 +80,8 @@ font-weight: bold;
     transition: color 0.2s ease;
     outline: none;
     text-align: center;
-    
-}
 
+}
 
 
 .stars i:focus {
@@ -104,11 +100,6 @@ font-weight: bold;
 }
 
 
-
-
-
-
-
 .fa-solid fa-star:focus {
     outline: none;
     /* Removes the focus outline */
@@ -122,7 +113,7 @@ font-weight: bold;
 
 .review_stars {
     color: orange;
-    font-size: 20px;    
+    font-size: 20px;
 }
 
 .col review-div {
@@ -149,4 +140,3 @@ font-weight: bold;
     margin: auto;
     text-align: center;
 }
-

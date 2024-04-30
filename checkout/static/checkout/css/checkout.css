@@ -1,13 +1,14 @@
 .stripe-element {
     height: 40px;
 }
+
 .stripe-style-input {
-    
-    height: 20px;    
+
+    height: 20px;
     border: none;
     border-radius: 0px;
     background-color: white;
-    
+
 }
 
 .StripeElement--focus,
@@ -34,10 +35,10 @@
 }
 
 
-#payment-form ,
+#payment-form,
 #card-element {
     color: #000;
-    
+
 }
 
 #card-element {
@@ -46,14 +47,14 @@
     border-color: black;
     height: 40px;
     padding: 10px;
-      
-    
+
+
 }
 
 #stripe-container {
-    
+
     width: 100%;
-    
+
 }
 
 .form-control {
@@ -123,10 +124,12 @@
 
 
 @media screen and (max-width: 800px) {
+
     #order-summary-container,
     #delivery-information-container {
         width: 100%;
     }
+
     .hide-on-small {
         display: none;
     }
@@ -136,6 +139,5 @@
     width: 20%;
     text-align: center;
     margin: auto;
-    
-}
 
+}

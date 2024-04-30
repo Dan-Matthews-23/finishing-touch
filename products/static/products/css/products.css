@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
 
 
-
 .nanum-pen-script-regular {
     font-family: "Nanum Pen Script", cursive;
     font-weight: 400;
@@ -25,18 +24,15 @@
 
 #order-details {
     width: 25%;
-    
+
 }
 
 #product-container {
     width: 30%;
     border-radius: 10% 10% 10% 10%;
-    
+
 
 }
-
-
-
 
 
 #menu-navigation {
@@ -70,13 +66,9 @@
 }
 
 
-
-
-
 .align-left {
     text-align: left;
 }
-
 
 
 #remove-item-form {
@@ -100,16 +92,11 @@
 }
 
 
-
-
-
 .product-item-span {
     font-weight: bold;
     font-size: 16px;
     text-align: left;
 }
-
-
 
 
 #display_order {
@@ -172,7 +159,6 @@
 }
 
 
-
 .product-container-index {
     display: inline-block;
     border-radius: 10% 10% 10% 10%;
@@ -233,7 +219,6 @@
 }
 
 
-
 /* This modal was adapted from W3 Schools */
 .select-sandwich {
     display: none;
@@ -282,7 +267,7 @@
     color: black;
     border: none;
     background-color: inherit;
-    
+
 
 }
 
@@ -445,7 +430,6 @@ th {
 }
 
 
-
 #remove-item-div {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -534,7 +518,6 @@ th {
 }
 
 
-
 .hide {
     display: none;
 }
@@ -561,6 +544,7 @@ th {
         right: 20%;
         width: 40%;
     }
+
     #order-details {
 
         width: 30%;
@@ -577,7 +561,7 @@ th {
     }
 
     #product-container {
-        
+
         width: 95%;
         position: static;
         right: 0px
@@ -609,11 +593,11 @@ th {
 
 .change-chef-message {
     width: 100%;
-        height: 300px;
-        padding: 12px 20px;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 4px;       
-        font-size: 16px;
-        resize: none;
+    height: 300px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: none;
 }
