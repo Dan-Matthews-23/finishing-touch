@@ -24,6 +24,9 @@
 
 #order-details {
     width: 25%;
+    text-align: center;
+    margin: auto;
+    align-items: center;
 
 }
 
@@ -546,8 +549,10 @@ th {
     }
 
     #order-details {
-
         width: 30%;
+        text-align: center;
+        margin: auto;
+        align-items: center;
     }
 }
 
@@ -571,6 +576,9 @@ th {
 
         width: 95%;
         position: static;
+        text-align: center;
+        margin: auto;
+        align-items: center;
     }
 }
 

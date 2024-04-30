@@ -225,8 +225,7 @@ def checkout_success(request, order_number):
     order = order_line_items.first().order
     order.update_total()
     messages.success(request, f'Order successfully processed! \
-        Your order number is {order_number}. A confirmation \
-        email will be sent to {order.email}.')
+        Your order number is {order_number}')
     if request.session.get('basket'):
         del request.session['basket']
     if request.session.get('order_number'):

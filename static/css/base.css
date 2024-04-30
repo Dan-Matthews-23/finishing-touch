@@ -719,3 +719,39 @@ h3 {
         right: 15px;
     }
 }
+
+@media screen and (max-width: 800px) {
+    .allauth-container {
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .allauth-container {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .allauth-container {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .allauth-container {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .allauth-container {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .allauth-container {
+        width: 95%;
+    }
+}
