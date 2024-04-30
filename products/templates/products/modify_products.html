@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
 {% block content %}
-
 <div class="container-fluid" id="add_product">
     <div class="row">
         <div class="col header-div">
@@ -52,11 +50,9 @@
                     <div class="col btn-div">
                         <button type="submit" class="btn orderBtn" id="checkout">Delete Product </button>
                         <br>
-                        
-                        <input type="checkbox" id="confirm" name="confirm" value="I understand that deleting a product is not reversible">
+                        <input type="checkbox" id="confirm" name="confirm"
+                            value="I understand that deleting a product is not reversible">
                         <label for="vehicle1">I understand that deleting a product is not reversible</label><br>
-                        
-                        
                     </div>
                 </div>
             </form>
@@ -64,17 +60,12 @@
     </div>
 </div>
 </div>
-
 <br><br>
-
-
 </form>
-
 {% endblock %}
-
 {% block postloadjs %}
 <script src="{% static 'products/js/script.js' %}"></script>
 <!--
-    This will likely need to be changed to {% static 'products/js/script.js' %}  
--->
+   This will likely need to be changed to {% static 'products/js/script.js' %}  
+   -->
 {% endblock %}

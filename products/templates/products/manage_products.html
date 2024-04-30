@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
 {% endblock %}
@@ -75,7 +74,6 @@
     </div>
 </form>
 <br><br>
-
 <form method="POST" action="{% url 'change_chef_message' %}">
     {% csrf_token %}
     <div class="container-fluid" id="modify_product">
@@ -87,7 +85,8 @@
         <div class="content">
             <div class="row">
                 <div class="col table-div">
-                    <textarea class="change-chef-message" id="change-chef-message" name="change-chef-message" placeholder="{{chef_messages}}"></textarea>
+                    <textarea class="change-chef-message" id="change-chef-message" name="change-chef-message"
+                        placeholder="{{chef_messages}}"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -98,12 +97,10 @@
         </div>
     </div>
 </form>
-
 {% endblock %}
-
 {% block postloadjs %}
 <script src="{% static 'products/js/script.js' %}"></script>
 <!--
-    This will likely need to be changed to {% static 'products/js/script.js' %}  
--->
+   This will likely need to be changed to {% static 'products/js/script.js' %}  
+   -->
 {% endblock %}

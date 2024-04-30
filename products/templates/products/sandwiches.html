@@ -1,42 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'products/css/products.css' %}">
-
 {% endblock %}
-
 {% block extra_js %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 {% endblock %}
-
 {% block content %}
-
-
-
-
-    <div class="container-fluid card product-container" id="chef-message-top">
-        <div class="row ">
-            <div class="col align-center">
-                <h3 class="nanum-pen-script-heading ">Chef's reccomendations</h3>
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col ">
-                <h3 class="nanum-pen-script-regular">
-                    {% if chef_messages %}
-                    {{ chef_messages }}
-                    {% endif %}
-                </h3>
-            </div>
+<div class="container-fluid card product-container" id="chef-message-top">
+    <div class="row ">
+        <div class="col align-center">
+            <h3 class="nanum-pen-script-heading ">Chef's reccomendations</h3>
         </div>
     </div>
-
+    <div class="row ">
+        <div class="col ">
+            <h3 class="nanum-pen-script-regular">
+                {% if chef_messages %}
+                {{ chef_messages }}
+                {% endif %}
+            </h3>
+        </div>
+    </div>
+</div>
 <br>
-
-
 <!--This is the section that holds the secondary navigation where users can navigate on the same page-->
 <section class="chef-message-left">
     <div class="container-fluid card product-container" id="chef-message-left">
@@ -53,11 +42,10 @@
                     {% endif %}
                 </h3>
             </div>
-        </div>    
+        </div>
     </div>
 </section>
 <!--End of secondary navigation section-->
-
 <!--This is the order sumary section that holds details of the current order-->
 <section class="order-details">
     <div class="container-fluid align-center card product-container" id="order-details">
@@ -77,10 +65,10 @@
                         <form method="POST" action="{% url 'remove_item' %}">
                             {% csrf_token %}
                             <p class="product-item-paragraph">
-                                <input type="hidden" name="remove-item-product-id" id="remove-item-product-id" value="{{ product_id }}"
-                                    class="align-left">
+                                <input type="hidden" name="remove-item-product-id" id="remove-item-product-id"
+                                    value="{{ product_id }}" class="align-left">
                                 <button type="submit" class="align-left" id="remove-item">
-                                    <i class="fa-solid fa-trash fa-xl align-left" ></i>
+                                    <i class="fa-solid fa-trash fa-xl align-left"></i>
                                 </button>
                             </p>
                             <p class="product-item-paragraph">
@@ -105,7 +93,6 @@
                         {% endif %}
                     </div>
                 </div>
-
                 <div class="row">
                     <div
                         class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 align-center-horizontal align-center-vertical">
@@ -128,23 +115,13 @@
     </div>
 </section>
 <!--End of order summary section-->
-
-
-
-
-
-
 <!--This is the product selection section-->
 <section class="product-listings">
     {% for i in sandwich_items %}
     {% if i.category_id == 9 %}
     <div class="container-fluid align-center card " id="product-container">
-
         <div class="row  card-row">
             <div class="col col-sm-2 col-md-2 col-lg-2 col-xl-2">
-
-
-
                 {% if i.is_favourite %}
                 <div class="favourite">
                     <form method="POST" action="{% url 'delete_from_favourites' %}">
@@ -156,7 +133,6 @@
                         <span class="favouritetext">Remove from favourites</span>
                     </form>
                 </div>
-
                 {% else %}
                 <div class="favourite">
                     <form method="POST" action="{% url 'add_to_favourites' %}">
@@ -169,9 +145,7 @@
                     </form>
                 </div>
                 {% endif %}
-
             </div>
-
             <div class="row  card-row">
                 <div class="col  align-center">
                     <h5 class="card-title">{{i.product_name}}</h5>
@@ -253,18 +227,14 @@
                                 <div class="col  align-center">
                                     <span class="close">&times;</span>
                                     <div class="row card-row ">
-
                                     </div>
                                     <div class="row">
                                         <input type="hidden" id="product_test" name="product_test">
                                     </div>
                                     <div class="row card-row ">
-
                                         <div class="col modal-text-styling" id="product-price"></div>
                                     </div>
                                     <div class="row card-row align-center " id="quantity-row">
-
-
                                         <select name="quantity" id="quantity">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -276,18 +246,13 @@
                                             <option value="8">8</option>
                                             <option value="9">9</option>
                                             <option value="10">10</option>
-
                                         </select>
-
-
                                     </div>
                                     <div class="row modal-row-padding  ">
-
                                         <div class="col  align-center-vertical align-center-horizontal">
                                             <button class="btn select-product-btn">Add to
                                                 order</button>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -302,15 +267,10 @@
     {% endfor %}
 </section>
 <!--End of product selection section-->
-
-
 {% endblock %}
-
-
-
 {% block postloadjs %}
 <script src="{% static 'products/js/script.js' %}"></script>
 <!--
-    This will likely need to be changed to {% static 'products/js/script.js' %}  
--->
+   This will likely need to be changed to {% static 'products/js/script.js' %}  
+   -->
 {% endblock %}

@@ -25,7 +25,8 @@
         <div class="row">
             <div class="col header-div">
                 <h2 class="header">
-                    Order Summary</h2>
+                    Order Summary
+                </h2>
             </div>
         </div>
         <div class="row">
@@ -59,11 +60,9 @@
                 <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
                 <button type="submit" class="btn orderBtn" id="checkoutBtn"><i class="fas fa-lock"></i> Complete
                     Order</button>
-                
                 <h3 class="warning">
                     Your card will be charged <strong>£{{ request.session.order_total }}</strong>
                 </h3>
-               
             </div>
         </div>
     </div>
