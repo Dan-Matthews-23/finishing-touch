@@ -50,7 +50,7 @@
 <section class="order-details">
     <div class="container-fluid card product-container" id="order-details">
         <div class="row ">
-            <div class="col ">
+            <div class="col  col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                 {% if request.session.order_items %}
                 <div class="row ">
                     <div class="col ">
@@ -59,7 +59,7 @@
                 </div>
                 {%endif%}
                 <div class="row">
-                    <div class="col">
+                    <div class="col  col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                         {% if request.session.order_items %}
                         {% for product_id, item in request.session.order_items.items %}
                         <form method="POST" action="{% url 'remove_item' %}">
@@ -87,15 +87,14 @@
                         {% endif %}
                         <hr>
                         {% else %}
-                        <p class="product-item-paragraph-center ">
-                            Your basket is empty
+                        <p class="product-item-paragraph-center">
+                            <strong>Your basket is empty</strong>
                         </p>
                         {% endif %}
                     </div>
                 </div>
                 <div class="row">
-                    <div
-                        class="col ">
+                    <div class="col col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
                         {% if request.session.order_items %}
                         <form method="POST" action="{% url 'view_basket' %}">
                             {% csrf_token %}
@@ -121,10 +120,10 @@
     {% for i in sandwich_items %}
     {% if i.category_id == 9 %}
     <div class="container-fluid align-center card " id="product-container">
-        <div class="row  card-row">
-            <div class="col ">
+        <div class="row  card-row ">
+            <div class="col align-left">
                 {% if i.is_favourite %}
-                <div class="favourite">
+                <div class="favourite ">
                     <form method="POST" action="{% url 'delete_from_favourites' %}">
                         {% csrf_token %}
                         <input type="hidden" name="product_id-favourites" value="{{ i.product_id }}">
@@ -219,51 +218,44 @@
             <!--This is the pop-up modal led by customer interaction-->
             <form method="POST" action="{% url 'add_to_order' %}">
                 {% csrf_token %}
-                <!--<input type="hidden" name="product_id" id="product_id" value="{{i.product_id}}">-->
                 <input type="hidden" name="quantity" id="quantity" value="{{i.quantity}}">
-                <!--<input type="hidden" name="orderData" id="orderData" value="">-->
                 <div id="modal-div" class="select-sandwich ">
                     <div class="select-sandwich-modal-content">
                         <div class="container-fluid  align-center">
                             <div class="row card-row align-center">
                                 <div class="col  align-center">
                                     <span class="close">&times;</span>
-                                    <div class="row card-row ">
-                                    </div>
-                                    <div class="row">
-                                        <input type="hidden" id="product_test" name="product_test">
-                                    </div>
-                                    <div class="row card-row ">
-                                        <div class="col modal-text-styling" id="product-price"></div>
-                                    </div>
-                                    <div class="row card-row align-center " id="quantity-row">
-                                        <select name="quantity" id="quantity">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
-                                        </select>
-                                    </div>
-                                    <div class="row modal-row-padding  ">
-                                        <div class="col  align-center-vertical align-center-horizontal">
-                                            <button class="btn select-product-btn">Add to
-                                                order</button>
-                                        </div>
-                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="product_test" name="product_test">
+                            <div class="row card-row align-center " id="quantity-row">
+                                <select class="select-quantity" name="quantity" id="quantity">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <div class="row modal-row-padding  ">
+                                <div class="col  align-center-vertical align-center-horizontal">
+                                    <button class="btn select-product-btn">Add to
+                                        order</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
-        <!--End of popup modal -->
+    </div>
+    </form>
+    </div>
+    <!--End of popup modal -->
     </div>
     <br>
     {% endif %}
