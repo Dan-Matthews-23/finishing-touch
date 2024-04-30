@@ -1,106 +1,80 @@
 {% extends "base.html" %}
 {% load static %}
-
-
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'checkout/css/checkout.css' %}">
-
 {% endblock %}
-
 {% block content %}
 <div class="overlay"></div>
-
-{{payment_success}}
-
-    
-    <form action="{% url 'process_checkout' %}" method="POST" id="payment-form">
-        {% csrf_token %}
-        <input type="hidden" value="{{ client_secret }}" name="client_secret">
-        <input type="hidden" name="toggle_order" id="toggle_order" value="">
-        
-        <!--<div class="container-fluid" id="parent-container">
-            <div class="row ">
-                <div class="col">-->
-                    
-                    <div class="container-fluid card" id="delivery-information-container">
-                        <div class="col-12 col-lg-6">
-                            <p>{{ order_form.full_name | as_crispy_field }}</p>
-                            <p>{{ order_form.email | as_crispy_field }}</p>
-                            <p>{{ order_form.phone_number | as_crispy_field }}</p>
-                            <p>{{ order_form.street_address1 | as_crispy_field }}</p>
-                            <p>{{ order_form.street_address2 | as_crispy_field }}</p>
-                            <p>{{ order_form.town_or_city | as_crispy_field }}</p>
-                            <p>{{ order_form.county | as_crispy_field }}</p>
-                            <p>{{ order_form.postcode | as_crispy_field }}</p>
-                        </div>
-                    </div>
-               <!--</div>
-                <div class="col">-->
-                    <div class="container-fluid card" id="order-summary-container">
-                        <div class="row">
-                            <div class="col header-div">                                
-                                <h2 class="header">Order Summary</h3>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col md-padding">
-                                {% if request.session.order_items %}
-                                {% for product_id, item in request.session.order_items.items %}
-
-                                <p class="product-item-paragraph">
-                                    {{ item.product_name }}
-                                    (x{{ item.quantity }})
-                                    <br>
-                                    <strong>£{{ item.cost }}</strong>
-                                </p>
-
-                                {% endfor %}
-                                <br>
-                                <hr>
-                                
-                                
-                                {% if request.session.order_total %}
-                                <p class="product-item-paragraph-center ">
-                                    <strong>Total: £{{ request.session.order_total }}</strong>
-                                </p>
-                                {% endif %}
-                                
-                                {% else %}
-                                <p class="product-item-paragraph-center ">
-                                    Your basket is empty
-                                </p>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="container-fluid  " id="stripe-container">
-                            <div class="row">
-                                <div class="col" id="card-element"></div>
-                                <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
-                                <button type="submit" class="btn orderBtn" id="checkoutBtn"><i class="fas fa-lock"></i> Complete Order</button>
-                                <p>
-                                    <h3 class="warning">
-                                            Your card will be charged <strong>£{{ request.session.order_total }}</strong>
-                                    </h3>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<form action="{% url 'process_checkout' %}" method="POST" id="payment-form">
+    {% csrf_token %}
+    <input type="hidden" value="{{ client_secret }}" name="client_secret">
+    <input type="hidden" name="toggle_order" id="toggle_order" value="">
+    <div class="container-fluid card" id="delivery-information-container">
+        <div class="col-12 col-lg-6">
+            <p>{{ order_form.full_name | as_crispy_field }}</p>
+            <p>{{ order_form.email | as_crispy_field }}</p>
+            <p>{{ order_form.phone_number | as_crispy_field }}</p>
+            <p>{{ order_form.street_address1 | as_crispy_field }}</p>
+            <p>{{ order_form.street_address2 | as_crispy_field }}</p>
+            <p>{{ order_form.town_or_city | as_crispy_field }}</p>
+            <p>{{ order_form.county | as_crispy_field }}</p>
+            <p>{{ order_form.postcode | as_crispy_field }}</p>
+        </div>
+    </div>
+    <div class="container-fluid card" id="order-summary-container">
+        <div class="row">
+            <div class="col header-div">
+                <h2 class="header">
+                    Order Summary</h3>
             </div>
         </div>
-    </form>
-</div>
-</div>
+        <div class="row">
+            <div class="col md-padding">
+                {% if request.session.order_items %}
+                {% for product_id, item in request.session.order_items.items %}
+                <p class="product-item-paragraph">
+                    {{ item.product_name }}
+                    (x{{ item.quantity }})
+                    <br>
+                    <strong>£{{ item.cost }}</strong>
+                </p>
+                {% endfor %}
+                <br>
+                <hr>
+                {% if request.session.order_total %}
+                <p class="product-item-paragraph-center ">
+                    <strong>Total: £{{ request.session.order_total }}</strong>
+                </p>
+                {% endif %}
+                {% else %}
+                <p class="product-item-paragraph-center ">
+                    Your basket is empty
+                </p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="container-fluid  " id="stripe-container">
+            <div class="row">
+                <div class="col" id="card-element"></div>
+                <div class="mb-3 text-danger" id="card-errors" role="alert"></div>
+                <button type="submit" class="btn orderBtn" id="checkoutBtn"><i class="fas fa-lock"></i> Complete
+                    Order</button>
+                <p>
+                <h3 class="warning">
+                    Your card will be charged <strong>£{{ request.session.order_total }}</strong>
+                </h3>
+                </p>
+            </div>
+        </div>
+    </div>
+</form>
 <div id="loading-overlay">
     <h1 class="text-light logo-font loading-spinner">
         <span class="icon">
             <i class="fas fa-3x fa-sync-alt fa-spin"></i>
-
     </h1>
 </div>
 {% endblock %}
-
 {% block postloadjs %}
 {{ block.super }}
 {{ stripe_public_key|json_script:"id_stripe_public_key" }}

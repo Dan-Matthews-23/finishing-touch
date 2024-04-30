@@ -144,9 +144,11 @@
             <div class="col col-sm-12 col-lg-12">
                 {% if messages %}
                 <ul class="messages">
+                    <li>
                     {% for message in messages %}
                      {{ message }}
                     {% endfor %}
+                    </li>
                 </ul>
                 {% endif %}
             </div>
