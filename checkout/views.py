@@ -224,8 +224,8 @@ def checkout_success(request, order_number):
         })
     order = order_line_items.first().order
     order.update_total()
-    messages.success(request, f'Order successfully processed! \
-        Your order number is {order_number}')
+    messages.success(request, f'Order successfully processed!')
+    display_order_num = order_number
     if request.session.get('basket'):
         del request.session['basket']
     if request.session.get('order_number'):
@@ -235,6 +235,7 @@ def checkout_success(request, order_number):
     template = 'checkout/order_confirmed.html'
     context = {
         'order': order,
+        'order_number': display_order_num,
         'profile_data': profile_data,
         'order_details': order_details,
     }

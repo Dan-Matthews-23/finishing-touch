@@ -746,12 +746,7 @@ h3 {
 
 @media screen and (max-width: 400px) {
     .allauth-container {
-        width: 80%;
+        width: 100%;
     }
 }
 
-@media screen and (max-width: 300px) {
-    .allauth-container {
-        width: 95%;
-    }
-}

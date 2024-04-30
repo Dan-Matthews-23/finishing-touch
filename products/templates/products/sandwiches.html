@@ -48,12 +48,12 @@
 <!--End of secondary navigation section-->
 <!--This is the order sumary section that holds details of the current order-->
 <section class="order-details">
-    <div class="container-fluid align-center card product-container" id="order-details">
+    <div class="container-fluid card product-container" id="order-details">
         <div class="row ">
-            <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
+            <div class="col ">
                 {% if request.session.order_items %}
                 <div class="row ">
-                    <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 ">
+                    <div class="col ">
                         <h5 class="card-title">Order Details</h5>
                     </div>
                 </div>
@@ -64,14 +64,14 @@
                         {% for product_id, item in request.session.order_items.items %}
                         <form method="POST" action="{% url 'remove_item' %}">
                             {% csrf_token %}
-                            <p class="product-item-paragraph">
+                            <p class="product-item-paragraph-center">
                                 <input type="hidden" name="remove-item-product-id" id="remove-item-product-id"
                                     value="{{ product_id }}" class="align-left">
                                 <button type="submit" class="align-left" id="remove-item">
                                     <i class="fa-solid fa-trash fa-xl align-left"></i>
                                 </button>
                             </p>
-                            <p class="product-item-paragraph">
+                            <p class="product-item-paragraph-center">
                                 {{ item.product_name }}
                                 (x{{ item.quantity }})
                                 <br>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="row">
                     <div
-                        class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xm-12 col-xxl-12 align-center-horizontal align-center-vertical">
+                        class="col ">
                         {% if request.session.order_items %}
                         <form method="POST" action="{% url 'view_basket' %}">
                             {% csrf_token %}
@@ -109,11 +109,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col  col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xm-2 col-xxl-2" id="remove-item-div">
+            <div class="col" id="remove-item-div">
             </div>
         </div>
     </div>
 </section>
+<br>
 <!--End of order summary section-->
 <!--This is the product selection section-->
 <section class="product-listings">
@@ -121,7 +122,7 @@
     {% if i.category_id == 9 %}
     <div class="container-fluid align-center card " id="product-container">
         <div class="row  card-row">
-            <div class="col col-sm-2 col-md-2 col-lg-2 col-xl-2">
+            <div class="col ">
                 {% if i.is_favourite %}
                 <div class="favourite">
                     <form method="POST" action="{% url 'delete_from_favourites' %}">
@@ -264,6 +265,7 @@
         </div>
         <!--End of popup modal -->
     </div>
+    <br>
     {% endif %}
     {% endfor %}
 </section>
