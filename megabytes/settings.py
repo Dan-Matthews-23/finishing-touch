@@ -14,8 +14,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io', 'megabytes-bfd0afc9e4a4.herokuapp.com', 'https://megabytes-bfd0afc9e4a4.herokuapp.com']
-CSRF_TRUSTED_ORIGINS = ['https://8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io', 'megabytes-bfd0afc9e4a4.herokuapp.com', 'https://megabytes-bfd0afc9e4a4.herokuapp.com']
+ALLOWED_HOSTS = ['8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io', 'megabytes-bfd0afc9e4a4.herokuapp.com', 'https://megabytes-bfd0afc9e4a4.herokuapp.com', 'https://ui.dev/']
+CSRF_TRUSTED_ORIGINS = ['https://8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io', 'megabytes-bfd0afc9e4a4.herokuapp.com', 'https://megabytes-bfd0afc9e4a4.herokuapp.com', 'https://ui.dev/']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
