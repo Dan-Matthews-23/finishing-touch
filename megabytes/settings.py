@@ -1,27 +1,21 @@
 import os
+import dj_database_url
 from pathlib import Path
 
-if os.path.exists("env.py"):
-  import env 
+#if os.path.exists("env.py"):
+    #import env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-z6=tya0-8l-&!w4wgc&pp_shtbwe1%xq-y=32d2w+xdf34%b@-'
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'DEVELOPMENT' in os.environ
 
-ALLOWED_HOSTS = ['8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io']
-CSRF_TRUSTED_ORIGINS = ['https://8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io'] 
-
-
-# Application definition
+ALLOWED_HOSTS = ['8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io', 'megabytes-bfd0afc9e4a4.herokuapp.com', 'https://megabytes-bfd0afc9e4a4.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://8000-danmatthews23-megabytes-hggui7x2owz.ws-eu110.gitpod.io', 'megabytes-bfd0afc9e4a4.herokuapp.com', 'https://megabytes-bfd0afc9e4a4.herokuapp.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,132 +26,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',    
-    'allauth.socialaccount.providers.agave',
-    'allauth.socialaccount.providers.amazon',
-    'allauth.socialaccount.providers.amazon_cognito',
-    'allauth.socialaccount.providers.angellist',
-    'allauth.socialaccount.providers.apple',
-    'allauth.socialaccount.providers.asana',
-    'allauth.socialaccount.providers.auth0',
-    'allauth.socialaccount.providers.authentiq',
-    'allauth.socialaccount.providers.baidu',
-    'allauth.socialaccount.providers.basecamp',
-    'allauth.socialaccount.providers.battlenet',
-    'allauth.socialaccount.providers.bitbucket_oauth2',
-    'allauth.socialaccount.providers.bitly',
-    'allauth.socialaccount.providers.box',
-    'allauth.socialaccount.providers.cilogon',
-    'allauth.socialaccount.providers.clever',
-    'allauth.socialaccount.providers.coinbase',
-    'allauth.socialaccount.providers.dataporten',
-    'allauth.socialaccount.providers.daum',
-    'allauth.socialaccount.providers.digitalocean',
-    'allauth.socialaccount.providers.dingtalk',
-    'allauth.socialaccount.providers.discord',
-    'allauth.socialaccount.providers.disqus',
-    'allauth.socialaccount.providers.douban',
-    'allauth.socialaccount.providers.doximity',
-    'allauth.socialaccount.providers.draugiem',
-    'allauth.socialaccount.providers.drip',
-    'allauth.socialaccount.providers.dropbox',
-    'allauth.socialaccount.providers.dwolla',
-    'allauth.socialaccount.providers.edmodo',
-    'allauth.socialaccount.providers.edx',
-    'allauth.socialaccount.providers.eventbrite',
-    'allauth.socialaccount.providers.eveonline',
-    'allauth.socialaccount.providers.evernote',
-    'allauth.socialaccount.providers.exist',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.feedly',
-    'allauth.socialaccount.providers.figma',
-    'allauth.socialaccount.providers.fivehundredpx',
-    'allauth.socialaccount.providers.flickr',
-    'allauth.socialaccount.providers.foursquare',
-    'allauth.socialaccount.providers.frontier',
-    'allauth.socialaccount.providers.fxa',
-    'allauth.socialaccount.providers.gitea',
-    'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.gitlab',
-    'allauth.socialaccount.providers.globus',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.gumroad',
-    'allauth.socialaccount.providers.hubic',
-    'allauth.socialaccount.providers.instagram',
-    'allauth.socialaccount.providers.jupyterhub',
-    'allauth.socialaccount.providers.kakao',
-    'allauth.socialaccount.providers.lemonldap',
-    'allauth.socialaccount.providers.line',
-    #'allauth.socialaccount.providers.linkedin',
-    'allauth.socialaccount.providers.linkedin_oauth2',
-    'allauth.socialaccount.providers.mailchimp',
-    'allauth.socialaccount.providers.mailru',
-    'allauth.socialaccount.providers.mediawiki',
-    'allauth.socialaccount.providers.meetup',
-    'allauth.socialaccount.providers.miro',
-    'allauth.socialaccount.providers.microsoft',
-    'allauth.socialaccount.providers.naver',
-    'allauth.socialaccount.providers.nextcloud',
-    'allauth.socialaccount.providers.notion',
-    'allauth.socialaccount.providers.odnoklassniki',
-    'allauth.socialaccount.providers.openid',
-    'allauth.socialaccount.providers.openid_connect',
-    'allauth.socialaccount.providers.openstreetmap',
-    'allauth.socialaccount.providers.orcid',
-    'allauth.socialaccount.providers.patreon',
-    'allauth.socialaccount.providers.paypal',
-    #'allauth.socialaccount.providers.persona',
-    'allauth.socialaccount.providers.pinterest',
-    'allauth.socialaccount.providers.pocket',
-    "allauth.socialaccount.providers.questrade",
-    'allauth.socialaccount.providers.quickbooks',
-    'allauth.socialaccount.providers.reddit',
-    'allauth.socialaccount.providers.robinhood',
-    'allauth.socialaccount.providers.salesforce',
-    'allauth.socialaccount.providers.sharefile',
-    'allauth.socialaccount.providers.shopify',
-    'allauth.socialaccount.providers.slack',
-    'allauth.socialaccount.providers.snapchat',
-    'allauth.socialaccount.providers.soundcloud',
-    'allauth.socialaccount.providers.spotify',
-    'allauth.socialaccount.providers.stackexchange',
-    'allauth.socialaccount.providers.steam',
-    'allauth.socialaccount.providers.stocktwits',
-    'allauth.socialaccount.providers.strava',
-    'allauth.socialaccount.providers.stripe',
-    'allauth.socialaccount.providers.telegram',
-    'allauth.socialaccount.providers.trainingpeaks',
-    'allauth.socialaccount.providers.trello',
-    'allauth.socialaccount.providers.tumblr',
-    'allauth.socialaccount.providers.twentythreeandme',
-    'allauth.socialaccount.providers.twitch',
-    'allauth.socialaccount.providers.twitter',
-    'allauth.socialaccount.providers.twitter_oauth2',
-    'allauth.socialaccount.providers.untappd',
-    'allauth.socialaccount.providers.vimeo',
-    'allauth.socialaccount.providers.vimeo_oauth2',
-    'allauth.socialaccount.providers.vk',
-    'allauth.socialaccount.providers.wahoo',
-    'allauth.socialaccount.providers.weibo',
-    'allauth.socialaccount.providers.weixin',
-    'allauth.socialaccount.providers.windowslive',
-    'allauth.socialaccount.providers.xing',
-    'allauth.socialaccount.providers.yahoo',
-    'allauth.socialaccount.providers.yandex',
-    'allauth.socialaccount.providers.ynab',
-    'allauth.socialaccount.providers.zoho',
-    'allauth.socialaccount.providers.zoom',
-    'allauth.socialaccount.providers.okta',
-    'allauth.socialaccount.providers.feishu',
     'home',
     'products',
     'basket',
     'checkout',
     'accounts',
-
     'crispy_forms',
-    'crispy_bootstrap5' ,
-
+    'crispy_bootstrap5',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -188,7 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages', 
+                'django.contrib.messages.context_processors.messages',
             ],
             'builtins': [
                 'crispy_forms.templatetags.crispy_forms_tags',
@@ -200,13 +76,11 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
 
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
-    
 ]
 
 SITE_ID = 1
@@ -215,7 +89,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/accounts/login/'
@@ -223,21 +97,19 @@ LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'megabytes.wsgi.application'
 
-
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -273,25 +145,35 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'products/static'),
-    os.path.join(BASE_DIR, 'static'),  # Remove extra parentheses 
-]
-
-    
-    
-    
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+if 'USE_AWS' in os.environ:
+    # Bucket Config
+    AWS_STORAGE_BUCKET_NAME = 'megabytes-dan'
+    AWS_S3_REGION_NAME = 'eu-north-1'
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+
+    # Static and media files
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    STATICFILES_LOCATION = 'static'
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
+
+    # Override static and media URLs in production
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
+
+
+
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
