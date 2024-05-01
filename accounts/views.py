@@ -8,6 +8,12 @@ from checkout.models import Orders, Reviews
 from products.models import Products
 from django.views.decorators.http import require_POST
 
+"""
+This function takes the values of the
+profile form and updates the profile when
+saved
+"""
+
 
 @login_required
 def update_profile(request):
@@ -35,6 +41,11 @@ def update_profile(request):
     return render(request, template, context)
 
 
+"""
+This function renders the profile page
+"""
+
+
 @login_required
 def render_profile(request):
     profile = get_object_or_404(UserProfile, user=request.user)
@@ -49,6 +60,11 @@ def render_profile(request):
     }
 
     return render(request, template, context)
+
+
+"""
+This function displays the order history
+"""
 
 
 def order_history(request, order_number):
@@ -73,6 +89,13 @@ def order_history(request, order_number):
         'from_profile': True,
     }
     return render(request, template, context)
+
+
+"""
+This function renders the saved reviews
+or displays empty form for user to leave
+a review
+"""
 
 
 @login_required

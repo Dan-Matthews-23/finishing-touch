@@ -16,6 +16,10 @@ from accounts.forms import UserProfileForm
 from accounts.models import UserProfile
 from django.shortcuts import render, redirect
 
+"""
+This function renders the basket
+"""
+
 
 def view_basket(request):
     order_form = OrderForm()

@@ -15,6 +15,12 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+"""
+This function holds the intent and
+calculates the order cost. If failed
+it causes payment to fail
+"""
+
 
 @require_POST
 def cache_checkout_data(request):
@@ -41,6 +47,11 @@ def cache_checkout_data(request):
                                  'processed right now. Please try '
                                  'again later.'))
         return HttpResponse(content=e, status=400)
+
+
+"""
+This function processes the payment
+"""
 
 
 def process_checkout(request):
@@ -216,6 +227,12 @@ def process_checkout(request):
             return render(request, template, context)
 
 
+"""
+This function processes the intent and redirects
+to order_confirmed if sucessful
+"""
+
+
 def checkout_success(request, order_number):
     profile = UserProfile.objects.get(user=request.user)
     order = get_object_or_404(Orders, order_number=order_number)
@@ -231,7 +248,7 @@ def checkout_success(request, order_number):
             }
     user_profile_form = UserProfileForm(profile_data, instance=profile)
     if user_profile_form.is_valid():
-        user_profile_form.save()    
+        user_profile_form.save()
     messages.success(request, f'Order successfully processed!')
     display_order_num = order_number
     if request.session.get('basket'):

@@ -10,6 +10,11 @@ from decimal import Decimal
 from django.shortcuts import (render, redirect, reverse,
                               get_object_or_404, HttpResponse)
 
+"""
+This renders the products on the products
+page
+"""
+
 
 @login_required
 def prepacked_sandwiches(request):
@@ -32,6 +37,12 @@ def prepacked_sandwiches(request):
     return render(request, 'products/sandwiches.html', context)
 
 
+"""
+This function adds an item to the favourites
+model when clicked
+"""
+
+
 @login_required
 def add_to_favourites(request):
     if request.method == 'POST':
@@ -45,6 +56,12 @@ def add_to_favourites(request):
         return redirect(request.META.get('HTTP_REFERER'))
 
 
+"""
+This function deletes an item to the favourites
+model when clicked
+"""
+
+
 @login_required
 def delete_from_favourites(request):
     if request.method == 'POST':
@@ -56,6 +73,11 @@ def delete_from_favourites(request):
             )
         favourite_to_delete.delete()
         return redirect(request.META.get('HTTP_REFERER'))
+
+
+"""
+This function adds an item to the basket
+"""
 
 
 @login_required
@@ -91,8 +113,19 @@ def add_to_order(request):
         return redirect(request.META.get('HTTP_REFERER'))
 
 
+"""
+This function creates an order number
+"""
+
+
 def create_order_number():
     return uuid.uuid4().hex.upper()
+
+
+"""
+This function renders the mangage_products
+page if superuser
+"""
 
 
 @login_required
@@ -156,6 +189,11 @@ def manage_products(request):
 
 logger = logging.getLogger(__name__)
 
+"""
+This function allows superuser to
+change chef message displayed on products page
+"""
+
 
 @login_required
 def change_chef_message(request):
@@ -194,6 +232,11 @@ def change_chef_message(request):
                            request.user)
             messages.error("You do not have authorisation for that")
             return redirect(request.META.get('HTTP_REFERER'))
+
+
+"""
+This function renders product modification form
+"""
 
 
 def render_modification_form(request, product_id):
@@ -236,6 +279,11 @@ def render_modification_form(request, product_id):
     else:
         messages.error(request, 'You do not have authorisation to do that')
         return redirect(request.META.get('HTTP_REFERER'))
+
+
+"""
+This function allows a superuser to modify a product
+"""
 
 
 def modify_product(request):
@@ -300,6 +348,11 @@ def modify_product(request):
         return redirect(request.META.get('HTTP_REFERER'))
 
 
+"""
+This function allows a superuser to delete a product
+"""
+
+
 def delete_product(request):
     if request.user.is_superuser:
         try:
@@ -336,6 +389,12 @@ def delete_product(request):
         return redirect(request.META.get('HTTP_REFERER'))
 
 
+"""
+This function allows a user to remove
+an item from the basket
+"""
+
+
 @login_required
 def remove_item(request):
     if request.method == 'POST':
@@ -359,6 +418,11 @@ def remove_item(request):
                 request.session['order_total'] = str(total_cost)
         return redirect(request.META.get('HTTP_REFERER'))
     return redirect(request.META.get('HTTP_REFERER'))
+
+
+"""
+This function allows a superuser to empty basket
+"""
 
 
 def clear_order(request):
