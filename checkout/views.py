@@ -249,6 +249,16 @@ def checkout_success(request, order_number):
     user_profile_form = UserProfileForm(profile_data, instance=profile)
     if user_profile_form.is_valid():
         user_profile_form.save()
+    order_details = []
+    order_line_items = order.lineitems.all()
+    for item in order_line_items:
+        order_details.append({
+            'product_name': item.product.product_name,
+            'quantity': item.quantity,
+            'lineitem_total': item.lineitem_total,
+            'phone_number': item.order.phone_number,
+        })
+    order = order_line_items.first().order
     messages.success(request, f'Order successfully processed!')
     display_order_num = order_number
     if request.session.get('basket'):

@@ -1,3 +1,12 @@
+- [Responsiveness Testing](#responsiveness-testing)
+    - [Testing](#testing)
+    - [Re-testing failed elements](#re-testing-failed-elements)
+- [Testing User Stories](#testing-user-stories)
+- [Known Bugs](#known-bugs)
+    - [process_checkout](#process_checkout)
+    - [basket_form](#basket_form)
+
+
 ## Responsiveness Testing
 
 ### Testing
