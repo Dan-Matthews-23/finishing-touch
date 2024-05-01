@@ -726,31 +726,24 @@ h3 {
 
 @media screen and (max-width: 800px) {
     .allauth-container {
-        width: 40%;
+        width: 70%;
     }
 }
 
 @media screen and (max-width: 700px) {
     .allauth-container {
-        width: 50%;
+        width: 80%;
     }
 }
 
 @media screen and (max-width: 600px) {
     .allauth-container {
-        width: 60%;
+        width: 90%;
     }
 }
 
-@media screen and (max-width: 500px) {
-    .allauth-container {
-        width: 70%;
-    }
-}
-
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 550px) {
     .allauth-container {
         width: 100%;
     }
 }
-
