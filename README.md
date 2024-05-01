@@ -1,8 +1,63 @@
-SETUP
-
-I have used tutorials given by the Code Institude to set up this project. Specificaly, this relates to setting up base and index.html. The file and block names are identical, although it should be noted that familiarity across all students' projects at this stage is to be expected.
-
-
+- [MegaBytes]()
+- [Concept]()
+    - [User Experience](#user-experience)
+        - [Background](#background)
+        - [Key information](#key-information)
+        - [About the user](#about-the-user)
+        - [User Goals](#user-goals)
+    - [Wireframes](#wireframes)
+    - [Custom Models](#custom-models)
+        - [Favourites](#favourites)
+        - [Ratings](#ratings)
+        - [Chef Messages](#chef-message)
+    - [App Interconnectivity](#app-interconnectivity)
+    - [Database Design](#database-design)
+    - [Layout](#layout)
+        - [Colour](#colour)
+        - [Font](#font)
+        - [Webpage Layout](#webpage-layout)
+            - [Master Template](#master-template)
+            - [Header](#header)
+            - [Navbar](#navbar)
+            - [Index](#index)
+            - [Register and login functions](#register-and-login-functions)
+            - [Profile](#profile)
+            - [Products](#products)
+            - [Basket](#basket)
+            - [Checkout](#checkout)
+            - [Order History](#order-history)
+            - [Manage Products](#manage-products)
+    - [Accessibility](#accessibility)
+        - [WAVE report](#wave-report)
+        - [Contrast Ratio](#contrast-ratio)
+    - [Justifications and reflections](#justifications-and-reflections)
+        - [Justifications](#justifications)
+            - [Image use](#image-use)
+            - [Categories](#categories)
+            - [Limited colour palette](#limited-colour-palette)
+        - [Reflections](#reflections)
+            - [process_checkout](#process_checkout)
+            - [basket_form](#basket_form)
+    - [Technologies Used](#technologies-used)
+    - [Deployment & Local Development](#deployment--local-development)
+        - [Deployment](#deployment)
+            - [Live database](#live-database)
+            - [Heroku setup](#heroku-setup)
+            - [Actions in IDE](#actions-in-ide)
+            - [Amazon Web Service for static files](#amazon-web-service-for-static-files)
+            - [Creating AWS groups, policies and users](#creating-aws-groups-policies-and-users)
+        - [Local Development](#local-development)
+    - [Testing](#testing)
+    - [Feedback](#feedback)
+        - [Peer Feedback](#peer-feedback)
+        - [Responding to Peer Feedback](#responding-to-peer-feedback)
+        - [Feedback from previous projects](#feedback-from-previous-projects)
+    - [Credits](#credits)
+        - [Content](#content)
+        - [Code Used](#code-used)
+            - [Hamburger Bar](#hamburger-bar)
+            - [Star Rating system](#star-rating-system)
+    - [Acknowledgments](#acknowledgments)
 
 
 ## Local Legends
@@ -13,12 +68,11 @@ I have used tutorials given by the Code Institude to set up this project. Specif
 
 ![Am I responsive]()
 
-MegaBytes is a fully responsive ecommerce web application designed for local residents of Sunderland as a takeaway-ordering platform. The order will be fully customizable, will allow users to chose a payment method, create an account, browse a menu, update details such as address and delete orders or accounts. 
+MegaBytes is a fully responsive ecommerce web application designed for local residents of Sunderland as a takeaway-ordering platform. The order will be fully customizable, will allow users to choose a payment method, create an account, browse a menu, update details such as address and delete orders or accounts. 
 
-The product available at MegaBytes is healthy sandwitches with full nutritional information
+The product available at MegaBytes is healthy sandwiches with full nutritional information
 
 ***
-
 
 ## Concept
 
@@ -40,7 +94,6 @@ MegaBytes has several aims:
 - A profile page that holds personal information, where the user can read, update and delete
 - A registration and login page where the user can log into their account or create one
 
-
 #### About the user
 
 This project has been designed with two end users in mind:
@@ -50,20 +103,18 @@ This project has been designed with two end users in mind:
 
 #### User Goals
 
-![Megabytes User Stories](/media/images/concept/user-stories)
-
+![Megabytes User Stories](/media/images/concept/user-stories.png)
 
 ### Wireframes
 
 I have designed five wireframes per web page to coincide with Bootstrap's five breakpoints: 
 
-Extra small	None	<576px
-Small	sm	≥576px
-Medium	md	≥768px
-Large	lg	≥992px
-Extra large	xl	≥1200px
-Extra extra large	xxl	≥1400px
-
+Extra small None    <576px
+Small   sm  ≥576px
+Medium  md  ≥768px
+Large   lg  ≥992px
+Extra large xl  ≥1200px
+Extra extra large   xxl ≥1400px
 
 Index.html / Home (Extra Extra Large View)
 
@@ -85,7 +136,6 @@ Index.html / Home (Small View)
 
 [Index sm](/media/images/concept/wireframes/index-576px.png)
 
-
 Base.html / Home (Extra Extra Large View)
 
 [Base xxl](/media/images/concept/wireframes/base-1400px.png)
@@ -106,7 +156,6 @@ Base.html / Home (Small View)
 
 [Base sm](/media/images/concept/wireframes/base-576px.png)
 
-
 Products.html / Home (Extra Extra Large View)
 
 [Products xxl](/media/images/concept/wireframes/products-1400px.png)
@@ -126,7 +175,6 @@ Products.html / Home (Medium View)
 Products.html / Home (Small View)
 
 [Products sm](/media/images/concept/wireframes/products-576px.png)
-
 
 Basket.html / Home (Extra Extra Large View)
 
@@ -149,7 +197,6 @@ Basket.html / Home (Small View)
 [Basket sm](/media/images/concept/wireframes/basket-576px.png)
 
 
-
 Checkout.html / Home (Extra Extra Large View)
 
 [Checkout xxl](/media/images/concept/wireframes/checkout-1400px.png)
@@ -169,7 +216,6 @@ Checkout.html / Home (Medium View)
 Checkout.html / Home (Small View)
 
 [Checkout sm](/media/images/concept/wireframes/checkout-576px.png)
-
 
 
 Login.html / Home (Extra Extra Large View)
@@ -196,7 +242,6 @@ Login.html / Home (Small View)
 
 
 
-
 ### Custom Models
 
 I plan to have two additional models that are fully customized: favourites and ratings
@@ -209,12 +254,15 @@ The user will be able to browse products and then add one as a favourite.
 
 In my previous project, ratings were what the project was all about. In MegaBytes, they will be used as a useful addition but not central to the theme. They will be an added option for users when browsing for products or having purchased an item. Ratings may be a many-to-one relationship where a user can leave many ratings. 
 
+#### Chef Message
+
+Chef Message is a basic model accessible only to the superuser, and can be found under the Manage Products tab. It only has one element to the model. 
+
 ### App interconnectivity
 
 I have set out how I expect my apps to connect to one another based on the user journey, however this is only a plan at this point and may be subject to change in the final version. I will document any deviation from these plans
 
 ![App interconnectivity Design](/media/images/concept/app-interconnectivity.png)
-
 
 ### Database Design
 
@@ -240,16 +288,15 @@ It should be noted here that although the designs say 'Number' on several data t
 
 ### Layout
 
-I will be using Bootstrap to set the layout of this project. I will be using a range of features including the the grid, nav bar and breakpoints to ensure it's responsive. 
+I will be using Bootstrap to set the layout of this project. I will be using a range of features including the grid, nav bar and breakpoints to ensure it's responsive. 
 
 #### Colour
 
-I have not chosen to implemenet a colour palette in this project. Instead, the colours available will be black and off white (F7F9F9). 
+I have not chosen to implement a colour palette in this project. Instead, the colours available will be black and off white (F7F9F9). 
 
 #### Font
 
 The font I have chosen to use for this project is one called Poppins, which is part of the Sans Sarif family. It can be found [here](https://fonts.google.com/specimen/Poppins). I chose the 'Light 300' weighting as I felt that it would stand out a little more than the 'thin' preset. I have used this font in my other projects and feel it's just right on the eye. I have also used Nanum Pen Script for the Chef Message to give the effect of handwriting. It can be found [here](https://fonts.google.com/specimen/Nanum+Pen+Script).
-
 
 ### Webpage layout
 
@@ -261,7 +308,7 @@ The Master Template, called base.html, will be used as a template for all pages 
 
 #### Header
 
-The header incorperates the project title and nav bar. 
+The header incorporates the project title and nav bar. 
 
 #### Navbar
 
@@ -271,18 +318,15 @@ Initial design of nav bar on larger viewport:
 
 ![Concept Stage Navbar Larger Viewport](/media/images/concept/concept-navbar-large.png)
 
-
 Initial design of nav bar on smaller viewport:
 
 ![Concept Stage Navbar Smaller Viewport](/media/images/concept/concept-navbar-small.png)
-
 
 #### Index
 
 The homepage will consist of an introduction, purpose and instructions of how to use. 
 
 Homepage Design: ![Homepage Design](/media/images/concept/concept-index.png)
-
 
 #### Register and Login functions
 
@@ -326,10 +370,9 @@ Order History: ![Am I Responsive]()
 
 #### Manage Products
 
-If a superuser, the user can create, read, update and delete products. This can be acessed via the nav bar and will only show for those who are superusers
+If a superuser, the user can create, read, update and delete products. This can be accessed via the nav bar and will only show for those who are superusers
 
 Manage Products: ![Am I Responsive]()
-
 
 ***
 
@@ -339,13 +382,13 @@ Manage Products: ![Am I Responsive]()
 
 The WAVE report returned no errors and three alerts:
 
-- Suspicious link. This refers to the 'Register' link in the index page. As this is not an error and only a suggestion, I have chosen to disgegard this suggestion. I do not feel rewording 'Register' to anything else would be appropiate. 
+- Suspicious link. This refers to the 'Register' link in the index page. As this is not an error and only a suggestion, I have chosen to disregard this suggestion. I do not feel rewording 'Register' to anything else would be appropriate. 
 
-- Justified Text. This referes to Chef Message block being set with a 'Justify' CSS style. I have followed this suggestion and changed this to 'Centre'. However I cannot locate the second block of text this suggestion refers to as the WAVE report.
+- Justified Text. This refers to Chef Message block being set with a 'Justify' CSS style. I have followed this suggestion and changed this to 'Centre'. However I cannot locate the second block of text this suggestion refers to as the WAVE report.
 
 ### Contrast Ratio
 
-I have been unable to use WebAIM's contrast ratio on MegaBytes. I believe it may be a conflict between Heroku and WebAIM. 
+I have been unable to use Web Aim’s contrast ratio on MegaBytes. I believe it may be a conflict between Heroku and Web AIM. 
 
 ***
 
@@ -355,7 +398,7 @@ I have been unable to use WebAIM's contrast ratio on MegaBytes. I believe it may
 
 #### Image use
 
-I have opted not to use images in MegaBytes. Finding images that match the specific specifications including colour, bread type, background colour, filling etc proved too problematic. I have kept the original model structure however as this project is going to be deployed as a live project for real-world application, and when that happens we will be able to create images for the new products directly. This means there is already an image_url field in the products model ready for use. 
+I have opted not to use images in MegaBytes. Finding images that match the specific specifications including colour, bread type, background colour, filling etc proved too problematic. I have kept the original model structure however as this project is going to be deployed as a live project for real-world application, and when that happens we will be able to create images for the new products directly. This means there is already an image URL field in the products model ready for use. 
 
 #### Categories
 
@@ -363,7 +406,7 @@ The products that the user can see on the products page all have a category_id o
 
 #### Limited colour palette
 
-I took inspiration for this project from sucessful food apps such as Just Eat. I note that their three primary colours are white, black and orange. I wanted to replicate that simplistic approach and have adopted a similar colour scheme.
+I took inspiration for this project from successful food apps such as Just Eat. I note that their three primary colours are white, black and orange. I wanted to replicate that simplistic approach and have adopted a similar colour scheme.
 
 ### Reflections
 
@@ -384,8 +427,8 @@ This is also noted in 'Known Bugs' and is a bug resulting in the user having to 
 | Languages                   | HTML and CSS                                                 |
 | Framework                   | [Bootstrap 5.3](https://getbootstrap.com/docs/5.3/getting-started/introduction/) |
 | Colour Scheme               | [Coolers](https://coolors.co/l)         |
-| Contrast Ratio              | [webAIM](https://webaim.org/)                                |
-| Accessibility (WAVE report) | [webAIM](https://webaim.org/)                                |
+| Contrast Ratio              | [web AIM](https://webaim.org/)                                |
+| Accessibility (WAVE report) | [web AIM](https://webaim.org/)                                |
 | Fonts                       | [Google Fonts](https://fonts.google.com/)                    |
 | **Images**                  |                                                              |
 |                             |                                                              |
@@ -446,30 +489,16 @@ SQL Lite can be used in local development, however for live deployment we must u
 
 3. In settings.py underneath import os, add `import dj_database_url`
 
-4. Under 'DATABASES', comment out the existing code. Type: DATABASES = { 'default': dj_database_url.parse('paste-elephantsql-db-url-here')  } 
+4. Under 'DATABASES', comment out the existing code. Type: DATABASES = { 'default': dj_database_url.parse('elephantsql-db-url-here')  } 
 
-5. In the terminal, run the show migrations command to confirm connection to the external database:
+5. In the terminal, type 'python manage.py showmigrations
 
-    ```bash
-    python3 manage.py runserver
-    ```
+6. You should see a list of migrations that are unchecked. If so, type 'python manage.py makemigrations' followed by 'python manage.py migrate'   
 
-6. If you have connected the database correctly you will see a list of migrations that are unchecked. You can now run migrations to migrate the models to the new database:
+7. Create a superuser for the new database by typing 'python manage.py createsuperuser. Follow the instructions and note the details  
 
-    ```bash
-    python3 manage.py migrate
-    ```
+8. Replace your DATABASE code (including commented-out code) with the following:
 
-7. Create a superuser for the new database. Input a username, email and password when directed.
-
-    ```bash
-    python3 manage.py createsuperuser
-    ```
-
-8. You should now be able to go to the browser tab on the left of the page in elephantsql, click the table queries button and see the user you've just created by selecting the auth_user table.
-9. We can now add an if/else statement for the databases in settings.py, so we use the development database while in development (the code we commented out) - and the external database on the live site (note the change where the db URL was is now a variable we will use in Heroku):
-
-    ```python
     if 'DATABASE_URL' in os.environ:
         DATABASES = {
           'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
@@ -481,75 +510,57 @@ SQL Lite can be used in local development, however for live deployment we must u
                 'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
           }
         }
-    ```
+   
+10. Install gunicorn by typing 'pip3 install gunicorn' followed by 'pip3 freeze > requirements.txt'
+    
 
-10. Install gunicorn which will act as our webserver and freeze this to the requirements.txt file:
+11. Create a file called 'Procfile' in the root directory and add this line 'web: unicorn app_name.wsgi:application'
 
-    ```bash
-    pip3 install gunicorn
-    pip3 freeze > requirements.txt
-    ```
+12. Ensure both your IDE and Heroku in the Allowed Hosts:
+    
+    ALLOWED_HOSTS = ['{heroku site URL}', 'localhost' ]
 
-11. Create a `Procfile` in the root directory. This tells Heroku to create a web dyno which runs gunicorn and serves our django app. Add the following to the file (making sure not to leave any blank lines underneath):
+13. Save, commit and push all changes to GitHub
 
-    ```Procfile
-    web: gunicorn seaside_sewing.wsgi:application
-    ```
+#### **Amazon Web Service for static files**
 
-12. Log into the Heroku CLI in the terminal and then run the following command to disable collectstatic. This command tells Heroku not to collect static files when we deploy:
+Access your AWS account:
 
-    ```bash
-    heroku config:set DISABLE_COLLECTSTATIC=1 --app heroku-app-name-here
-    ```
+Go to https://aws.amazon.com.
+Click "Manage My Account" (top right) to sign up or log in.
+Navigate to the S3 service.
+Create a storage bucket:
 
-13. We will also need to add the Heroku app and localhost (which will allow GitPod to still work) to ALLOWED_HOSTS = [] in settings.py:
+Name the bucket after your project.
+Choose your nearest region.
+Under "Object Ownership," select "ACLs enabled" -> "Bucket owner preferred."
+Under "Block Public Access," uncheck the box and acknowledge to make the bucket public.
+Click "Create bucket."
+Enable static web hosting:
 
-    ```python
-    ALLOWED_HOSTS = ['{heroku deployed site URL here}', 'localhost' ]
-    ```
+Open the newly created bucket.
+Go to the "Properties" tab.
+Find "Static web hosting" and click "Enable."
+Set "Index document" to index.html and "Error Document" to error.html (these files won't be used).
+Configure bucket permissions:
 
-14. Save, add, commit and push the changes to GitHub. You can then also initialize the Heroku git remote in the terminal and push to Heroku with:
+Open the "Permissions" tab.
+Copy the bucket's ARN (Amazon Resource Name).
+In the "Bucket policy" section, click "Edit" -> "Policy generator."
+Set the following:
+Policy Type: S3 Bucket Policy
+Principal: * (allow all)
+Actions: Get Object
+ARN: (Paste the copied ARN)
+Click "Add Statement" -> "Generate Policy."
+Copy the generated policy, paste it into the Bucket Policy Editor, and:
+Add /* to the end of the Resource value.
+Click "Save."
 
-    ```bash
-    heroku git:remote -a {app name here}
-    git push heroku master
-    ```
+   
 
-15. You should now be able to see the deployed site (without any static files as we haven't set these up yet).
-
-16. To enable automatic deploys on Heroku, go to the deploy tab and click the connect to GitHub button in the deployment method section. Search for the projects repository and then click connect. Click enable automatic deploys at the bottom of the page.
-
-#### **Generate a SECRET KEY & Updating Debug**
-
-1. Django automatically sets a secret key when you create your project, however we shouldn't use this default key in our deployed version, as it leaves our site vulnerable. We can use a random key generator to create a new SECRET_KEY which we can then add to our Heroku config vars which will then keep the key protected.
-2. [Django Secret Key Generator](https://miniwebtool.com/django-secret-key-generator/) is an example of a site we could use to create our secret key. Create a new key and copy the value.
-3. In Heroku settings create a new config var with a key of `SECRET_KEY`. The value will be the secret key we just created. Click add.
-4. In settings.py we can now update the `SECRET_KEY` variable, asking it to get the secret key from the environment, or use an empty string in development:
-
-    ```python
-    SECRET_KEY = os.environ.get('SECRET_KEY', ' ')
-    ```
-
-5. We can now adjust the `DEBUG` variable to only set DEBUG as true if in development:
-
-    ```python
-    DEBUG = 'DEVELOPMENT' in os.environ
-    ```
-
-6. Save, add, commit and push these changes.
-
-#### **Set up AWS hosting for static and media files**
-
-! NOTE: These instructions are for setting up AWS hosting as of 5/1/23 - these may change slightly in future versions of AWS.
-
-1. Sign up or login to your [aws amazon account](https://aws.amazon.com) on the top right by using the manage my account button and then navigate to S3 to create a new bucket.
-2. The bucket will be used to store our files, so it is a good idea to name this bucket the same as your project. Select the region closest to you. In the object ownership section we need to select ACLs enabled and then select bucket owner preferred. In the block public access section uncheck the block public access box. You will then need to tick the acknowledge button to make the bucket public. Click create bucket.
-3. Click the bucket you've just created and then select the properties tab at the top of the page. Find the static web hosting section and choose enable static web hosting, host a static website and enter index.html and error.html for the index and error documents (these won't actually be used.)
-4. Open the permissions tab and copy the ARN (amazon resource name). Navigate to the bucket policy section click edit and select policy generator. The policy type will be S3 bucket policy, we want to allow all principles by adding `*` to the input and the actions will be get object. Paste the ARN we copied from the last page into the ARN input and then click add statement. Click generate policy and copy the policy that displays in a new pop up. Paste this policy into the bucket policy editor and make the following changes: Add a `/*` at the end of the resource value. Click save.
-5. Next we need to edit the the cross-origin resource sharing (CORS). Paste in the following text:
-
-    ```json
-    [
+5. Paste the following code (replace this with the actual CORS configuration if you have a specific one):
+[
         {
             "AllowedHeaders": [
                 "Authorization"
@@ -563,153 +574,185 @@ SQL Lite can be used in local development, however for live deployment we must u
             "ExposeHeaders": []
         }
     ]
-    ```
 
 6. Now we need to edit the access control list (ACL) section. Click edit and enable list for everyone(public access) and accept the warning box.
 
 #### **Creating AWS groups, policies and users**
 
-1. Click the services icon on the top right of the page and navigate to IAM - manage access to AWS services. On the left hand navigation menu click user groups and then click the create group button in the top right. This will create the group that our user will be placed in.
-2. Choose a name for your group - for example manage-seaside-sewing, and click the create policy button on the right. This will open a new page.
-3. Click on the JSON tab and then click the link for import managed policy on the top right of the page.
-4. Search for S3 and select the one called AmazonS3FullAccess, then click import.
-5. We need to make a change to the resources, we need to make resources an array and then change the value for resources. Instead of a `*` which allows all access, we want to paste in our ARN. followed by a comma, and then paste the ARN in again on the next line with `/*` at the end. This allows all actions on our bucket, and all the resources in it.
-6. Click the next: tags button and then the next:review .
-7. Give the policy a name and description (e.g. seaside-sewing-policy | Access to S3 bucket for seaside sewing static files.) Click the create policy button.
-8. Now we need to atach the policy we just created. On the left hand navigation menu click user groups, select the group and go to the permissions tab. Click the add permissions button on the right and choose attach policies from the dropdown.
-9. Select the policy you just created and then click add permissions at the bottom.
-10. Now we'll create a user for the group by clicking on the user link in the left hand navigation menu, clicking the add users button on the top right and giving our user a username (e.g. seaside-sewing-staticfiles-user). Select programmatic access and then click the next: permissions button.
-11. Add the user to the group you just created and then click next:tags button, next:review button and then create user button.
-12. You will now need to download the CSV file as this contains the user access key and secret access key that we need to insert into the Heroku config vars. Make sure you download the CSV now as you won't be able to access it again.
+Simplified Instructions
 
-#### **Connecting Django to our S3 bucket**
+Access IAM and Create User Group
 
-1. Install boto3 and django storages and freeze them to the requirements.txt file.
+On the AWS Console, click the "Services" icon (top right) and find "IAM".
+In the left menu, go to "User Groups" and click "Create Group."
+Name your group (e.g., "manage-megabytes")
+Create an S3 Access Policy
 
-    ```bash
-    pip3 install boto3
-    pip3 install django-storages
-    pip3 freeze > requirements.txt
-    ```
+Click "Create Policy."
+Switch to the "JSON" tab and click "Import Managed Policy" (top right).
+Search for "AmazonS3FullAccess" and click "Import."
+Modify the Policy
 
-2. Add `storages` to the installed apps in settings.py
-3. Add the following code in settings.py to use our bucket if we are using the deployed site:
+In the "Resources" section:
+Replace * with your bucket's ARN.
+On the next line, paste the ARN again and add /* at the end.
+Click "Next: Tags" -> "Next: Review."
+Name and Create the Policy
 
-    ```python
-    if 'USE_AWS' in os.environ:
-        AWS_S3_OBJECT_PARAMETERS = {
-            'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-            'CacheControl': 'max-age=9460800',
-        }
-        
-        AWS_STORAGE_BUCKET_NAME = 'enter your bucket name here'
-        AWS_S3_REGION_NAME = 'enter the region you selected here'
-        AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-        AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-    ```
+Provide a name and description (e.g., "megabytes-policy | Access to S3 bucket...").
+Click "Create Policy."
+Attach Policy to User Group
 
-4. In Heroku we can now add these keys to our config vars:
+Navigate to "User Groups" (left menu) and select your group.
+Go to the "Permissions" tab and click "Add Permissions" -> "Attach Policies."
+Select your newly created policy and click "Add Permissions."
+Create a User
 
-    | KEY | VALUE |
-    | :--- | :--- |
-    | AWS_ACCESS_KEY_ID | The access key value from the amazon csv file downloaded in the last section |
-    | AWS_SECRET_ACCESS_KEY | The secret access key from the amazon csv file downloaded in the last section |
-    | USE_AWS | True |
+Go to "Users" (left menu) and click "Add Users."
+Create a username (e.g., "megabytes-staticfiles-user").
+Select "Programmatic Access" and click "Next: Permissions."
+Add User to Group
 
-5. Remove the DISABLE_COLLECTSTATIC variable.
-6. Create a file called custom_storages.py in the root and import settings and S3Botot3Storage. Create a custom class for static files and one for media files. These will tell the app the location to store static and media files.
-7. Add the following to settings.py to let the app know where to store static and media files, and to override the static and media URLs in production.
+Add your user to the group you created.
+Click "Next: Tags" -> "Next: Review" -> "Create User."
+Retrieve Keys
 
-    ```python
-    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
-    STATICFILES_LOCATION = 'static'
-    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
-    MEDIAFILES_LOCATION = 'media'
-    
-    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
-    ```
+Immediately download the CSV with your user's access keys. This is your only chance to obtain them.
 
-8. Save, add, commit and push these changes to make a deployment to Heroku. In the build log you should be able to see that the static files were collected, and if we check our S3 bucket we can see the static folder which has all the static files in it.
-9. Navigate to S3 and open your bucket. We now want to create a new file to hold all the media files for our site. We can do this by clicking the create folder button on the top right and naming the folder media.
+Connecting Django to Your S3 Bucket
 
-#### **Setting up Stripe**
+1. Installation
 
-1. We now need to add our Stripe keys to our config vars in Heroku to keep these out of our code and keep them private. Log into Stripe, click developers and then API keys.
-2. Create 2 new variables in Heroku's config vars - for the publishable key (STRIPE_PUBLIC_KEY) and the secret key (STRIPE_SECRET_KEY) and paste the values in from the Stripe page.
-3. Now we need to add the WebHook endpoint for the deployed site. Navigate to the WebHooks link in the left hand menu and click add endpoint button.
-4. Add the URL for our deployed sites WebHook, give it a description and then click the add events button and select all events. Click Create endpoint.
-5. Now we can add the WebHook signing secret to our Heroku config variables as STRIPE_WH_SECRET.
-6. In settings.py:
+Install necessary packages and update your requirements file:
 
-    ```python
-    STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
-    STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
-    STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
-    ```
+Bash
+pip3 install boto3 django-storages
+pip3 freeze > requirements.txt
+Use code with caution.
+content_copy
+Add storages to INSTALLED_APPS in your settings.py file.
 
-### Migrating to Railway.app for deployment
+2. Configure Django Settings (settings.py)
 
-*Update: 29th April 2023* Since completing my diploma and due to Heroku removing their free tier in November 2022, I have migrated the deployment of this site to use railway.app. You can find instructions on how to migrate your app from Heroku to Railway in my [article here](https://www.codu.co/articles/migrating-your-heroku-app-to-railway-vf9p3kid).
+Add this code, replacing placeholders with your actual values:
 
-Note that you will also need to create a runtime.txt in your environment which contains the version of python you are using. You can find this out by typing `python --version` in the terminal, and entering the result into the runtime.txt folder like so:
+Python
+if 'USE_AWS' in os.environ:
+    AWS_S3_OBJECT_PARAMETERS = {
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'CacheControl': 'max-age=9460800',
+    }
+    AWS_STORAGE_BUCKET_NAME = 'your-bucket-name'
+    AWS_S3_REGION_NAME = 'your-region'
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+Use code with caution.
+play_circleeditcontent_copy
+3. Set Heroku Config Vars
 
-```
-Python -3.10.5
-```
+Add these keys/values in Heroku's config vars section, using the values from your AWS CSV file:
+
+| KEY                      | VALUE                                              |
+| ------------------------ | -------------------------------------------------- |
+| AWS_ACCESS_KEY_ID        | Your access key from the CSV                       |
+| AWS_SECRET_ACCESS_KEY    | Your secret access key from the CSV                |
+| USE_AWS                  | True                                               |
+
+4. Setup Custom Storages
+
+Create custom_storages.py in your project root and add:
+
+Python
+from django.conf import settings
+from storages.backends.s3boto3 import S3Boto3Storage
+
+class StaticStorage(S3Boto3Storage):
+    location = 'static'
+
+class MediaStorage(S3Boto3Storage):
+    location = 'media'
+
+play_circleeditcontent_copy
+5. Update Django Settings (settings.py)
+
+Python
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage' 
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+
+play_circleeditcontent_copy
+6. Deploy and Verify
+
+Commit and push your changes to Heroku.
+Verify static files were collected during deployment.
+Check your S3 bucket for the 'static' folder.
+7. Create S3 Media Folder
+
+Navigate to your S3 bucket.
+Create a new folder named 'media'.
+
+Setting up Stripe
+
+Obtain Stripe Keys
+
+Log into your Stripe account.
+Go to "Developers" -> "API Keys".
+Retrieve your publishable key and secret key.
+Add Keys to Heroku Config Vars
+
+In Heroku's settings, create two new config vars:
+STRIPE_PUBLIC_KEY (paste your publishable key)
+STRIPE_SECRET_KEY (paste your secret key)
+Set up Webhook
+
+In Stripe, go to "Developers" -> "Webhooks" -> "Add endpoint".
+Provide your deployed site's Webhook URL (e.g., https://your-site.herokuapp.com/webhook/)
+Add a description (e.g., "Webhook for my-site")
+Select "Receive all events".
+Click "Create endpoint".
+Retrieve the generated Webhook signing secret.
+Add Webhook Secret to Heroku
+
+Create a new Heroku config var:
+STRIPE_WH_SECRET (paste your Webhook signing secret)
+Update Django Settings (settings.py)
+
+Python
+import os
+
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
+Use code with caution.
+play_circleeditcontent_copy
+Important: Ensure you replace the placeholder Webhook URL (https://your-site.herokuapp.com/webhook/) with your actual deployed site's Webhook endpoint.
+
+
 
 ### Local Development
 
-#### **How to Fork**
+How to Fork the Project
 
-To fork the repository:
+Have a GitHub account: If you don't have one, sign up for free.
+Find the project: Go to https://github.com/kera-cudmore/seaside-sewing.
+Click "Fork": You'll find this button in the top-right corner of the project page. This creates your own copy of the project.
+How to Clone the Project
 
-1. Log in (or sign up) to GitHub.
-
-2. Go to the repository for this project, [seaside-sewing](https://github.com/kera-cudmore/seaside-sewing).
-
-3. Click on the fork button in the top right of the page.
-
-#### **How to Clone**
-
-To clone the repository:
-
-1. Log in (or sign up) to GitHub.
-
-2. Go to the repository for this project, [seaside-sewing](https://github.com/kera-cudmore/seaside-sewing).
-
-3. Click the Code button, select whether you would like to clone with HTTPS, SSH or the GitHub CLI and copy the link given.
-
-4. Open the terminal in your chosen IDE and change the current working directory to the location you would like to use for the cloned repository.
-
-5. Type the following command into the terminal `git clone` followed by the link you copied in step 3.
-
-6. Set up a virtual environment (this step is not required if you are using the Code Institute template and have opened the repository in GitPod as this will have been set up for you).
-
-7. Install the packages from the requirements.txt file by running the following command in the terminal:
-
-```bash
-pip3 install -r requirements.txt
-```
+Have a GitHub account: You'll need one if you don't already have it.
+Find the project: Go to https://github.com/kera-cudmore/seaside-sewing.
+Copy the Clone Link:
+Click the "Code" button.
+Choose your preference (HTTPS, SSH, GitHub CLI) and copy the provided link.
+Open your Code Editor: Use the one you're comfortable with.
+Choose a Folder: Decide where you want to save the project on your computer.
+Use the 'git clone' Command:
+In your editor's terminal, type git clone and paste the copied link. Press Enter.
+Optional: Set up a Virtual Environment (Skip this if unsure or using a pre-made setup)
+Install Packages: In your terminal, run pip install -r requirements.txt
 
 ---
-
-
-
-
-
-
-
-### How to maintain
-
-
-
-
-
-
-
-
 
 
 ***
@@ -726,7 +769,11 @@ I have worked closely with my peers on testing this product rigorously for any e
 
 - Some of the pages do not seem to be responding well on smaller screens. The input boxes seem to come out of the container.
 
-- The footer seems to float on Contact Us and Register on smaller screens
+- The order form does not require a postcode
+
+- The quantity-selection div cannot be seen on smaller screens
+
+- 
 
 ### Responding to Peer Feedback
 
@@ -739,33 +786,29 @@ I have taken the following actions in response to feedback:
 
 ### Responding to feedback from previous projects
 
-I have taken the following actions in response to feedback:
-
-1. Because I am partially colour-blind, I've had to build this project using a tool called [WebAIM](https://webaim.org/resources/contrastchecker/bookmarklet) to aid me in checking the contrast ratio. I continue to use alternative text.
-
-I have also included a WAVE report, which passes all tests.
-
-2. I have ensured that every filename contains no numbers, capital letters or underscores. Each file has been placed in an appropriate folder, and I've ensured each file is named correctly and appropriately.
-
-3. I have ensured that along with details of all of my testing, I've included as many before and after screenshots as possible. In some cases, it wasn't always possible to include both, but these tests are clearly marked with justification.
-
-4. Throughout the testing stages, I have included snippets of code along with screenshots of visual output of that code.
-
-5. I have attempted to be as thorough as possible throughout the development of this project.
+I have retested all user stories, responsiveness and each element after changes were made and asked for further feedback. No errors or suggestions were offered
 
 ### Other Feedback
 
-My mentor suggested that I display a warning to a user about the impact of deleting a review or account. I have included this just above the submit button on both elements.
+My mentor suggested that I display a warning to a user about the impact of deleting a review.
 
 ### Responding to other feedback
 
-
+I have included this just above the submit button.
 
 ***
 
 ## Future Developments
 
+- I plan to create functionality for users to customise their sandwich from the bread to type of filling. 
 
+- I would like to revisit process_checkout and rewrite it so that I do not need to rely on the work-around mentioned in 'Known Bugs'
+
+- I would like to introduce other products such as sundries, drinks, sauces when I release this for an audience
+
+- Early on I tried to create increase and decrease buttons rather than a select box for the quantity, however I could not get this to work. I would like to revisit this
+
+- I would like to introduce images of each product once the project is released for an audience
 
 ***
 
@@ -781,9 +824,22 @@ Content for the website was written by Dan Matthews.
 
 I have used Bootstrap's Nav bar as a template to create my own. It can be found [here](https://getbootstrap.com/docs/5.3/components/navbar/)
 
+#### Star Rating system
+
+I have adapted Coding Pal Web's star rating CSS and JavaScript. The full code can be found here: https://www.codingnepalweb.com/star-rating-html-css-javascript-2
 
 ***
 
 ## Acknowledgments
+
+Finally, I want to take the opportunity to thank and acknowledge the following for their support and patience in helping me create my first-ever project:
+
+- [Harry Dhillon](https://github.com/Harry-Leepz), who is my mentor at the Code Institute, for their continued support and guidance.
+  
+- Kofi Afriyie and Meena Mengle, who are my facilitators from West Herts College, for their time, patience and encouragement in helping me develop this project.
+  
+- Craig Hudson, for his patience and pep-talks throughout, and for helping to test my finished project
+  
+- Jordan Cooper, for helping to test my finished project and suggestions along the way
 
 
