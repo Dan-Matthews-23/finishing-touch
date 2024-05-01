@@ -298,7 +298,7 @@ Login.html / Home (Small View)
 
 ### Custom Models
 
-I plan to have two additional models that are fully customized: favourites and ratings
+I plan to have three additional models that are fully customized: favourites, ratings and Chef Messages, although the latter will be a very small model with one element
 
 #### Favourites
 
