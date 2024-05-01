@@ -5,6 +5,7 @@
 - [Known Bugs](#known-bugs)
     - [process_checkout](#process_checkout)
     - [basket_form](#basket_form)
+    - [index.html](#indexhtml)
 
 
 ## Responsiveness Testing
@@ -57,7 +58,11 @@ Python ![Toggle Python](/media/images/testing/known-bugs-toggle-hidden-python.pn
 
 The work-around means that once Process Checkout button is clicked, the event listener in the JavaScript changes the hidden input value to True. Once this is True, the Python function will execute the order, or it will render the form and stripe elements if not clicked. Of course this could be a security concern. If a hacker was able to manipulate this hidden form field, the order would execute without taking Stripe payment.
 
-This work-around is not what I wanted or intended. I cannot save this in the 'Solved Bugs section as it's not solved, only mitigated. 
+This work-around is not what I wanted or intended. I cannot save this in the 'Solved Bugs section as it's not solved, only mitigated.
+
+### index.html
+
+On smaller screens the index page is unresponsive. The CSS is clear that all containers should be at 100% on any screen less than medium, however this does not appear to be happening. Investigations are ongoing
 
 ### basket_form
 

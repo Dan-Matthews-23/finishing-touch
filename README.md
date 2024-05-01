@@ -35,6 +35,7 @@
             - [Image use](#image-use)
             - [Categories](#categories)
             - [Limited colour palette](#limited-colour-palette)
+            - [Am I Responsive](#am-i-responsive)
         - [Reflections](#reflections)
             - [process_checkout](#process_checkout)
             - [basket_form](#basket_form)
@@ -66,7 +67,60 @@
 
 [View MegaBytes on Github](https://github.com/Dan-Matthews-23/mega-bytes)
 
-![Am I responsive]()
+
+**Index Page**
+
+![Index Page](/media/images/finished-product-images/index-large.png)
+
+
+**Register Page**
+
+![Register Page](/media/images/finished-product-images/register-large.png)
+
+
+**Login Page**
+
+![Login Page](/media/images/finished-product-images/login-large.png)
+
+
+**Products Page**
+
+![Products Page](/media/images/finished-product-images/sandwiches-large.png))
+
+
+**Basket Page**
+
+![Basket Page](/media/images/finished-product-images/basket-large.png)
+
+
+**Checkout Page**
+
+![Checkout Page](/media/images/finished-product-images/checkout-large.png)
+
+
+**Order Confirmed Page**
+
+![Order Confirmed Page](/media/images/finished-product-images/order-confirmed-large.png)
+
+
+**Profile Page**
+
+![Profile Page](/media/images/finished-product-images/profile-large.png)
+
+
+**Leave Review Page**
+
+![Leave Review Page](/media/images/finished-product-images/leave-review-large.png)
+
+
+**Left Review Page**
+
+![Left Review Page](/media/images/finished-product-images/left-review-large.png)
+
+***
+
+
+
 
 MegaBytes is a fully responsive ecommerce web application designed for local residents of Sunderland as a takeaway-ordering platform. The order will be fully customizable, will allow users to choose a payment method, create an account, browse a menu, update details such as address and delete orders or accounts. 
 
@@ -304,7 +358,6 @@ The font I have chosen to use for this project is one called Poppins, which is p
 
 The Master Template, called base.html, will be used as a template for all pages in this project. It will hold the header, footer and nav bar.
 
-![Am I responsive]()
 
 #### Header
 
@@ -332,47 +385,37 @@ Homepage Design: ![Homepage Design](/media/images/concept/concept-index.png)
 
 I have used Django Allauth to provide functionality for Megabytes. I have adapted the templates for customised experience
 
-Register: ![Am I Responsive]()
-
-Login: ![Am I Responsive]()
-
-Logout: ![Am I Responsive]()
 
 #### Profile
 
 The user will have one profile page where they can view previous orders and update their personal information
 
-Profile: ![Am I Responsive]()
 
 #### Products
 
 The user will be able to browse available sandwiches and choose one they would like to purchase
 
-Products: ![Am I Responsive]()
 
 #### Basket
 
 The user will be able to view products they have chosen and update order details
 
-Basket: ![Am I Responsive]()
+
 
 #### Checkout
 
 The user will be able to enter payment details so that they can purchase items. The payment functionality is provided by Stripe
 
-Checkout: ![Am I Responsive]()
 
 #### Order History
 
 The user will be able to view all of their previous orders
 
-Order History: ![Am I Responsive]()
 
 #### Manage Products
 
 If a superuser, the user can create, read, update and delete products. This can be accessed via the nav bar and will only show for those who are superusers
 
-Manage Products: ![Am I Responsive]()
 
 ***
 
@@ -418,6 +461,10 @@ I had multiple problems with this function. I spent a great deal of time with Tu
 
 This is also noted in 'Known Bugs' and is a bug resulting in the user having to type in their full name each time they order even if they update their profile information. Tests are ongoing to find the cause.
 
+#### Am I Responsive
+
+In all my previous projects I have been able to supply a link and use UI.DEV's Am I Responsive for use in this readme. It usually gives a glimpse of how each section looks and an overall look in the introduction. However I've not been able to use it on this occasion. The link does not work in the usual tool. I can only guess it has something to do with either Heroku (unlikely as I was able to do this for my last project) or AWS permissions (the likely suspect). I have therefore not been able to supply those useful snapshots across all screens, and have only included the snapshots on desktop view. 
+
 ***
 
 ## Technologies Used
@@ -455,7 +502,7 @@ This is also noted in 'Known Bugs' and is a bug resulting in the user having to 
 | Static File Hosting        | [Amazon Web Service](https://aws.amazon.com/)             |
 | Form Rendering        | [Django Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/)             |
 | Django 5.02       | [Django](https://www.djangoproject.com/)             |
-| Python 3       | [Django](https://www.python.org/)             |
+| Python 3       | [Python](https://www.python.org/)             |
 
 ***
 

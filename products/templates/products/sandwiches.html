@@ -57,7 +57,7 @@
         </div>
         {%endif%}
         <div class="row ">
-            <div class="col with-borders">
+            <div class="col">
                 {% if request.session.order_items %}
                 {% for product_id, item in request.session.order_items.items %}
                 <form method="POST" action="{% url 'remove_item' %}">
