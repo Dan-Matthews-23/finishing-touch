@@ -736,12 +736,12 @@ Important: Ensure you replace the placeholder Webhook URL (https://your-site.her
 How to Fork the Project
 
 Have a GitHub account: If you don't have one, sign up for free.
-Find the project: Go to https://github.com/kera-cudmore/seaside-sewing.
+Find the project: Go to https://github.com/Dan-Matthews-23/mega-bytes.
 Click "Fork": You'll find this button in the top-right corner of the project page. This creates your own copy of the project.
 How to Clone the Project
 
 Have a GitHub account: You'll need one if you don't already have it.
-Find the project: Go to https://github.com/kera-cudmore/seaside-sewing.
+Find the project: Go to https://github.com/Dan-Matthews-23/mega-bytes.
 Copy the Clone Link:
 Click the "Code" button.
 Choose your preference (HTTPS, SSH, GitHub CLI) and copy the provided link.
