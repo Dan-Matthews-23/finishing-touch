@@ -49,68 +49,65 @@
 <!--This is the order sumary section that holds details of the current order-->
 <section class="order-details">
     <div class="container-fluid card product-container" id="order-details">
+        {% if request.session.order_items %}
         <div class="row ">
-            <div class="col  col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                {% if request.session.order_items %}
-                <div class="row ">
-                    <div class="col ">
-                        <h5 class="card-title">Order Details</h5>
-                    </div>
-                </div>
-                {%endif%}
-                <div class="row">
-                    <div class="col  col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                        {% if request.session.order_items %}
-                        {% for product_id, item in request.session.order_items.items %}
-                        <form method="POST" action="{% url 'remove_item' %}">
-                            {% csrf_token %}
-                            <p class="product-item-paragraph-center">
-                                <input type="hidden" name="remove-item-product-id" id="remove-item-product-id"
-                                    value="{{ product_id }}" class="align-left">
-                                <button type="submit" class="align-left" id="remove-item">
-                                    <i class="fa-solid fa-trash fa-xl align-left"></i>
-                                </button>
-                            </p>
-                            <p class="product-item-paragraph-center">
-                                {{ item.product_name }}
-                                (x{{ item.quantity }})
-                                <br>
-                                <strong>£{{ item.cost }}</strong>
-                            </p>
-                        </form>
-                        {% endfor %}
-                        <hr>
-                        {% if request.session.order_total %}
-                        <p class="product-item-paragraph-center ">
-                            <strong>Total: £{{ request.session.order_total }}</strong>
-                        </p>
-                        {% endif %}
-                        <hr>
-                        {% else %}
-                        <p class="product-item-paragraph-center">
-                            <strong>Your basket is empty</strong>
-                        </p>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                        {% if request.session.order_items %}
-                        <form method="POST" action="{% url 'view_basket' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn orderBtn" id="checkout">Checkout items</button>
-                        </form>
-                        <form method="POST" action="{% url 'clear_order' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn delete_order" id="delete_order">Clear Order</button>
-                        </form>
-                        {%endif%}
-                    </div>
-                </div>
-            </div>
-            <div class="col" id="remove-item-div">
+            <div class="col ">
+                <h5 class="card-title">Order Details</h5>
             </div>
         </div>
+        {%endif%}
+        <div class="row ">
+            <div class="col with-borders">
+                {% if request.session.order_items %}
+                {% for product_id, item in request.session.order_items.items %}
+                <form method="POST" action="{% url 'remove_item' %}">
+                    {% csrf_token %}
+                    <p>
+                        <input type="hidden" name="remove-item-product-id" id="remove-item-product-id"
+                            value="{{ product_id }}" class="align-left">
+                        <button type="submit" class="align-left" id="remove-item">
+                            <i class="fa-solid fa-trash fa-xl align-left"></i>
+                        </button>
+                    </p>
+                    <p>
+                        {{ item.product_name }}
+                        (x{{ item.quantity }})
+                        <br>
+                        <strong>£{{ item.cost }}</strong>
+                    </p>
+                </form>
+                {% endfor %}
+                <hr>
+                {% if request.session.order_total %}
+                <p>
+                    <strong>Total: £{{ request.session.order_total }}</strong>
+                </p>
+                {% endif %}
+                <hr>
+                {% else %}
+                <p>
+                    <strong>Your basket is empty</strong>
+                </p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {% if request.session.order_items %}
+                <form method="POST" action="{% url 'view_basket' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn orderBtn" id="checkout">Checkout items</button>
+                </form>
+                <form method="POST" action="{% url 'clear_order' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn delete_order" id="delete_order">Clear Order</button>
+                </form>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" id="remove-item-div"></div>
     </div>
 </section>
 <br>
@@ -228,7 +225,7 @@
                                     <span class="close">&times;</span>
                                 </div>
                             </div>
-                            <div class="row  align-center" id="quantity-row" >
+                            <div class="row  align-center" id="quantity-row">
                                 <select class="select-quantity" name="quantity" id="quantity">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
