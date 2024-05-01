@@ -1,5 +1,5 @@
-- [MegaBytes]()
-- [Concept]()
+- [MegaBytes](#megabytes)
+- [Concept](#concept)
     - [User Experience](#user-experience)
         - [Background](#background)
         - [Key information](#key-information)
@@ -60,11 +60,11 @@
     - [Acknowledgments](#acknowledgments)
 
 
-## Local Legends
+## MegaBytes
 
 [View deployed site on Heroku](https://megabytes-bfd0afc9e4a4.herokuapp.com/)
 
-[View Local Legends on Github](https://github.com/Dan-Matthews-23/mega-bytes)
+[View MegaBytes on Github](https://github.com/Dan-Matthews-23/mega-bytes)
 
 ![Am I responsive]()
 
